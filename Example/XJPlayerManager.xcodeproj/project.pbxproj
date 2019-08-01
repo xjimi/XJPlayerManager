@@ -24,6 +24,19 @@
 		6DD90813D21E298A945BC082 /* Pods_XJPlayerManager_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06DA849D386E2AC5A6E5561E /* Pods_XJPlayerManager_Example.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		904E997022E9A6D800A17F76 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 904E996E22E9A6D800A17F76 /* YTPlayerView.m */; };
+		905191CC22E9554F003004A2 /* XJPlayerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191C822E9554F003004A2 /* XJPlayerAdapter.m */; };
+		905191CD22E9554F003004A2 /* XJPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191C922E9554F003004A2 /* XJPlayerManager.m */; };
+		905191D122E95580003004A2 /* XJPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191D022E95580003004A2 /* XJPlayerView.m */; };
+		905191D722E95593003004A2 /* XJPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191D222E95593003004A2 /* XJPlayerControlsView.m */; };
+		905191D822E95593003004A2 /* XJPlayerGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191D422E95593003004A2 /* XJPlayerGesture.m */; };
+		905191E422E9564A003004A2 /* XJPlayerTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191DD22E9564A003004A2 /* XJPlayerTransitioningDelegate.m */; };
+		905191E622E9564A003004A2 /* XJPlayerFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191E022E9564A003004A2 /* XJPlayerFullScreenViewController.m */; };
+		905191E722E9564A003004A2 /* XJPlayerAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191E322E9564A003004A2 /* XJPlayerAnimatedTransitioning.m */; };
+		905191EB22E9565D003004A2 /* XJPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191EA22E9565D003004A2 /* XJPlayerModel.m */; };
+		905191EF22E95684003004A2 /* AVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191ED22E95684003004A2 /* AVPlayerView.m */; };
+		905191F722E9580E003004A2 /* UIView+PlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191F222E9580E003004A2 /* UIView+PlayerControlsView.m */; };
+		905191F922E9580E003004A2 /* UIView+XJBasePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 905191F522E9580E003004A2 /* UIView+XJBasePlayerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +55,7 @@
 		26D86BB9C25E21F6F3F2B22E /* Pods-XJPlayerManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJPlayerManager_Tests.debug.xcconfig"; path = "Target Support Files/Pods-XJPlayerManager_Tests/Pods-XJPlayerManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2E1A27474FC91E6D19451074 /* Pods-XJPlayerManager_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJPlayerManager_Tests.release.xcconfig"; path = "Target Support Files/Pods-XJPlayerManager_Tests/Pods-XJPlayerManager_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		4570324A5239844CB7A82994 /* Pods-XJPlayerManager_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XJPlayerManager_Example.debug.xcconfig"; path = "Target Support Files/Pods-XJPlayerManager_Example/Pods-XJPlayerManager_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		5009222321C4E054FBCBC2CA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		5009222321C4E054FBCBC2CA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* XJPlayerManager_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XJPlayerManager_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -64,9 +77,37 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		880E652A02CF22B58E06E74C /* XJPlayerManager.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = XJPlayerManager.podspec; path = ../XJPlayerManager.podspec; sourceTree = "<group>"; };
+		880E652A02CF22B58E06E74C /* XJPlayerManager.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = XJPlayerManager.podspec; path = ../XJPlayerManager.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		904E996E22E9A6D800A17F76 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTPlayerView.m; sourceTree = "<group>"; };
+		904E996F22E9A6D800A17F76 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTPlayerView.h; sourceTree = "<group>"; };
+		905191C822E9554F003004A2 /* XJPlayerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdapter.m; sourceTree = "<group>"; };
+		905191C922E9554F003004A2 /* XJPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerManager.m; sourceTree = "<group>"; };
+		905191CA22E9554F003004A2 /* XJPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerManager.h; sourceTree = "<group>"; };
+		905191CB22E9554F003004A2 /* XJPlayerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdapter.h; sourceTree = "<group>"; };
+		905191CF22E95580003004A2 /* XJPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerView.h; sourceTree = "<group>"; };
+		905191D022E95580003004A2 /* XJPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerView.m; sourceTree = "<group>"; };
+		905191D222E95593003004A2 /* XJPlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerControlsView.m; sourceTree = "<group>"; };
+		905191D322E95593003004A2 /* XJPlayerGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerGesture.h; sourceTree = "<group>"; };
+		905191D422E95593003004A2 /* XJPlayerGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerGesture.m; sourceTree = "<group>"; };
+		905191D522E95593003004A2 /* XJPlayerControlsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerControlsViewDelegate.h; sourceTree = "<group>"; };
+		905191D622E95593003004A2 /* XJPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerControlsView.h; sourceTree = "<group>"; };
+		905191DA22E955D3003004A2 /* XJBasePlayerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBasePlayerViewDelegate.h; sourceTree = "<group>"; };
+		905191DC22E9564A003004A2 /* XJPlayerFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerFullScreenViewController.h; sourceTree = "<group>"; };
+		905191DD22E9564A003004A2 /* XJPlayerTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerTransitioningDelegate.m; sourceTree = "<group>"; };
+		905191DF22E9564A003004A2 /* XJPlayerAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAnimatedTransitioning.h; sourceTree = "<group>"; };
+		905191E022E9564A003004A2 /* XJPlayerFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerFullScreenViewController.m; sourceTree = "<group>"; };
+		905191E122E9564A003004A2 /* XJPlayerTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerTransitioningDelegate.h; sourceTree = "<group>"; };
+		905191E322E9564A003004A2 /* XJPlayerAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAnimatedTransitioning.m; sourceTree = "<group>"; };
+		905191E922E9565D003004A2 /* XJPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerModel.h; sourceTree = "<group>"; };
+		905191EA22E9565D003004A2 /* XJPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerModel.m; sourceTree = "<group>"; };
+		905191ED22E95684003004A2 /* AVPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVPlayerView.m; sourceTree = "<group>"; };
+		905191EE22E95684003004A2 /* AVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVPlayerView.h; sourceTree = "<group>"; };
+		905191F222E9580E003004A2 /* UIView+PlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PlayerControlsView.m"; sourceTree = "<group>"; };
+		905191F322E9580E003004A2 /* UIView+XJBasePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XJBasePlayerView.h"; sourceTree = "<group>"; };
+		905191F522E9580E003004A2 /* UIView+XJBasePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XJBasePlayerView.m"; sourceTree = "<group>"; };
+		905191F622E9580E003004A2 /* UIView+PlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PlayerControlsView.h"; sourceTree = "<group>"; };
 		C1B969E6426D19CF3740A7CE /* Pods_XJPlayerManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJPlayerManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1375CB9AACE96D4D2EBC71D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		E1375CB9AACE96D4D2EBC71D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +144,6 @@
 				26D86BB9C25E21F6F3F2B22E /* Pods-XJPlayerManager_Tests.debug.xcconfig */,
 				2E1A27474FC91E6D19451074 /* Pods-XJPlayerManager_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -144,6 +184,7 @@
 		6003F593195388D20070C39A /* Example for XJPlayerManager */ = {
 			isa = PBXGroup;
 			children = (
+				905191C722E95511003004A2 /* Classes */,
 				6003F59C195388D20070C39A /* XJAppDelegate.h */,
 				6003F59D195388D20070C39A /* XJAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -195,6 +236,97 @@
 				5009222321C4E054FBCBC2CA /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		904E996D22E9A6CC00A17F76 /* YTPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				904E996F22E9A6D800A17F76 /* YTPlayerView.h */,
+				904E996E22E9A6D800A17F76 /* YTPlayerView.m */,
+			);
+			path = YTPlayerView;
+			sourceTree = "<group>";
+		};
+		905191C722E95511003004A2 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				904E996D22E9A6CC00A17F76 /* YTPlayerView */,
+				905191E822E9565D003004A2 /* Model */,
+				905191CA22E9554F003004A2 /* XJPlayerManager.h */,
+				905191C922E9554F003004A2 /* XJPlayerManager.m */,
+				905191CB22E9554F003004A2 /* XJPlayerAdapter.h */,
+				905191C822E9554F003004A2 /* XJPlayerAdapter.m */,
+				905191EC22E95684003004A2 /* AVPlayerView */,
+				905191CE22E95577003004A2 /* XJPlayerView */,
+				905191DB22E9564A003004A2 /* XJPlayerTransition */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		905191CE22E95577003004A2 /* XJPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				905191F022E9580E003004A2 /* Category */,
+				905191CF22E95580003004A2 /* XJPlayerView.h */,
+				905191D022E95580003004A2 /* XJPlayerView.m */,
+				905191DA22E955D3003004A2 /* XJBasePlayerViewDelegate.h */,
+				905191D322E95593003004A2 /* XJPlayerGesture.h */,
+				905191D422E95593003004A2 /* XJPlayerGesture.m */,
+				905191D922E955AF003004A2 /* XJPlayerControlsView */,
+			);
+			name = XJPlayerView;
+			sourceTree = "<group>";
+		};
+		905191D922E955AF003004A2 /* XJPlayerControlsView */ = {
+			isa = PBXGroup;
+			children = (
+				905191D622E95593003004A2 /* XJPlayerControlsView.h */,
+				905191D222E95593003004A2 /* XJPlayerControlsView.m */,
+				905191D522E95593003004A2 /* XJPlayerControlsViewDelegate.h */,
+			);
+			name = XJPlayerControlsView;
+			sourceTree = "<group>";
+		};
+		905191DB22E9564A003004A2 /* XJPlayerTransition */ = {
+			isa = PBXGroup;
+			children = (
+				905191DC22E9564A003004A2 /* XJPlayerFullScreenViewController.h */,
+				905191E022E9564A003004A2 /* XJPlayerFullScreenViewController.m */,
+				905191E122E9564A003004A2 /* XJPlayerTransitioningDelegate.h */,
+				905191DD22E9564A003004A2 /* XJPlayerTransitioningDelegate.m */,
+				905191DF22E9564A003004A2 /* XJPlayerAnimatedTransitioning.h */,
+				905191E322E9564A003004A2 /* XJPlayerAnimatedTransitioning.m */,
+			);
+			path = XJPlayerTransition;
+			sourceTree = "<group>";
+		};
+		905191E822E9565D003004A2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				905191E922E9565D003004A2 /* XJPlayerModel.h */,
+				905191EA22E9565D003004A2 /* XJPlayerModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		905191EC22E95684003004A2 /* AVPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				905191EE22E95684003004A2 /* AVPlayerView.h */,
+				905191ED22E95684003004A2 /* AVPlayerView.m */,
+			);
+			path = AVPlayerView;
+			sourceTree = "<group>";
+		};
+		905191F022E9580E003004A2 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				905191F322E9580E003004A2 /* UIView+XJBasePlayerView.h */,
+				905191F522E9580E003004A2 /* UIView+XJBasePlayerView.m */,
+				905191F622E9580E003004A2 /* UIView+PlayerControlsView.h */,
+				905191F222E9580E003004A2 /* UIView+PlayerControlsView.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +390,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -346,11 +479,23 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XJPlayerManager_Example/Pods-XJPlayerManager_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/XJPlayerManager/XJPlayerManager.framework",
+				"${BUILT_PRODUCTS_DIR}/XJScrollViewStateManager/XJScrollViewStateManager.framework",
+				"${BUILT_PRODUCTS_DIR}/XJUtil/XJUtil.framework",
+				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJPlayerManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJScrollViewStateManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJUtil.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -364,9 +509,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				905191CC22E9554F003004A2 /* XJPlayerAdapter.m in Sources */,
+				904E997022E9A6D800A17F76 /* YTPlayerView.m in Sources */,
 				6003F59E195388D20070C39A /* XJAppDelegate.m in Sources */,
+				905191D822E95593003004A2 /* XJPlayerGesture.m in Sources */,
+				905191D722E95593003004A2 /* XJPlayerControlsView.m in Sources */,
+				905191CD22E9554F003004A2 /* XJPlayerManager.m in Sources */,
+				905191E622E9564A003004A2 /* XJPlayerFullScreenViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* XJViewController.m in Sources */,
+				905191EF22E95684003004A2 /* AVPlayerView.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				905191F722E9580E003004A2 /* UIView+PlayerControlsView.m in Sources */,
+				905191EB22E9565D003004A2 /* XJPlayerModel.m in Sources */,
+				905191E722E9564A003004A2 /* XJPlayerAnimatedTransitioning.m in Sources */,
+				905191E422E9564A003004A2 /* XJPlayerTransitioningDelegate.m in Sources */,
+				905191F922E9580E003004A2 /* UIView+XJBasePlayerView.m in Sources */,
+				905191D122E95580003004A2 /* XJPlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
