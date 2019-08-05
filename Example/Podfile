@@ -4,6 +4,8 @@ platform :ios, '9.0'
 
 target 'XJPlayerManager_Example' do
   pod 'XJPlayerManager', :path => '../'
+  pod 'XJCollectionViewManager'
+  pod 'XJTableViewManager'
 
   target 'XJPlayerManager_Tests' do
     inherit! :search_paths
