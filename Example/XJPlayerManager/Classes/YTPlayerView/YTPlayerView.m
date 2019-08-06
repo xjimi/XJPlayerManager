@@ -79,7 +79,9 @@ typedef void(^SeekCompletionHandler)(BOOL);
                                               @"autoplay"       : @1,
                                               @"showinfo"       : @0,
                                               @"modestbranding" : @1,
-                                              @"fs"             : @0
+                                              @"fs"             : @0,
+                                              @"html5"          : @1,
+                                              @"rel"            : @0,
                                               };
                  [weakSelf.player loadWithVideoId:weakSelf.videoId playerVars:playerVars];
              }
@@ -109,6 +111,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
 - (void)initPlayer
 {
     self.player = [[WKYTPlayerView alloc] init];
+    
     self.player.delegate = self;
     [self addSubview:self.player];
 

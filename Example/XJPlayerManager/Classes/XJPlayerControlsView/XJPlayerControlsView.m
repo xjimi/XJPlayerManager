@@ -418,7 +418,7 @@
     if (XJP_ISNEATBANG && self.bounds.size.width)
     {
         [self.slider mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(self.mas_width);
+            make.width.mas_equalTo(XJP_PortraitW);
         }];
         [UIView animateWithDuration:.3 animations:^{
             [self layoutIfNeeded];
@@ -854,7 +854,7 @@
             make.top.equalTo(self.mas_top);
             make.bottom.equalTo(self.mas_bottom);
             make.centerX.equalTo(self);
-            make.width.mas_equalTo(self.mas_width);
+            make.width.mas_equalTo(XJP_PortraitW);
         }
         else
         {

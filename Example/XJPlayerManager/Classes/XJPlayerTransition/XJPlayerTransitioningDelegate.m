@@ -43,11 +43,11 @@
 }
 
 - (NSTimeInterval)presentDuration {
-    return .3f;
+    return 0.3f;
 }
 
 - (NSTimeInterval)dismissDuration {
-    return .3f;
+    return 3.6f;
 }
 
 @end

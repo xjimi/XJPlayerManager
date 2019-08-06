@@ -17,6 +17,7 @@
 #import <Masonry/Masonry.h>
 #import <XJScrollViewStateManager/XJNetworkStatusMonitor.h>
 #import <XJUtil/UIWindow+XJVisible.h>
+#import "YTPlayerView.h"
 
 @interface XJPlayerView () < XJBasePlayerViewDelegate, XJPlayerControlsViewDelegate, XJPlayerGestureDelegate >
 
@@ -114,12 +115,6 @@
     [self resetPlayer:nil];
     [self removeFromSuperview];
 }
-/*
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
-    self.player.frame = self.bounds;
-}*/
 
 - (void)layoutSubviews
 {
@@ -148,7 +143,7 @@
     _player.delegate = self;
     [self addSubview:_player];
     [_player mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
+        make.edges.equalTo(self);
     }];
 }
 
@@ -299,7 +294,9 @@
     //不改變任何播放變數，單純控制UI與播放影片
     if (isPlay)
     {
-        [self enabledSessionCategoryPlayback];
+        if (![self.player isKindOfClass:[YTPlayerView class]]) {
+            [self enabledSessionCategoryPlayback];
+        }
         [self.player xj_play];
     }
     else
@@ -625,8 +622,8 @@
     self.fullScreenRotating = YES;
     [self endEditing:YES];
     __weak typeof(self)weakSelf = self;
-    [self.player xj_layoutPortrait];
-    [self.controlView xj_controlsLayoutPortrait];
+    //[self.player xj_layoutPortrait];
+    //[self.controlView xj_controlsLayoutPortrait];
 
     [self.rootViewController dismissViewControllerAnimated:YES completion:^{
 
