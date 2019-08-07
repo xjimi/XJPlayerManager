@@ -53,8 +53,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
     return self;
 }
 
-- (void)setup
-{
+- (void)setup {
     self.backgroundColor = [UIColor blackColor];
 }
 
@@ -70,31 +69,27 @@ typedef void(^SeekCompletionHandler)(BOOL);
          {
              // hide error
 
-             if (weakSelf.videoId)
+             if (!weakSelf.isReadyToPlay)
              {
-                 NSDictionary *playerVars = @{@"origin" :@"http://www.youtube.com",
+                 NSDictionary *playerVars = @{@"origin" :@"https://www.youtube.com",
                                               @"controls"       : @0,
                                               @"playsinline"    : @1,
                                               @"autohide"       : @1,
                                               @"autoplay"       : @1,
                                               @"showinfo"       : @0,
                                               @"modestbranding" : @1,
-                                              @"fs"             : @0,
-                                              @"html5"          : @1,
-                                              @"rel"            : @0,
+                                              @"fs"             : @0
                                               };
                  [weakSelf.player loadWithVideoId:weakSelf.videoId playerVars:playerVars];
              }
-         }
-         else
-         {
          }
      }];
 }
 
 - (void)xj_setVideoObject:(id)videoObject
 {
-    _videoId = (NSString *)videoObject;
+    if (![videoObject isKindOfClass:[NSString class]]) return;
+    self.videoId = [self extractYoutubeIdFromLink:(NSString *)videoObject];
     [self removePlayer];
     [self initPlayer];
     [self addNetworkMonitor];
@@ -111,23 +106,10 @@ typedef void(^SeekCompletionHandler)(BOOL);
 - (void)initPlayer
 {
     self.player = [[WKYTPlayerView alloc] init];
-    
     self.player.delegate = self;
     [self addSubview:self.player];
-
     [self.player mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        if (XJP_ISNEATBANG)
-        {
-            make.top.equalTo(self.mas_top);
-            make.bottom.equalTo(self.mas_bottom);
-            make.centerX.equalTo(self);
-            make.width.mas_equalTo(XJP_PortraitW);
-        }
-        else {
-            make.edges.equalTo(self);
-        }
-
+        make.edges.equalTo(self);
     }];
 }
 
@@ -162,11 +144,6 @@ typedef void(^SeekCompletionHandler)(BOOL);
 }
 
 - (NSTimeInterval)xj_currentTime {
-//    [self.player getCurrentTime:^(float currentTime, NSError * _Nullable error) {
-//        return currentTime;
-//    }];
-//    return self.player.currentTime;
-    
     return self.currentTime;
 }
 
@@ -190,8 +167,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
     if (XJP_ISNEATBANG)
     {
         [self.player mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).offset(0);
-            make.width.mas_equalTo(XJP_PortraitW);
+            make.edges.equalTo(self);
         }];
         [UIView animateWithDuration:.3 animations:^{
             [self layoutIfNeeded];
@@ -203,11 +179,9 @@ typedef void(^SeekCompletionHandler)(BOOL);
 {
     if (XJP_ISNEATBANG)
     {
-        CGFloat height = XJP_PortraitW;
-        CGFloat mw = roundf(height * (16.0 / 9.0));
         [self.player mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self).offset(21);
-            make.width.mas_equalTo(mw);
+            make.top.left.right.equalTo(self);
         }];
         [UIView animateWithDuration:.3 animations:^{
             [self layoutIfNeeded];
@@ -248,7 +222,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 - (void)playerView:(WKYTPlayerView *)playerView didChangeToState:(WKYTPlayerState)state
 {
-    NSLog(@"WKYTPlayerState : %ld", state);
+    NSLog(@"WKYTPlayerState : %ld", (long)state);
     switch (state)
     {
         case kWKYTPlayerStateBuffering:
@@ -280,15 +254,26 @@ typedef void(^SeekCompletionHandler)(BOOL);
 - (void)playerView:(WKYTPlayerView *)playerView didPlayTime:(float)playTime
 {
     self.currentTime = playTime;
-    
-    if (!self.duration) {
-        return;
-    }
-    
     self.timeLastPlayed = playTime;
     if ([self.delegate respondsToSelector:@selector(xj_playerView:currentTime:totalTime:)]) {
         [self.delegate xj_playerView:self currentTime:playTime totalTime:self.duration];
     }
 }
+
+- (NSString *)extractYoutubeIdFromLink:(NSString *)link
+{
+    NSString *regexString = @"((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)";
+    NSRegularExpression *regExp = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                            options:NSRegularExpressionCaseInsensitive
+                                                                              error:nil];
+    NSArray *array = [regExp matchesInString:link options:0 range:NSMakeRange(0, link.length)];
+    if (array.count > 0) {
+        NSTextCheckingResult *result = array.firstObject;
+        return [link substringWithRange:result.range];
+    }
+
+    return link;
+}
+
 
 @end

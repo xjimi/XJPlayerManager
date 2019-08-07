@@ -108,7 +108,7 @@
         model.detailInfo = @"tvN Korean Drama of 2018";
         model.imageName = @"drama";
         
-        NSString *youtubeId = @"ulKrn-3GraI";
+        NSString *youtubeId = @"4ZVUmEUFwaY";//@"ulKrn-3GraI";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", youtubeId];
         model.playerModel = [XJPlayerModel initWithYoutubeId:youtubeId
                                                coverImageUrl:imageUrl];

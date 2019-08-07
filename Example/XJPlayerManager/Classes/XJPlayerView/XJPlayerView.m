@@ -622,9 +622,9 @@
     self.fullScreenRotating = YES;
     [self endEditing:YES];
     __weak typeof(self)weakSelf = self;
-    //[self.player xj_layoutPortrait];
-    //[self.controlView xj_controlsLayoutPortrait];
 
+    [self.player xj_layoutPortrait];
+    [self.controlView xj_controlsLayoutPortrait];
     [self.rootViewController dismissViewControllerAnimated:YES completion:^{
 
         weakSelf.fullScreenRotating = NO;

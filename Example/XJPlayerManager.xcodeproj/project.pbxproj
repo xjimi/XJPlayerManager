@@ -307,10 +307,10 @@
 		9033597F22F9A059007F20CF /* Drama */ = {
 			isa = PBXGroup;
 			children = (
+				9033598B22F9A059007F20CF /* DramasViewController.h */,
 				9033598022F9A059007F20CF /* DramasViewController.m */,
 				9033598122F9A059007F20CF /* Model */,
 				9033598422F9A059007F20CF /* View */,
-				9033598B22F9A059007F20CF /* DramasViewController.h */,
 			);
 			path = Drama;
 			sourceTree = "<group>";
@@ -341,10 +341,10 @@
 			isa = PBXGroup;
 			children = (
 				9033599322F9A0B4007F20CF /* XJPlayerControlsView.h */,
-				9033599422F9A0B4007F20CF /* XJPlayerGesture.m */,
 				9033599522F9A0B4007F20CF /* XJPlayerControlsView.m */,
 				9033599622F9A0B4007F20CF /* XJPlayerControlsViewDelegate.h */,
 				9033599722F9A0B4007F20CF /* XJPlayerGesture.h */,
+				9033599422F9A0B4007F20CF /* XJPlayerGesture.m */,
 				9033599822F9A0B4007F20CF /* PlayerErrorInfoView */,
 			);
 			name = XJPlayerControlsView;
