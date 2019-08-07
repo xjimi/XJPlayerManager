@@ -11,8 +11,8 @@
 #import <Masonry/Masonry.h>
 #import "DramaHeader.h"
 #import "DramaCell.h"
-#import "XJPlayerModel.h"
-#import "XJPlayerFullScreenViewController.h"
+#import <XJPlayerManager/XJPlayerModel.h>
+#import <XJPlayerManager/XJPlayerFullScreenViewController.h>
 #import <XJUtil/UIWindow+XJVisible.h>
 
 @interface DramasViewController () < XJCollectionViewDelegate >
@@ -41,12 +41,10 @@
     self.view.bounds = [UIScreen mainScreen].bounds;
 }
 
-
 - (void)xj_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.playerManager playInScrollView:self.collectionView indexPath:indexPath rootViewController:self];
 }
-
 
 #pragma mark - Create XJCollectionView and dataModel
 

@@ -7,7 +7,7 @@
 //
 
 #import <XJCollectionViewManager/XJCollectionViewManager.h>
-#import "XJPlayerModel.h"
+#import <XJPlayerManager/XJPlayerModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
