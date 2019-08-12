@@ -11,9 +11,12 @@
 #import <Masonry/Masonry.h>
 #import "DramaHeader.h"
 #import "DramaCell.h"
-#import <XJPlayerManager/XJPlayerModel.h>
-#import <XJPlayerManager/XJPlayerFullScreenViewController.h>
+
+//#import <XJPlayerManager/XJPlayerModel.h>
+//#import <XJPlayerManager/XJPlayerFullScreenViewController.h>
 #import <XJUtil/UIWindow+XJVisible.h>
+#import "XJPlayerModel.h"
+#import "XJPlayerFullScreenViewController.h"
 
 @interface DramasViewController () < XJCollectionViewDelegate >
 
@@ -33,12 +36,11 @@
     [self reloadData];
 
     self.playerManager = [[XJPlayerManager alloc] init];
+    //[self.playerManager autoPlayInScrollView:self.collectionView rootViewController:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.bounds = [UIScreen mainScreen].bounds;
 }
 
 - (void)xj_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -106,10 +108,13 @@
         model.detailInfo = @"tvN Korean Drama of 2018";
         model.imageName = @"drama";
         
-        NSString *youtubeId = @"4ZVUmEUFwaY";//@"ulKrn-3GraI";
-        NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", youtubeId];
-        model.playerModel = [XJPlayerModel initWithYoutubeId:youtubeId
-                                               coverImageUrl:imageUrl];
+        NSString *url = @"https://www.youtube.com/watch?v=4ZVUmEUFwaY";
+        //url = @"4ZVUmEUFwaY";
+        //url = @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8";
+        url = @"ulKrn-3GraI";
+        //NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", url];
+        model.playerModel = [XJPlayerModel initWithUrl:url
+                                         coverImageUrl:nil];
 
         CGFloat vw = CGRectGetWidth(self.view.frame);
         CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70;
@@ -141,9 +146,8 @@
 }
 
 - (BOOL)shouldAutorotate {
-    return true;
+    return NO;
 }
-
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
@@ -151,6 +155,10 @@
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
     return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 @end

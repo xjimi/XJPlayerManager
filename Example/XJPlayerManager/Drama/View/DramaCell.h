@@ -9,7 +9,8 @@
 
 #import <XJCollectionViewManager/XJCollectionViewManager.h>
 #import "DramaModel.h"
-#import <XJPlayerManager/XJPlayerManager.h>
+//#import <XJPlayerManager/XJPlayerManager.h>
+#import "XJPlayerManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

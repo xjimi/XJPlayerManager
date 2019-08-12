@@ -3,9 +3,14 @@ use_frameworks!
 platform :ios, '9.0'
 
 target 'XJPlayerManager_Example' do
+
   pod 'XJPlayerManager', :path => '../'
+  #pod 'XJPlayerManager/XJPlayerAdManager', :path => '../'
+
   pod 'XJCollectionViewManager'
   pod 'XJTableViewManager'
+#  pod 'FBAudienceNetwork'
+#  pod 'GoogleAds-IMA-iOS-SDK'
 
   target 'XJPlayerManager_Tests' do
     inherit! :search_paths

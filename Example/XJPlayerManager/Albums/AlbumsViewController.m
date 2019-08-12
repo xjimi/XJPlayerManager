@@ -96,8 +96,8 @@
         model.imageName = @"drake";
         NSString *youtubeId = @"3FjCmsQbW3g";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", youtubeId];
-        model.playerModel = [XJPlayerModel initWithYoutubeId:youtubeId
-                                               coverImageUrl:imageUrl];
+        model.playerModel = [XJPlayerModel initWithUrl:youtubeId
+                                         coverImageUrl:imageUrl];
 
         XJTableViewCellModel *cellModel = [XJTableViewCellModel
                                            modelWithReuseIdentifier:[AlbumCell identifier]

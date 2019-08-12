@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XJPlayerManager'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'A short description of XJPlayerManager.'
   s.homepage         = 'https://github.com/xjimi/XJPlayerManager'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -22,10 +22,31 @@ Pod::Spec.new do |s|
   s.dependency 'XJScrollViewStateManager'
   s.dependency 'Masonry'
   s.dependency 'YoutubePlayer-in-WKWebView'
-  
-  # s.resource_bundles = {
-  #   'XJPlayerManager' => ['XJPlayerManager/Assets/*.png']
-  # }
+
+  s.subspec 'XJPlayerAdManager' do |ss|
+
+      ss.source_files = 'XJPlayerManager/Classes/XJPlayerAdManager/**/*.{h,m}'
+      ss.dependency 'GoogleAds-IMA-iOS-SDK', '<=3.9.0'
+      ss.xcconfig = {
+        'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
+        'OTHER_LDFLAGS' => '$(inherited) -framework "GoogleInteractiveMediaAds"',
+        'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}"/**'
+        #'LIBRARY_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}"/**'
+      }
+
+      #ss.vendored_frameworks = 'XJPlayerManager/Classes/XJPlayerAdManager/Frameworks/FBAudienceNetwork.framework'
+
+      #ss.dependency 'FBAudienceNetwork'
+      #ss.xcconfig = { "LIBRARY_SEARCH_PATHS" => "\"$(PODS_ROOT)/**\"", "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/**\"",  "FRAMEWORK_SEARCH_PATHS" => "\"$(PODS_ROOT)/**\""}
+      #ss.user_target_xcconfig = { 'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES' }
+      #ss.pod_target_xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '${PODS_ROOT}/FBAudienceNetwork/**' }
+      #https://developers.facebook.com/docs/audience-network/download/#ios
+
+  end
+
+  s.resource_bundles = {
+      s.name + '_resource_image' => ['XJPlayerManager/Assets/*.xcassets']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
 end
