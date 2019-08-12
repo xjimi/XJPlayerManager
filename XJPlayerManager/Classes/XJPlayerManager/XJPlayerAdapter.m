@@ -104,8 +104,6 @@
                         if (!playerContainer) break;
 
                         CGRect targetRect = [playerContainer convertRect:playerContainer.bounds toView:self.rootViewController.view];
-                        if (CGRectIsEmpty(targetRect)) return;
-
                         CGFloat rnageH = targetRect.size.height * .5;
 
                         if (![playerContainer.subviews containsObject:pv])
@@ -352,7 +350,6 @@
             pv = nil;
         }
 
-        NSLog(@"playerData.videoUrl : %@", playerData.videoUrl);
         playerView = [self playerViewWithPlayerModel:playerData
                                      playerContainer:playerContainer
                                   rootViewController:self.rootViewController];
@@ -360,7 +357,6 @@
     }
 
     [self.playerKeys insertObject:identifier atIndex:0];
-    NSLog(@"self.playerKeys : %@", self.playerKeys);
 
     playerView.playerContainer = playerContainer;
     if (![playerContainer.subviews containsObject:playerView])

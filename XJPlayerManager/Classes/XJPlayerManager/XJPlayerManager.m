@@ -24,6 +24,10 @@ static void * const kXJPlayerManagerContentOffsetContext = (void*)&kXJPlayerMana
 
 @implementation XJPlayerManager
 
+- (void)dealloc {
+    NSLog(@"%s", __func__);
+}
+
 + (instancetype)shared
 {
     static XJPlayerManager *_shared = nil;
@@ -102,18 +106,18 @@ static void * const kXJPlayerManagerContentOffsetContext = (void*)&kXJPlayerMana
 
 - (void)pause
 {
+    [self.playerView systemPause];
     for (XJPlayerAdapter *adapter in self.playerAdapters) {
         [adapter pause];
     }
-    [self.playerView systemPause];
 }
 
 - (void)resume
 {
+    [self.playerView systemPlay];
     for (XJPlayerAdapter *adapter in self.playerAdapters) {
         [adapter resume];
     }
-    [self.playerView systemPlay];
 }
 
 
@@ -127,8 +131,7 @@ static void * const kXJPlayerManagerContentOffsetContext = (void*)&kXJPlayerMana
     [self.playerAdapters removeAllObjects];
 }
 
-- (void)dismissFullScreen
-{
+- (void)dismissFullScreen {
     [self dismissFullScreenPlayerWithCompletion:nil];
 }
 

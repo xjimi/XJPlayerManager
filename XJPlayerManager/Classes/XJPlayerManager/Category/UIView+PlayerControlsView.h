@@ -66,7 +66,11 @@
 - (void)xj_controlsHiddenControlsView:(BOOL)hidden;
 
 - (void)xj_controlsSliderPorgressEnabled:(BOOL)enabled;
+- (void)xj_controlsSliderHorizontalGestureEnabled:(BOOL)enabled;
+- (void)xj_controlsSliderVerticalGestureEnabled:(BOOL)enabled;
 
+    
 - (BOOL)xj_controlsIsShowing;
+
 
 @end

@@ -131,7 +131,7 @@
           playerModel:(XJPlayerModel *)playerModel
 {
     _hiddenControlsView = NO;
-    self.player = playerView; //? : [[AVPlayerView alloc] init];
+    self.player = playerView;
     self.controlView = controlView ? : [[XJPlayerControlsView alloc] init];
     self.playerModel = playerModel;
     [self configurePlayer];

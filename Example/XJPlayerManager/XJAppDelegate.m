@@ -17,17 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
-    for (NSInteger i = 0; i < 10; i ++) {
-        for (NSInteger j = 0; j < 10; j ++) {
-            if (j == 3) break;
-            NSLog(@"j : %ld", j);
-        }
-
-        NSLog(@"i : %ld", i);
-
-    }
-
     UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     window.rootViewController = [[DramasViewController alloc] init];
     [window makeKeyAndVisible];

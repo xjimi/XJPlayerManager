@@ -597,6 +597,8 @@ typedef NS_ENUM(NSInteger, PanDir){
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer
 {
+    if (![panGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) return YES;
+
     CGPoint velocity = [panGestureRecognizer velocityInView:self];
     if (self.isEnabledHorizontalGesture) return fabs(velocity.x) > fabs(velocity.y);
     if (self.isEnabledVerticalGesture) return fabs(velocity.y) > fabs(velocity.x);

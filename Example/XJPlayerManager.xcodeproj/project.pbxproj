@@ -374,8 +374,8 @@
 			isa = PBXGroup;
 			children = (
 				9034D76123017402000D902C /* XJPlayerBundleResource */,
-				903519C522FF080A002C9615 /* XJSlider */,
 				903519CD22FF080A002C9615 /* AVPlayerView */,
+				903519C522FF080A002C9615 /* XJSlider */,
 				903519D022FF080A002C9615 /* XJPlayerControlsView */,
 				903519DA22FF080A002C9615 /* XJPlayerTransition */,
 				903519E122FF080A002C9615 /* Category */,

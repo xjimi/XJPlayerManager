@@ -129,6 +129,14 @@
     self.slider.progressEnabled = enabled;
 }
 
+- (void)xj_controlsSliderHorizontalGestureEnabled:(BOOL)enabled {
+    self.slider.enabledHorizontalGesture = enabled;
+}
+
+- (void)xj_controlsSliderVerticalGestureEnabled:(BOOL)enabled {
+    self.slider.enabledVerticalGesture = enabled;
+}
+
 - (void)addSliderGesture
 {
     [self.slider addProgressSlider];
