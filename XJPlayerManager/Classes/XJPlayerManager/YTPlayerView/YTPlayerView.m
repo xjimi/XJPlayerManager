@@ -127,6 +127,10 @@ typedef void(^SeekCompletionHandler)(BOOL);
     [self.player pauseVideo];
 }
 
+- (void)xj_mute {
+    [self.player mute];
+}
+
 - (void)xj_seekToTime:(NSTimeInterval)time
     completionHandler:(void (^)(BOOL))completionHandler
 {

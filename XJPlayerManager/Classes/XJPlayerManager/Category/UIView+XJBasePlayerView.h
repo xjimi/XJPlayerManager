@@ -24,6 +24,10 @@ typedef void(^PlayerReadyBlock)(void);
 
 - (void)xj_pause;
 
+- (void)xj_mute;
+
+- (void)xj_unMute;
+
 - (void)xj_seekToTime:(NSTimeInterval)time
     completionHandler:(void (^)(BOOL finished))completionHandler;
 

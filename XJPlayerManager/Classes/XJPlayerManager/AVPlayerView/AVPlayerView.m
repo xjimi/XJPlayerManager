@@ -145,14 +145,20 @@
     [self addPeriodicTimeObserver];
 }
 
-- (void)xj_play
-{
+- (void)xj_play {
     [self.player play];
 }
 
-- (void)xj_pause
-{
+- (void)xj_pause {
     [self.player pause];
+}
+
+- (void)xj_mute {
+    self.player.muted = YES;
+}
+
+- (void)xj_unMute {
+    self.player.muted = NO;
 }
 
 - (void)xj_seekToTime:(NSTimeInterval)time completionHandler:(void (^)(BOOL finished))completionHandler

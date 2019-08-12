@@ -98,6 +98,7 @@ typedef NS_ENUM(NSInteger, XJPlayerStatus) {
 
 @property (nonatomic, weak) UIViewController *rootViewController;
 
+@property (nonatomic, assign, getter=isMuted) BOOL muted;
 
 - (void)setPlayerView:(UIView *)playerView
           controlView:(UIView *)controlView

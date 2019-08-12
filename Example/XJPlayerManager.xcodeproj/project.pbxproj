@@ -503,9 +503,9 @@
 		903519F622FF080A002C9615 /* XJPlayerView */ = {
 			isa = PBXGroup;
 			children = (
+				903519F922FF080A002C9615 /* XJPlayerView.h */,
 				903519F722FF080A002C9615 /* XJPlayerView.m */,
 				903519F822FF080A002C9615 /* XJBasePlayerViewDelegate.h */,
-				903519F922FF080A002C9615 /* XJPlayerView.h */,
 			);
 			path = XJPlayerView;
 			sourceTree = "<group>";

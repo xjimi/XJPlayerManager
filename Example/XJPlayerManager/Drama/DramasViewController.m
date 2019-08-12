@@ -115,7 +115,7 @@
         //NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", url];
         model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:nil];
-
+        model.playerModel.muted = YES;
         CGFloat vw = CGRectGetWidth(self.view.frame);
         CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70;
         XJCollectionViewCellModel *cellModel = [XJCollectionViewCellModel

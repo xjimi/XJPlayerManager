@@ -41,6 +41,8 @@ typedef NS_ENUM(NSUInteger, XJPlayerType) {
 
 @property (nonatomic, assign) BOOL isLive;
 
+@property (nonatomic, assign) BOOL muted;
+
 + (instancetype)initWithUrl:(NSString *)url coverImageUrl:(NSString *)coverImageUrl;
 
 @end

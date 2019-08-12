@@ -311,6 +311,16 @@
     }
 }
 
+- (void)setMuted:(BOOL)muted
+{
+    _muted = muted;
+    if (muted) {
+        [self.player xj_mute];
+    } else {
+        [self.player xj_unMute];
+    }
+}
+
 - (void)enabledSessionCategoryPlayback
 {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -440,6 +450,8 @@
     if ([self.player xj_isValidDuration]) {
         [self.controlView xj_controlsSliderPorgressEnabled:YES];
     }
+
+    self.muted = self.playerModel.muted;
 
     if (self.isPauseBySystem)
     {
