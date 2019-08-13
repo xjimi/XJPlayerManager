@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <AVKit/AVKit.h>
+#import "XJPlayerView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XJPlayerTransitioningDelegate : NSObject < UIViewControllerTransitioningDelegate >
 
-@property (nonatomic, weak) UIView *sourceView;
-@property (nonatomic, weak) UIView *targetView;
-@property (nonatomic, weak) UIView *playerView;
+@property (nonatomic, weak, nullable) UIView *sourceView;
+@property (nonatomic, weak, nullable) UIView *targetView;
+@property (nonatomic, weak, nullable) XJPlayerView *playerView;
 
 @property (nonatomic, assign) NSTimeInterval presentDuration;
 @property (nonatomic, assign) NSTimeInterval dismissDuration;

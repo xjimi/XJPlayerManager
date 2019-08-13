@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <AVKit/AVKit.h>
 #import "XJPlayerView.h"
 
 typedef NS_ENUM(NSUInteger, XJPlayerTransitionType) {
@@ -20,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XJPlayerAnimatedTransitioning : NSObject < UIViewControllerAnimatedTransitioning >
 
-@property (nonatomic, weak) UIView *sourceView;
-@property (nonatomic, weak) UIView *targetView;
-@property (nonatomic, weak) XJPlayerView *playerView;
+@property (nonatomic, weak, nullable) UIView *sourceView;
+@property (nonatomic, weak, nullable) UIView *targetView;
+@property (nonatomic, weak, nullable) XJPlayerView *playerView;
 
 @property (nonatomic, assign) NSTimeInterval duration;
 

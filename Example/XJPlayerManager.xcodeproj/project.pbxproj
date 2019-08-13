@@ -29,6 +29,7 @@
 		9033599022F9A059007F20CF /* DramaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9033598822F9A059007F20CF /* DramaCell.m */; };
 		9033599122F9A059007F20CF /* DramaHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9033598922F9A059007F20CF /* DramaHeader.xib */; };
 		9034D76423017449000D902C /* XJPlayerBundleResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9034D76323017449000D902C /* XJPlayerBundleResource.m */; };
+		9034D76923027BDF000D902C /* UIImageView+XJPlayerImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9034D76823027BDF000D902C /* UIImageView+XJPlayerImageManager.m */; };
 		903519FF22FF080A002C9615 /* XJSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519C622FF080A002C9615 /* XJSlider.m */; };
 		90351A0022FF080A002C9615 /* XJMarkSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519C922FF080A002C9615 /* XJMarkSlider.m */; };
 		90351A0122FF080A002C9615 /* XJSliderTrackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519CC22FF080A002C9615 /* XJSliderTrackView.m */; };
@@ -111,6 +112,8 @@
 		9034D75F230126A4000D902C /* GoogleInteractiveMediaAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleInteractiveMediaAds.framework; sourceTree = "<group>"; };
 		9034D76223017449000D902C /* XJPlayerBundleResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJPlayerBundleResource.h; sourceTree = "<group>"; };
 		9034D76323017449000D902C /* XJPlayerBundleResource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XJPlayerBundleResource.m; sourceTree = "<group>"; };
+		9034D76723027BDF000D902C /* UIImageView+XJPlayerImageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XJPlayerImageManager.h"; sourceTree = "<group>"; };
+		9034D76823027BDF000D902C /* UIImageView+XJPlayerImageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XJPlayerImageManager.m"; sourceTree = "<group>"; };
 		903519C622FF080A002C9615 /* XJSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSlider.m; sourceTree = "<group>"; };
 		903519C722FF080A002C9615 /* XJSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSlider.h; sourceTree = "<group>"; };
 		903519C922FF080A002C9615 /* XJMarkSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJMarkSlider.m; sourceTree = "<group>"; };
@@ -360,6 +363,27 @@
 			path = XJPlayerBundleResource;
 			sourceTree = "<group>";
 		};
+		9034D765230254FD000D902C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				903519DA22FF080A002C9615 /* XJPlayerTransition */,
+				903519D022FF080A002C9615 /* XJPlayerControlsView */,
+				903519C522FF080A002C9615 /* XJSlider */,
+				9034D76123017402000D902C /* XJPlayerBundleResource */,
+				903519ED22FF080A002C9615 /* XJBufferingView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9034D76623025535000D902C /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				903519EA22FF080A002C9615 /* YTPlayerView */,
+				903519CD22FF080A002C9615 /* AVPlayerView */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		903519C322FF080A002C9615 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,16 +397,11 @@
 		903519C422FF080A002C9615 /* XJPlayerManager */ = {
 			isa = PBXGroup;
 			children = (
-				9034D76123017402000D902C /* XJPlayerBundleResource */,
-				903519CD22FF080A002C9615 /* AVPlayerView */,
-				903519C522FF080A002C9615 /* XJSlider */,
-				903519D022FF080A002C9615 /* XJPlayerControlsView */,
-				903519DA22FF080A002C9615 /* XJPlayerTransition */,
-				903519E122FF080A002C9615 /* Category */,
-				903519EA22FF080A002C9615 /* YTPlayerView */,
-				903519ED22FF080A002C9615 /* XJBufferingView */,
-				903519F122FF080A002C9615 /* Model */,
 				903519F622FF080A002C9615 /* XJPlayerView */,
+				9034D76623025535000D902C /* Player */,
+				9034D765230254FD000D902C /* View */,
+				903519E122FF080A002C9615 /* Category */,
+				903519F122FF080A002C9615 /* Model */,
 				903519E822FF080A002C9615 /* XJPlayerAdapter.h */,
 				903519FA22FF080A002C9615 /* XJPlayerAdapter.m */,
 				903519E922FF080A002C9615 /* XJPlayerManager.h */,
@@ -460,12 +479,14 @@
 		903519E122FF080A002C9615 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				903519E222FF080A002C9615 /* UIButton+CenterSpace.h */,
+				903519E722FF080A002C9615 /* UIView+PlayerControlsView.h */,
 				903519E322FF080A002C9615 /* UIView+PlayerControlsView.m */,
 				903519E422FF080A002C9615 /* UIView+XJBasePlayerView.h */,
-				903519E522FF080A002C9615 /* UIButton+CenterSpace.m */,
 				903519E622FF080A002C9615 /* UIView+XJBasePlayerView.m */,
-				903519E722FF080A002C9615 /* UIView+PlayerControlsView.h */,
+				903519E222FF080A002C9615 /* UIButton+CenterSpace.h */,
+				903519E522FF080A002C9615 /* UIButton+CenterSpace.m */,
+				9034D76723027BDF000D902C /* UIImageView+XJPlayerImageManager.h */,
+				9034D76823027BDF000D902C /* UIImageView+XJPlayerImageManager.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -493,9 +514,9 @@
 			isa = PBXGroup;
 			children = (
 				903519F222FF080A002C9615 /* XJPlayerModel.h */,
-				903519F322FF080A002C9615 /* XJPlayerUtils.m */,
 				903519F422FF080A002C9615 /* XJPlayerModel.m */,
 				903519F522FF080A002C9615 /* XJPlayerUtils.h */,
+				903519F322FF080A002C9615 /* XJPlayerUtils.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -711,8 +732,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XJPlayerManager_Example/Pods-XJPlayerManager_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
+				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${PODS_ROOT}/GoogleAds-IMA-iOS-SDK/GoogleInteractiveMediaAds.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/XJCollectionViewManager/XJCollectionViewManager.framework",
 				"${BUILT_PRODUCTS_DIR}/XJPlayerManager/XJPlayerManager.framework",
@@ -724,8 +749,12 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleInteractiveMediaAds.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJCollectionViewManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJPlayerManager.framework",
@@ -767,6 +796,7 @@
 				90351A1322FF080A002C9615 /* XJPlayerAdapter.m in Sources */,
 				90351A0422FF080A002C9615 /* XJPlayerControlsView.m in Sources */,
 				90351A0722FF080A002C9615 /* XJPlayerTransitioningDelegate.m in Sources */,
+				9034D76923027BDF000D902C /* UIImageView+XJPlayerImageManager.m in Sources */,
 				90351A0B22FF080A002C9615 /* UIButton+CenterSpace.m in Sources */,
 				90351A1222FF080A002C9615 /* XJPlayerView.m in Sources */,
 				90351A0922FF080A002C9615 /* XJPlayerAnimatedTransitioning.m in Sources */,

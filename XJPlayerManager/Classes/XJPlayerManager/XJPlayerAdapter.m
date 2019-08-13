@@ -199,9 +199,9 @@
         {
             NSLog(@"create playerView:: +");
             UIView *playerContainer = [self playerContainerAtIndexPath:playableIndexPath];
-            playerView = [self playerViewWithPlayerModel:playerData
-                                         playerContainer:playerContainer
-                                      rootViewController:self.rootViewController];
+            playerView = [XJPlayerAdapter playerViewWithPlayerModel:playerData
+                                                    playerContainer:playerContainer
+                                                 rootViewController:self.rootViewController];
 
             [self.players setObject:playerView forKey:identifier];
         }
@@ -264,7 +264,7 @@
     return fullscreenView;
 }
 
-- (void)pause
+- (void)systemPause
 {
     self.systemPause = YES;
     for (XJPlayerView *player in self.players.allValues) {
@@ -274,7 +274,7 @@
     }
 }
 
-- (void)resume
+- (void)systemPlay
 {
     self.systemPause = NO;
     [self scrollViewDidScroll];
@@ -350,9 +350,9 @@
             pv = nil;
         }
 
-        playerView = [self playerViewWithPlayerModel:playerData
-                                     playerContainer:playerContainer
-                                  rootViewController:self.rootViewController];
+        playerView = [XJPlayerAdapter playerViewWithPlayerModel:playerData
+                                                playerContainer:playerContainer
+                                             rootViewController:self.rootViewController];
         [self.players setObject:playerView forKey:identifier];
     }
 
@@ -376,8 +376,18 @@
     [playerView play];
 }
 
++ (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
+                            playerContainer:(UIView *)playerContainer
+                         rootViewController:(UIViewController *)rootViewController
+{
+    return [XJPlayerAdapter playerViewWithPlayerModel:playerModel
+                                          controlView:nil
+                                      playerContainer:playerContainer
+                                   rootViewController:rootViewController];
+}
 
-- (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
++ (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
+                                controlView:(UIView *)controlView
                             playerContainer:(UIView *)playerContainer
                          rootViewController:(UIViewController *)rootViewController
 {
@@ -395,8 +405,7 @@
     }
 
     XJPlayerView *playerView = [[XJPlayerView alloc] init];
-    //playerView.delegate = self;
-    [playerView setPlayerView:player controlView:nil playerModel:playerModel];
+    [playerView setPlayerView:player controlView:controlView playerModel:playerModel];
     playerView.playerContainer = playerContainer;
     playerView.rootViewController = rootViewController;
     return playerView;

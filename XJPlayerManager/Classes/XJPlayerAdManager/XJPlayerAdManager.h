@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol XJPlayerAdManagerDelegate <NSObject>
 
 @optional
@@ -22,7 +24,7 @@
 
 @interface XJPlayerAdManager : NSObject
 
-@property (nonatomic, weak) id < XJPlayerAdManagerDelegate > delegate;
+@property (nonatomic, weak, nullable) id < XJPlayerAdManagerDelegate > delegate;
 
 @property (nonatomic, getter=isAdPlaying, readonly) BOOL adPlaying;
 
@@ -31,10 +33,12 @@
 
 - (void)requestAdWithAdTagUrl:(NSString *)adTagUrl;
 
+- (void)play;
+
 - (void)pause;
 
 - (void)resume;
 
-- (void)playAD;
-
 @end
+
+NS_ASSUME_NONNULL_END

@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/22.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2018年 XJIMI All rights reserved.
 //
 
 #import "XJPlayerView.h"
@@ -108,15 +108,12 @@
 - (void)remove
 {
     [self pause];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-//    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     if (self.fullScreenVC) [self.fullScreenVC dismissViewControllerAnimated:NO completion:nil];
     [self resetPlayer:nil];
     [self removeFromSuperview];
 }
 
-- (void)layoutSubviews
+/*- (void)layoutSubviews
 {
     [super layoutSubviews];
 
@@ -124,10 +121,10 @@
         //self.frame = self.playerContainer.bounds;
         //[self layoutIfNeeded];
     }
-}
+}*/
 
 - (void)setPlayerView:(UIView *)playerView
-          controlView:(UIView *)controlView
+          controlView:(nullable UIView *)controlView
           playerModel:(XJPlayerModel *)playerModel
 {
     _hiddenControlsView = NO;
@@ -153,7 +150,7 @@
     if (_controlView) return;
     _controlView = controlView;
     _controlView.delegate = self;
-    [_controlView xj_controlsHiddenControlsView:NO];
+    [_controlView xj_controlsHidden:NO];
     [self addSubview:_controlView];
     [_controlView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
@@ -168,7 +165,7 @@
     self.seekTime = playerModel.seekTime ? : 0;
 }
 
-- (void)resetPlayer:(UIView *)player
+- (void)resetPlayer:(nullable UIView *)player
 {
     [self.player xj_resetPlayer];
     [self.controlView xj_controlsReset];
@@ -231,7 +228,7 @@
 {
     //if (_hiddenControlsView == hiddenControlsView) return;
     _hiddenControlsView = hiddenControlsView;
-    [self.controlView xj_controlsHiddenControlsView:hiddenControlsView];
+    [self.controlView xj_controlsHidden:hiddenControlsView];
 }
 
 - (void)setButtonNextEnabled:(BOOL)buttonNextEnabled
@@ -435,7 +432,7 @@
 }
 
 - (void)processReadyToPlay
-{
+{    
     NSTimeInterval duration = [self.player xj_duration];
     NSLog(@" +++ Ready To Play +++ duration : %f", duration);
     if (!self.playerGesture)
@@ -571,7 +568,6 @@
 
 - (void)xj_playerGestureSingleTap:(UIGestureRecognizer *)gesture
 {
-    NSLog(@"xj_playerGestureSingleTap");
     if (gesture.state == UIGestureRecognizerStateRecognized)
     {
         if (self.controlView.userInteractionEnabled && !self.hiddenControlsView) {
@@ -609,9 +605,6 @@
         self.isFullScreening ||
         !self.isFullScreenEnabled) return;
 
-    CGRect targetRect = [self.playerContainer convertRect:self.playerContainer.frame toView:self.rootViewController.view];
-
-    NSLog(@"presentFullScreen playerContainer  : %@", NSStringFromCGRect(targetRect));
     self.fullScreenRotating = YES;
     [self presentFullScreenWithPlayerView:self containerView:self.playerContainer];
     [self.player xj_layoutFullScreen];
@@ -627,7 +620,7 @@
     [self.rootViewController presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)dismissFullScreenWithCompletion:(void (^)(void))completion
+- (void)dismissFullScreenWithCompletion:(nullable void (^)(void))completion
 {
     if (self.isFullScreenRotating || !self.isFullScreen)
     {
@@ -636,7 +629,7 @@
     }
 
     self.fullScreenRotating = YES;
-    //[self endEditing:YES];
+    [self endEditing:YES];
     [self.player xj_layoutPortrait];
     [self.controlView xj_controlsLayoutPortrait];
     __weak typeof(self)weakSelf = self;
@@ -733,11 +726,6 @@
     }
 }
 
-- (void)xj_controlsView:(UIView *)controlsView actionDismiss:(UIButton *)sender
-{
-    //[kStackPlayerViewController dismissPlayer];
-}
-
 - (void)xj_controlsView:(UIView *)controlsView actionReplay:(UIButton *)sender
 {
     [self seekToTime:0];
@@ -755,13 +743,6 @@
 {
     if ([self.delegate respondsToSelector:@selector(xj_playerViewDidSelectPrevEpisode:)]) {
         [self.delegate xj_playerViewDidSelectPrevEpisode:self];
-    }
-}
-
-- (void)xj_controlsView:(UIView *)controlsView actionShare:(UIButton *)sender
-{
-    if ([self.delegate respondsToSelector:@selector(xj_playerViewDidSelectShareMedia:)]) {
-        [self.delegate xj_playerViewDidSelectShareMedia:self];
     }
 }
 
@@ -842,11 +823,6 @@
         //[self safePlay];
     }
 }
-
-- (void)showLogo {
-    [self.controlView xj_controlsShowLogo];
-}
-
 
 - (void)refreshPlayerFrame:(CGRect)frame
 {

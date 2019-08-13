@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/22.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2018年 XJIMI All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -23,10 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)xj_playerView:(UIView *)playerView seekToProgress:(CGFloat)progress;
 
-- (void)xj_playerViewAccessDenied:(UIView *)playerView;
-
-- (void)xj_playerViewDidSelectShareMedia:(UIView *)playerView;
-
 - (void)xj_playerViewDidSelectNextEpisode:(UIView *)playerView;
 
 - (void)xj_playerViewDidSelectPrevEpisode:(UIView *)playerView;
@@ -34,12 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)xj_playerViewDidPlayToEndTime:(UIView *)playerView;
 
 - (void)xj_playerViewDidFailed:(UIView *)playerView;
-
-- (void)xj_playerViewDidSelectCast:(UIView *)playerView;
-
-- (void)xj_playerViewAdDidRequest:(UIView *)playerView;
-
-- (void)xj_playerViewAdDidEnd:(UIView *)playerView;
 
 - (void)xj_playerView:(UIView *)playerView isFullScreen:(BOOL)isFullScreen;
 
@@ -62,7 +52,7 @@ typedef NS_ENUM(NSInteger, XJPlayerStatus) {
 
 @interface XJPlayerView : UIView
 
-@property (nonatomic, weak) id < XJPlayerViewDelegate >  delegate;
+@property (nonatomic, weak, nullable) id < XJPlayerViewDelegate >  delegate;
 
 @property (nonatomic, strong, readonly) UIView *player;
 
@@ -101,10 +91,10 @@ typedef NS_ENUM(NSInteger, XJPlayerStatus) {
 @property (nonatomic, assign, getter=isMuted) BOOL muted;
 
 - (void)setPlayerView:(UIView *)playerView
-          controlView:(UIView *)controlView
+          controlView:(nullable UIView *)controlView
           playerModel:(XJPlayerModel *)playerModel;
 
-- (void)resetPlayer:(UIView *)player;
+- (void)resetPlayer:(nullable UIView *)player;
 
 - (void)resetPlayerWithTitle:(NSString *)title coverImageUrl:(NSString *)coverImageUrl;
 
@@ -125,16 +115,13 @@ typedef NS_ENUM(NSInteger, XJPlayerStatus) {
 
 - (NSTimeInterval)getCurrentPlayedTime;
 
-- (void)dismissFullScreenWithCompletion:(void (^)(void))completion;
+- (void)dismissFullScreenWithCompletion:(nullable void (^)(void))completion;
 
 - (void)remove;
 
-- (void)showLogo;
-
 - (void)refreshPlayerFrame:(CGRect)frame;
 
-//XJSlider
-
+/** XJSlider **/
 - (void)xj_sliderTouchBegan:(CGFloat)progress;
 - (void)xj_sliderValueChanged:(CGFloat)progress;
 - (void)xj_sliderTouchEnded:(CGFloat)progress;

@@ -14,7 +14,7 @@
 #import <Masonry/Masonry.h>
 #import <AVFoundation/AVFoundation.h>
 #import "UIButton+CenterSpace.h"
-#import <XJUtil/UIImageView+XJImageManager.h>
+#import "UIImageView+XJPlayerImageManager.h"
 #import "XJPlayerUtils.h"
 #import "XJPlayerBundleResource.h"
 
@@ -52,9 +52,6 @@
 @property (nonatomic, strong) UILabel                 *timeLabel;
 
 @property (nonatomic, strong) UILabel                 *sliderTimeLabel;
-
-@property (nonatomic, strong) UIImageView             *logoView;
-
 
 
 @property (nonatomic, assign, getter=isShowing) BOOL  showing;
@@ -108,7 +105,6 @@
 {
     self.userInteractionEnabled = NO;
 
-    self.logoView.hidden = YES;
     self.btn_replay.hidden = YES;
 
     self.slider.mpVolumeView.hidden = YES;
@@ -161,7 +157,6 @@
         [UIView animateWithDuration:.15 animations:^{
             weakSelf.timeLabel.alpha = 1.0f;
             weakSelf.sliderTimeLabel.alpha = 1.0f;
-            weakSelf.logoView.alpha = 0.0f;
         } completion:nil];
 
         if ([weakSelf.delegate respondsToSelector:@selector(xj_controlsView:sliderTouchBegan:)]) {
@@ -197,7 +192,6 @@
         {
             [UIView animateWithDuration:.3 animations:^{
                 weakSelf.timeLabel.alpha = 0.0f;
-                weakSelf.logoView.alpha = 1.0f;
             } completion:nil];
         }
 
@@ -214,7 +208,6 @@
         [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             weakSelf.timeLabel.alpha = 0.0f;
             weakSelf.sliderTimeLabel.alpha = 0.0f;
-            weakSelf.logoView.alpha = 1.0f;
         } completion:nil];
 
         if ([weakSelf.delegate respondsToSelector:@selector(xj_controlsView:sliderTouchCancelled:)]) {
@@ -289,7 +282,7 @@
     self.slider.enabled = enabled;
 }
 
-- (void)xj_controlsHiddenControlsView:(BOOL)hidden
+- (void)xj_controlsHidden:(BOOL)hidden
 {
     //這裡hidden將完全不顯示controlsView
     self.hiddenControlsView = hidden;
@@ -313,16 +306,6 @@
 
 - (BOOL)xj_controlsIsShowing {
     return self.isShowing;
-}
-
-- (void)xj_controlsShowLogo
-{
-    self.logoView.alpha = 1.0f;
-    self.logoView.hidden = NO;
-    /*
-     [UIView animateWithDuration:.3 animations:^{
-     self.logoView.alpha = 1.0f;
-     }];*/
 }
 
 - (void)xj_controlsSetTitle:(NSString *)title {
@@ -349,6 +332,7 @@
                                          cornerRadius:0
                                            completion:^(UIImage *image)
              {
+                 
                  [UIView animateWithDuration:.3 animations:^{
                      weakSelf.placeholderView.alpha = 1.0f;
                  }];
@@ -399,7 +383,6 @@
 {
     self.maskView.alpha = 1.0f;
     self.controlsView.alpha = 1.0f;
-    self.logoView.alpha = 0.0f;
     if (!self.isDragged)
     {
         [self.slider showBottomTrackView];
@@ -415,7 +398,6 @@
     if (!self.isDragged)
     {
         self.timeLabel.alpha = 0.0f;
-        self.logoView.alpha = 1.0f;
     }
 }
 
@@ -555,10 +537,6 @@
 - (void)xj_controlsSetMarkPositions:(NSArray *)positions {
     [self.slider addMarkSliderWithPositions:positions];
 }
-
-
-
-
 
 #pragma mark - action
 
@@ -807,17 +785,6 @@
     return _sliderTimeLabel;
 }
 
-- (UIImageView *)logoView
-{
-    if (!_logoView)
-    {
-        _logoView                        = [[UIImageView alloc] init];
-        _logoView.image                  = [[XJPlayerBundleResource imageNamed:@"ic_player_logo"] imageByApplyingAlpha:.5];
-        _logoView.contentMode = UIViewContentModeScaleAspectFit;
-    }
-    return _logoView;
-}
-
 - (void)createView
 {
     [self addSubview:self.placeholderView];
@@ -829,7 +796,6 @@
     [self.slider addSubview:self.controlsView];
     [self.slider addSubview:self.timeLabel];
     [self.slider addSubview:self.sliderTimeLabel];
-    [self.slider addSubview:self.logoView];
 
     [self.controlsView addSubview:self.topControlsView];
 
@@ -888,12 +854,6 @@
         make.height.equalTo(self.bottomControlsView.mas_height);
     }];
 
-    [self.logoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(10);
-        make.right.mas_equalTo(-15);
-        make.height.equalTo(self.logoView.mas_width).multipliedBy(88.0/160.0);
-        make.height.equalTo(self.mas_height).multipliedBy(0.15);
-    }];
     CGFloat multiplieH = 30.0 / (XJP_PortraitW * (9.0 / 16.0));
     [self.topControlsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(10);

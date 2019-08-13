@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/22.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2018年 XJIMI All rights reserved.
 //
 
 #import "XJPlayerModel.h"

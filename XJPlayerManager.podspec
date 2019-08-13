@@ -22,6 +22,7 @@ Pod::Spec.new do |s|
   s.dependency 'XJScrollViewStateManager'
   s.dependency 'Masonry'
   s.dependency 'YoutubePlayer-in-WKWebView'
+  s.dependency 'PINRemoteImage', '<= 3.0.0-beta.13'
 
   s.subspec 'XJPlayerAdManager' do |ss|
 
@@ -30,12 +31,11 @@ Pod::Spec.new do |s|
       ss.xcconfig = {
         'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
         'OTHER_LDFLAGS' => '$(inherited) -framework "GoogleInteractiveMediaAds"',
-        'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}"/**'
+        #'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}"/**'
         #'LIBRARY_SEARCH_PATHS' => '$(inherited) "${PODS_ROOT}"/**'
       }
 
       #ss.vendored_frameworks = 'XJPlayerManager/Classes/XJPlayerAdManager/Frameworks/FBAudienceNetwork.framework'
-
       #ss.dependency 'FBAudienceNetwork'
       #ss.xcconfig = { "LIBRARY_SEARCH_PATHS" => "\"$(PODS_ROOT)/**\"", "HEADER_SEARCH_PATHS" => "\"$(PODS_ROOT)/**\"",  "FRAMEWORK_SEARCH_PATHS" => "\"$(PODS_ROOT)/**\""}
       #ss.user_target_xcconfig = { 'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES' }

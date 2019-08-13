@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/24.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2018年 XJIMI All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -14,6 +14,6 @@
 @property (nonatomic, strong) XJPlayerTransitioningDelegate *transition;
 
 + (instancetype)initWithPlayerContainer:(UIView *)playerContainer
-                             playerView:(UIView *)playerView;
+                             playerView:(XJPlayerView *)playerView;
 
 @end

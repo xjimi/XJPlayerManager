@@ -82,9 +82,10 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
     [self applicationDidBecomeActive:nil];
 }
 
-- (void)playAD
+- (void)play
 {
-    switch (self.adSource) {
+    switch (self.adSource)
+    {
         case XJPlayerAdSourceGoogle:
         {
             if (self.imaManager) {

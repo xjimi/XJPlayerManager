@@ -9,14 +9,7 @@
 #import "XJPlayerManager.h"
 #import "XJPlayerAdapter.h"
 
-static void * const kXJPlayerManagerContentOffsetContext = (void*)&kXJPlayerManagerContentOffsetContext;
-
-
 @interface XJPlayerManager ()
-
-@property (nonatomic, weak) XJPlayerView *playerView;
-
-@property (nonatomic, strong) NSMutableArray *playerAdapters;
 
 @property (nonatomic, strong) XJPlayerAdapter *currentPlayerAdapter;
 
@@ -36,24 +29,6 @@ static void * const kXJPlayerManagerContentOffsetContext = (void*)&kXJPlayerMana
         _shared = [[XJPlayerManager alloc] init];
     });
     return _shared;
-}
-
-- (NSMutableArray *)playerAdapters
-{
-    if (!_playerAdapters) {
-        _playerAdapters = [NSMutableArray array];
-    }
-
-    return _playerAdapters;
-}
-
-- (void)playInContainer:(UIView * _Nonnull)container
-             playerView:(XJPlayerView * _Nonnull)playerView
-     rootViewController:(UIViewController * _Nonnull)rootViewController
-{
-    self.playerView = playerView;
-    self.playerView.playerContainer = container;
-    self.playerView.rootViewController = rootViewController;
 }
 
 - (void)playInScrollView:(UIScrollView *)scrollView
@@ -80,84 +55,29 @@ static void * const kXJPlayerManagerContentOffsetContext = (void*)&kXJPlayerMana
                 autoPlay:(BOOL)autoPlay
       rootViewController:(UIViewController *)rootViewController
 {
-    XJPlayerAdapter *playerAdapter = nil;
-    for (XJPlayerAdapter *adapter in self.playerAdapters)
+    if (!self.currentPlayerAdapter)
     {
-        if (adapter.rootViewController == rootViewController) {
-            NSLog(@"isequal rootViewController");
-            playerAdapter = adapter;
-        }
+        self.currentPlayerAdapter = [XJPlayerAdapter initWithRootViewController:rootViewController
+                                                                     scrollView:scrollView
+                                                                       autoPlay:autoPlay
+                                                                      indexPath:indexPath];
     }
-
-    if (!playerAdapter)
-    {
-        playerAdapter = [XJPlayerAdapter
-                            initWithRootViewController:rootViewController
-                            scrollView:scrollView
-                            autoPlay:autoPlay
-                            indexPath:indexPath];
-        [self.playerAdapters addObject:playerAdapter];
-    }
-
-    self.currentPlayerAdapter = playerAdapter;
 
     if (!autoPlay) [self.currentPlayerAdapter playAtIndexPath:indexPath];
 }
 
-- (void)pause
-{
-    [self.playerView systemPause];
-    for (XJPlayerAdapter *adapter in self.playerAdapters) {
-        [adapter pause];
-    }
+- (void)systemPause {
+    [self.currentPlayerAdapter systemPause];
 }
 
-- (void)resume
-{
-    [self.playerView systemPlay];
-    for (XJPlayerAdapter *adapter in self.playerAdapters) {
-        [adapter resume];
-    }
+- (void)systemPlay {
+    [self.currentPlayerAdapter systemPlay];
 }
-
 
 - (void)remove
 {
-    for (XJPlayerAdapter *adapter in self.playerAdapters) {
-        [adapter remove];
-    }
-
+    [self.currentPlayerAdapter remove];
     self.currentPlayerAdapter = nil;
-    [self.playerAdapters removeAllObjects];
-}
-
-- (void)dismissFullScreen {
-    [self dismissFullScreenPlayerWithCompletion:nil];
-}
-
-- (void)dismissFullScreenPlayerWithCompletion:(XJPlayerManagerDismiss)completion
-{
-    /*
-    [kStackPlayerViewController dismissPlayerWithCompletion:^{
-        XJPlayerView *playerView = [self.currentPlayerAdapter currentFullScreenPlayerView];
-        if (playerView) {
-            [playerView systemPause];
-            [playerView dismissFullScreenWithCompletion:completion];
-        } else {
-            if (completion) completion();
-        }
-    }];*/
-}
-
-- (XJPlayerAdapter *)checkIfHasAdapterFromViewController:(UIViewController *)viewController
-{
-    for (XJPlayerAdapter *adapter in self.playerAdapters)
-    {
-        if (adapter.rootViewController == viewController) {
-            return adapter;
-        }
-    }
-    return nil;
 }
 
 @end

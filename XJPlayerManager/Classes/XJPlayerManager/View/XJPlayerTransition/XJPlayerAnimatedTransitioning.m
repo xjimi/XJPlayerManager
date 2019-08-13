@@ -13,8 +13,6 @@
 
 @property (nonatomic, assign) XJPlayerTransitionType transitionType;
 
-@property (nonatomic, weak) AVPlayerLayer *playerLayer;
-
 @end
 
 @implementation XJPlayerAnimatedTransitioning

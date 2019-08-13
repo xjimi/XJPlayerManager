@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/22.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2019年 XJIMI All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,8 +12,10 @@
 typedef NS_ENUM(NSUInteger, XJPlayerType) {
     XJPlayerTypeNone,
     XJPlayerTypeNative,
-    XJPlayerTypeYoutube,
+    XJPlayerTypeYoutube
 };
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface XJPlayerModel : NSObject
 
@@ -25,24 +27,15 @@ typedef NS_ENUM(NSUInteger, XJPlayerType) {
 
 @property (nonatomic, strong) id videoObject;
 
-@property (nonatomic, copy) NSString *webUrl;
-
 @property (nonatomic, copy) NSString *coverImageUrl;
-
-@property (nonatomic, assign) NSInteger episodeId;
-
-@property (nonatomic, assign) NSInteger programmeId;
 
 @property (nonatomic, assign) NSTimeInterval seekTime;
 
-@property (nonatomic, strong) NSArray *cuePoints;
-
-@property (nonatomic, assign) BOOL is_buyer;
-
-@property (nonatomic, assign) BOOL isLive;
-
 @property (nonatomic, assign) BOOL muted;
 
-+ (instancetype)initWithUrl:(NSString *)url coverImageUrl:(NSString *)coverImageUrl;
++ (instancetype)initWithUrl:(NSString *)url
+              coverImageUrl:(nullable NSString *)coverImageUrl;
 
 @end
+
+NS_ASSUME_NONNULL_END

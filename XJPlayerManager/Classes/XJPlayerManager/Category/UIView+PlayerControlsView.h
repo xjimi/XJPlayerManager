@@ -26,9 +26,6 @@
 
 - (void)xj_controlsReset;
 
-/**
- * progress显示缓冲进度
- */
 - (void)xj_controlsSetProgress:(CGFloat)progress;
 
 - (void)xj_controlsSetTitle:(NSString *)title;
@@ -51,10 +48,7 @@
 - (void)xj_controlsPlayEnded;
 
 - (void)xj_controlsLayoutPortrait;
-
 - (void)xj_controlsLayoutFullScreen;
-
-- (void)xj_controlsShowLogo;
 
 - (void)xj_controlsBtnPrevEnabled:(BOOL)enabled;
 - (void)xj_controlsBtnNextEnabled:(BOOL)enabled;
@@ -63,7 +57,7 @@
 
 - (void)xj_controlsEnabled:(BOOL)enabled;
 
-- (void)xj_controlsHiddenControlsView:(BOOL)hidden;
+- (void)xj_controlsHidden:(BOOL)hidden;
 
 - (void)xj_controlsSliderPorgressEnabled:(BOOL)enabled;
 - (void)xj_controlsSliderHorizontalGestureEnabled:(BOOL)enabled;

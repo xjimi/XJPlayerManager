@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define XJP_ISNEATBANG (XJP_PortraitH - 812) ? NO : YES
 
 
-
 @interface XJPlayerUtils : NSObject
 
 + (NSString *)extractYoutubeIdFromLink:(NSString *)link;

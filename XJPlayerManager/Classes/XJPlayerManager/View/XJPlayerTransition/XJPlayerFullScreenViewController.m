@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/24.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2018年 XJIMI All rights reserved.
 //
 
 #import "XJPlayerFullScreenViewController.h"
@@ -16,7 +16,7 @@
 
 @property (nonatomic, weak) UIView *playerContainer;
 
-@property (nonatomic, weak) UIView *playerView;
+@property (nonatomic, weak) XJPlayerView *playerView;
 
 @end
 
@@ -27,7 +27,7 @@
 }
 
 + (instancetype)initWithPlayerContainer:(UIView *)playerContainer
-                             playerView:(UIView *)playerView
+                             playerView:(XJPlayerView *)playerView
 {
     XJPlayerFullScreenViewController *vc = [[XJPlayerFullScreenViewController alloc] init];
     vc.playerContainer = playerContainer;

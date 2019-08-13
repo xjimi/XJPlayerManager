@@ -3,7 +3,7 @@
 //  Player
 //
 //  Created by XJIMI on 2018/1/22.
-//  Copyright © 2018年 任子丰. All rights reserved.
+//  Copyright © 2018年 XJIMI All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -28,14 +28,14 @@ typedef void(^PlayerReadyBlock)(void);
 
 - (void)xj_unMute;
 
+- (void)xj_resetPlayer;
+
 - (void)xj_seekToTime:(NSTimeInterval)time
     completionHandler:(void (^)(BOOL finished))completionHandler;
 
-- (void)xj_resetPlayer;
+- (NSTimeInterval)xj_duration;
 
 - (NSTimeInterval)xj_currentTime;
-
-- (NSTimeInterval)xj_duration;
 
 - (BOOL)xj_isReadyToPlay;
 
@@ -46,7 +46,5 @@ typedef void(^PlayerReadyBlock)(void);
 - (void)xj_layoutPortrait;
 
 - (void)xj_layoutFullScreen;
-
-- (void)loadVideo;
 
 @end

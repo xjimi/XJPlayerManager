@@ -30,10 +30,6 @@ typedef void(^_Nullable XJPlayerManagerDismiss)(void);
 
 + (instancetype)shared;
 
-- (void)playInContainer:(UIView *)container
-             playerView:(XJPlayerView *)playerView
-     rootViewController:(UIViewController *)rootViewController;
-
 - (void)playInScrollView:(UIScrollView *)scrollView
                indexPath:(NSIndexPath *)indexPath
       rootViewController:(UIViewController *)rootViewController;
@@ -41,15 +37,11 @@ typedef void(^_Nullable XJPlayerManagerDismiss)(void);
 - (void)autoPlayInScrollView:(UIScrollView *)scrollView
           rootViewController:(UIViewController *)rootViewController;
 
-- (void)pause;
+- (void)systemPause;
 
-- (void)resume;
+- (void)systemPlay;
 
 - (void)remove;
-
-- (void)dismissFullScreen;
-
-- (void)dismissFullScreenPlayerWithCompletion:(XJPlayerManagerDismiss)completion;
 
 @end
 
