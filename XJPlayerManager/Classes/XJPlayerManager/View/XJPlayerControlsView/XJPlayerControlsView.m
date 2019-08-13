@@ -18,7 +18,7 @@
 #import "XJPlayerUtils.h"
 #import "XJPlayerBundleResource.h"
 
-@interface XJPlayerControlsView ()
+@interface XJPlayerControlsView () < UIGestureRecognizerDelegate >
 
 @property (nonatomic, strong) UIImageView             *placeholderView;
 
@@ -72,6 +72,8 @@
 
 @property (nonatomic, assign, getter=isHiddenControlsView) BOOL hiddenControlsView;
 
+@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
+
 @end
 
 @implementation XJPlayerControlsView
@@ -104,7 +106,7 @@
 - (void)xj_controlsReset
 {
     self.userInteractionEnabled = NO;
-
+    
     self.btn_replay.hidden = YES;
 
     self.slider.mpVolumeView.hidden = YES;
@@ -332,7 +334,6 @@
                                          cornerRadius:0
                                            completion:^(UIImage *image)
              {
-                 
                  [UIView animateWithDuration:.3 animations:^{
                      weakSelf.placeholderView.alpha = 1.0f;
                  }];
@@ -395,8 +396,7 @@
     if (!self.isDragged && !self.isBuffering) [self.slider hideBottomTrackView];
     self.maskView.alpha = 0.0f;
     self.controlsView.alpha = 0.0f;
-    if (!self.isDragged)
-    {
+    if (!self.isDragged) {
         self.timeLabel.alpha = 0.0f;
     }
 }

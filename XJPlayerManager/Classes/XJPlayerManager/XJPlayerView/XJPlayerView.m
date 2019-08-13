@@ -56,6 +56,8 @@
 
 @property (nonatomic, strong) XJNetworkStatusMonitor *networkStatusMonitor;
 
+
+
 /**
  使用者自行暫停或播放(點擊下一首歌或resetVideoUrl時會回復為PauseByUser = NO)
  */
@@ -67,7 +69,7 @@
  */
 @property (nonatomic, assign, getter=isPauseBySystem) BOOL pauseBySystem;
 
-@property (nonatomic, assign, getter=isPauseInBackground) BOOL pauseInBackground;
+@property (nonatomic, assign) AVAudioSessionInterruptionType audioSessionInterruptionType;
 
 @end
 
@@ -251,8 +253,17 @@
 
 - (void)safePlay
 {
-    if (self.isPauseByUser) [self pause];
-    else [self play];
+    if (self.isPauseByUser) {
+        [self pause];
+    }
+    else
+    {
+        if (self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan) {
+            return;
+        }
+
+        [self play];
+    }
 }
 
 - (void)systemPause
@@ -263,8 +274,6 @@
 
 - (void)play
 {
-    //if (self.isStatusFailed) return;
-
     if (self.status == XJPlayerStatusPause) {
         self.status = XJPlayerStatusPlaying;
     }
@@ -275,10 +284,6 @@
 
 - (void)pause
 {
-    //if (self.isStatusFailed) return;
-
-    NSLog(@"%s", __func__);
-    [self.controlView xj_controlsPlayBtnState:NO];
     if (self.status == XJPlayerStatusPlaying) {
         self.status = XJPlayerStatusPause;
     }
@@ -329,7 +334,6 @@
 {
     self.pauseByUser = NO;
     self.pauseBySystem = NO;
-    self.pauseInBackground = NO;
 }
 
 - (void)addNetworkStatusMonitor
@@ -454,10 +458,6 @@
     {
         [self systemPause];
     }
-    else if (self.isPauseInBackground)
-    {
-        [self actionPlay:NO];
-    }
     else
     {
         NSLog(@"READY TO PLAY - safePlay");
@@ -469,11 +469,10 @@
         [self.delegate xj_playerViewReadyToPlay:self duration:duration];
     }
 
-
     self.player.alpha = 0.0f;
     __weak typeof(self)weakSelf = self;
     [self.controlView xj_controlsHideCoverImageWithCompletion:^{
-        [self.controlView xj_controlsShowControlsView];
+        [weakSelf.controlView xj_controlsShowControlsView];
         [UIView animateWithDuration:.3 animations:^{
             weakSelf.player.alpha = 1.0f;
         }];
@@ -508,8 +507,7 @@
              weakSelf.status = XJPlayerStatusBuffering;
          }
 
-         if (weakSelf.isPauseInBackground ||
-             weakSelf.isPauseBySystem)
+         if (weakSelf.isPauseBySystem)
          {
              return;
          }
@@ -552,10 +550,6 @@
         {
             [self systemPause];
         }
-        else if (self.isPauseInBackground)
-        {
-            [self actionPlay:NO];
-        }
         else
         {
             NSLog(@"BUFFERING SOME SECOND - safePlay");
@@ -586,7 +580,8 @@
     [self safePlay];
 }
 
-- (BOOL)xj_playerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+- (BOOL)xj_playerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+                shouldReceiveTouch:(UITouch *)touch
 {
     if ([touch.view isKindOfClass:[UIButton class]]) return NO;
     return YES;
@@ -754,17 +749,8 @@
 
 - (void)addNotifications
 {
-    //[[NSNotificationCenter defaultCenter] removeObserver:self];
-    //[[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-
-    /*[[NSNotificationCenter defaultCenter] addObserver:self
-     selector:@selector(applicationWillEnterBackground:) name:UIApplicationWillResignActiveNotification object:nil];*/
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidBecomeActive:)
@@ -776,11 +762,20 @@
                                              selector:@selector(deviceOrientationDidChange:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
+    // 耳機 Input/Output
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(audioRouteChangeListenerCallback:) name:AVAudioSessionRouteChangeNotification
+                                               object:nil];
+
+    // voip 或電話來時 打斷通知
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(audioSessionInterruptionNotification:) name:AVAudioSessionInterruptionNotification
+                                               object:nil];
+
 }
 
 - (void)deviceOrientationDidChange:(NSNotification *)notification
 {
-
     if (self.didEnterBackground) return;
 
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
@@ -800,27 +795,53 @@
     }
 }
 
-- (void)applicationDidEnterBackground:(NSNotification*)notification
-{
+- (void)applicationDidEnterBackground:(NSNotification*)notification {
     self.didEnterBackground = YES;
-    //[self.player xj_removePlayerOnPlayerLaye];
-    [self applicationWillEnterBackground:notification];
-}
-
-- (void)applicationWillEnterBackground:(NSNotification*)notification {
-}
-
-- (void)applicationWillEnterForeground:(NSNotification*)notification {
-    //[self.player xj_resetPlayerToPlayerLayer];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification*)notification
 {
     self.didEnterBackground = NO;
-    self.pauseInBackground = NO;
-
     if (!self.isPauseBySystem) {
-        //[self safePlay];
+
+        [self safePlay];
+    }
+}
+
+- (void)audioRouteChangeListenerCallback:(NSNotification *)notification
+{
+    NSDictionary *interuptionDict = notification.userInfo;
+    NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+
+    switch (routeChangeReason)
+    {
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+        // 耳機 Input
+        break;
+
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+        {
+            // 耳機 Output
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self systemPause];
+            });
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+
+- (void)audioSessionInterruptionNotification:(NSNotification *)notification
+{
+    NSDictionary *info = notification.userInfo;
+    AVAudioSessionInterruptionType type = [info[AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+    self.audioSessionInterruptionType = type;
+    if (type == AVAudioSessionInterruptionTypeBegan) {
+        [self actionPlay:NO];
+    } else {
+        [self safePlay];
     }
 }
 

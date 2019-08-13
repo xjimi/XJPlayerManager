@@ -60,6 +60,8 @@ typedef NS_ENUM(NSInteger, PanDir){
 @property (nonatomic, assign) CGFloat  brightnessStartValue;
 @property (nonatomic, assign) CGFloat  volumeStartValue;
 
+@property (nonatomic, strong) UIView *container;
+
 @end
 
 @implementation XJSlider
@@ -91,19 +93,21 @@ typedef NS_ENUM(NSInteger, PanDir){
 {
     [super layoutSubviews];
     self.bufferingView.frame = self.bounds;
+    self.container.frame = self.bounds;
 }
 
 - (void)configureView
 {
     self.clipsToBounds = YES;
     self.enabledHorizontalGesture = YES;
+    [self addSubview:self.container];
     [self addBufferingView];
 }
 
 - (void)addBufferingView
 {
     self.bufferingView = [[XJBufferingView alloc] initWithFrame:self.bounds];
-    [self addSubview:self.bufferingView];
+    [self.container addSubview:self.bufferingView];
 }
 
 - (void)addSliderGestureBeganBlock:(XJSliderGestureBeganBlock)block
@@ -176,7 +180,7 @@ typedef NS_ENUM(NSInteger, PanDir){
     slider.trackDir = XJSliderTrackDirBottom;
     slider.userInteractionEnabled = NO;
     [slider hide];
-    [self addSubview:slider];
+    [self.container addSubview:slider];
     _progressSlider = slider;
     [slider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
@@ -193,7 +197,7 @@ typedef NS_ENUM(NSInteger, PanDir){
     slider.trackDir = XJSliderTrackDirBottom;
     slider.userInteractionEnabled = NO;
     [slider hide];
-    [self addSubview:slider];
+    [self.container addSubview:slider];
     _lastDragProgressSlider = slider;
     [slider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
@@ -205,7 +209,7 @@ typedef NS_ENUM(NSInteger, PanDir){
     if (!positions.count) return;
     XJMarkSlider *slider = [[XJMarkSlider alloc] init];
     slider.markPositions = positions;
-    [self addSubview:slider];
+    [self.container addSubview:slider];
     _markSlider = slider;
     _markSlider.alpha = 0.0f;
     [slider mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -222,8 +226,8 @@ typedef NS_ENUM(NSInteger, PanDir){
     self.brightnessSlider.bgProgressColor = [UIColor colorWithWhite:1 alpha:.2];
     self.brightnessSlider.userInteractionEnabled = NO;
     [self.brightnessSlider hide];
-    [self addSubview:self.brightnessSlider];
-    [self addSubview:self.brightnessIndicator];
+    [self.container addSubview:self.brightnessSlider];
+    [self.container addSubview:self.brightnessIndicator];
     [self.brightnessSlider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
@@ -237,8 +241,8 @@ typedef NS_ENUM(NSInteger, PanDir){
     self.volumeSlider.trackDir = XJSliderTrackDirLeft;
     self.volumeSlider.userInteractionEnabled = NO;
     [self.volumeSlider hide];
-    [self addSubview:self.volumeSlider];
-    [self addSubview:self.volumeIndicator];
+    [self.container addSubview:self.volumeSlider];
+    [self.container addSubview:self.volumeIndicator];
     [self.volumeSlider mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
@@ -595,10 +599,13 @@ typedef NS_ENUM(NSInteger, PanDir){
     return YES;
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panGestureRecognizer
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (![panGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) return YES;
+    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return YES;
+    }
 
+    UIPanGestureRecognizer *panGestureRecognizer = (UIPanGestureRecognizer *)gestureRecognizer;
     CGPoint velocity = [panGestureRecognizer velocityInView:self];
     if (self.isEnabledHorizontalGesture) return fabs(velocity.x) > fabs(velocity.y);
     if (self.isEnabledVerticalGesture) return fabs(velocity.y) > fabs(velocity.x);
@@ -610,6 +617,14 @@ typedef NS_ENUM(NSInteger, PanDir){
     _enabled = enabled;
     self.panRecognizer.enabled = enabled;
     [self.panRecognizer setCancelsTouchesInView:!enabled];
+}
+
+- (UIView *)container
+{
+    if (!_container) {
+        _container = [[UIView alloc] init];
+    }
+    return _container;
 }
 
 @end

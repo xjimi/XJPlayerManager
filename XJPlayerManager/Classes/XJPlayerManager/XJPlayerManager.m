@@ -8,6 +8,8 @@
 
 #import "XJPlayerManager.h"
 #import "XJPlayerAdapter.h"
+#import "XJPlayerFullScreenViewController.h"
+#import <XJUtil/UIWindow+XJVisible.h>
 
 @interface XJPlayerManager ()
 
@@ -76,6 +78,10 @@
 
 - (void)remove
 {
+    if ([[UIWindow xj_visibleViewController] isKindOfClass:[XJPlayerFullScreenViewController class]]) {
+        return;
+    }
+
     [self.currentPlayerAdapter remove];
     self.currentPlayerAdapter = nil;
 }

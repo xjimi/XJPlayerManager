@@ -43,6 +43,12 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.playerManager remove];
+}
+
 - (void)xj_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.playerManager playInScrollView:self.collectionView indexPath:indexPath rootViewController:self];
@@ -110,12 +116,12 @@
         
         NSString *url = @"https://www.youtube.com/watch?v=4ZVUmEUFwaY";
         //url = @"4ZVUmEUFwaY";
-        url = @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8";
-        //url = @"ulKrn-3GraI";
+        //url = @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8";
+        url = @"ulKrn-3GraI";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:imageUrl];
-        model.playerModel.muted = YES;
+        //model.playerModel.muted = YES;
         CGFloat vw = CGRectGetWidth(self.view.frame);
         CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70;
         XJCollectionViewCellModel *cellModel = [XJCollectionViewCellModel

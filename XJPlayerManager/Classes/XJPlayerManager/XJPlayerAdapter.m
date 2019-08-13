@@ -373,7 +373,11 @@
     }
 
     playerView.playable = YES;
-    [playerView play];
+    if (self.systemPause) {
+        [playerView systemPause];
+    } else {
+        [playerView play];
+    }
 }
 
 + (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
