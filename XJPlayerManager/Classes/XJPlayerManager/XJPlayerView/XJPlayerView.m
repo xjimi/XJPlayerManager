@@ -253,17 +253,22 @@
 
 - (void)safePlay
 {
+    if (self.isPauseBySystem) {
+        [self systemPause];
+        return;
+    }
+
     if (self.isPauseByUser) {
         [self pause];
+        return;
     }
-    else
-    {
-        if (self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan) {
-            return;
-        }
 
-        [self play];
+    if (self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan) {
+        [self actionPlay:NO];
+        return;
     }
+
+    [self play];
 }
 
 - (void)systemPause
@@ -297,9 +302,12 @@
     //不改變任何播放變數，單純控制UI與播放影片
     if (isPlay)
     {
-        if (![self.player isKindOfClass:[YTPlayerView class]]) {
-            [self enabledSessionCategoryPlayback];
+        if ([self.player isKindOfClass:[YTPlayerView class]]) {
+            [self audioSessionCategoryPlaybackEnabled:NO];
+        } else {
+            [self audioSessionCategoryPlaybackEnabled:YES];
         }
+
         [self.player xj_play];
     }
     else
@@ -323,11 +331,11 @@
     }
 }
 
-- (void)enabledSessionCategoryPlayback
+- (void)audioSessionCategoryPlaybackEnabled:(BOOL)enabled
 {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setCategory: AVAudioSessionCategoryPlayback error:nil];
-    [audioSession setActive:YES error:nil];
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [audioSession setActive:enabled error:nil];
 }
 
 - (void)disablePauseByProperty
@@ -436,7 +444,7 @@
 }
 
 - (void)processReadyToPlay
-{    
+{
     NSTimeInterval duration = [self.player xj_duration];
     NSLog(@" +++ Ready To Play +++ duration : %f", duration);
     if (!self.playerGesture)
@@ -453,16 +461,7 @@
     }
 
     self.muted = self.playerModel.muted;
-
-    if (self.isPauseBySystem)
-    {
-        [self systemPause];
-    }
-    else
-    {
-        NSLog(@"READY TO PLAY - safePlay");
-        [self safePlay];
-    }
+    [self safePlay];
 
     //由上層決定是否要播放
     if ([self.delegate respondsToSelector:@selector(xj_playerViewReadyToPlay:duration:)]) {
@@ -507,11 +506,6 @@
              weakSelf.status = XJPlayerStatusBuffering;
          }
 
-         if (weakSelf.isPauseBySystem)
-         {
-             return;
-         }
-
          [weakSelf safePlay];
 
      }];
@@ -546,15 +540,7 @@
     else
     {
         self.status = XJPlayerStatusPlaying;
-        if (self.isPauseBySystem)
-        {
-            [self systemPause];
-        }
-        else
-        {
-            NSLog(@"BUFFERING SOME SECOND - safePlay");
-            [self safePlay];
-        }
+        [self safePlay];
     }
 }
 
@@ -703,7 +689,9 @@
 - (void)xj_controlsView:(UIView *)controlsView actionPlay:(UIButton *)sender
 {
     self.pauseByUser = !self.isPauseByUser;
-    [self safePlay];
+
+    if (self.pauseByUser) [self pause];
+    else [self play];
 }
 
 - (void)xj_controlsView:(UIView *)controlsView actionFullScreen:(UIButton *)sender
@@ -766,12 +754,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(audioRouteChangeListenerCallback:) name:AVAudioSessionRouteChangeNotification
                                                object:nil];
-
     // voip 或電話來時 打斷通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(audioSessionInterruptionNotification:) name:AVAudioSessionInterruptionNotification
                                                object:nil];
-
 }
 
 - (void)deviceOrientationDidChange:(NSNotification *)notification
@@ -803,7 +789,6 @@
 {
     self.didEnterBackground = NO;
     if (!self.isPauseBySystem) {
-
         [self safePlay];
     }
 }
@@ -823,7 +808,7 @@
         {
             // 耳機 Output
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self systemPause];
+                [self actionPlay:NO];
             });
             break;
         }

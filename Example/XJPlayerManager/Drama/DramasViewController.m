@@ -17,6 +17,7 @@
 #import <XJUtil/UIWindow+XJVisible.h>
 #import "XJPlayerModel.h"
 #import "XJPlayerFullScreenViewController.h"
+#import "XJPlayerUtils.h"
 
 @interface DramasViewController () < XJCollectionViewDelegate >
 
@@ -96,7 +97,7 @@
 - (XJCollectionReusableModel *)createHeaderModel
 {
     NSString *setion = [NSString stringWithFormat:@"New Drama %ld", (long)self.collectionView.data.count + 1];
-    CGFloat vw = CGRectGetWidth(self.view.frame);
+    CGFloat vw = XJP_PortraitW;
     XJCollectionReusableModel *headerModel = [XJCollectionReusableModel
                                               modelWithReuseIdentifier:[DramaHeader identifier]
                                               size:CGSizeMake(vw, 50)
@@ -116,8 +117,8 @@
         
         NSString *url = @"https://www.youtube.com/watch?v=4ZVUmEUFwaY";
         //url = @"4ZVUmEUFwaY";
-        //url = @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8";
-        url = @"ulKrn-3GraI";
+        url = (i%2) ? @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8" : @"http://www.youtube.com/embed/4ZVUmEUFwaY";
+        //url = @"ulKrn-3GraI";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:imageUrl];

@@ -18,7 +18,7 @@
 #import "XJPlayerUtils.h"
 #import "XJPlayerBundleResource.h"
 
-@interface XJPlayerControlsView () < UIGestureRecognizerDelegate >
+@interface XJPlayerControlsView ()
 
 @property (nonatomic, strong) UIImageView             *placeholderView;
 
@@ -71,8 +71,6 @@
 @property (nonatomic, assign) CGFloat lastDragProgress;
 
 @property (nonatomic, assign, getter=isHiddenControlsView) BOOL hiddenControlsView;
-
-@property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 
 @end
 
