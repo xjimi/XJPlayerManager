@@ -97,9 +97,11 @@
     [toView layoutIfNeeded];
 
     CGRect targetRect = [self.targetView convertRect:self.targetView.frame toView:toView];
-    
+    NSLog(@"dismiss - targetRect : %@", NSStringFromCGRect(targetRect));
+
     if ([UIApplication sharedApplication].statusBarFrame.size.height == 40) {
         targetRect.origin.y += 10.0f;
+        NSLog(@"dismiss - targetRect : %@", NSStringFromCGRect(targetRect));
     }
 
     BOOL isYoutuePlayer = NO;
@@ -113,6 +115,7 @@
         bgView.alpha = 0.0f;
     }
 
+    NSLog(@"dismiss - playerView1 : %@", self.playerView);
     NSTimeInterval duration = [self transitionDuration:transitionContext] - 0.3f;
     [UIView animateWithDuration:duration
                           delay:0
@@ -132,6 +135,7 @@
          [self.targetView addSubview:self.playerView];
          self.playerView.frame = CGRectMake(0, 0, targetRect.size.width, targetRect.size.height);
          [fromView removeFromSuperview];
+         NSLog(@"dismiss - playerView2 : %@", self.playerView);
 
          if (isYoutuePlayer)
          {

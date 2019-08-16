@@ -17,6 +17,7 @@
 #import <Masonry/Masonry.h>
 #import <XJScrollViewStateManager/XJNetworkStatusMonitor.h>
 #import <XJUtil/UIWindow+XJVisible.h>
+#import <XJUtil/UIViewController+XJStatusBar.h>
 #import "YTPlayerView.h"
 
 @interface XJPlayerView () < XJBasePlayerViewDelegate, XJPlayerControlsViewDelegate, XJPlayerGestureDelegate >
@@ -585,14 +586,23 @@
         [UIWindow xj_rootViewController].presentedViewController ||
         self.isFullScreening ||
         !self.isFullScreenEnabled) return;
-
+    
     self.fullScreenRotating = YES;
-    [self presentFullScreenWithPlayerView:self containerView:self.playerContainer];
-    [self.player xj_layoutFullScreen];
-    [self.controlView xj_controlsLayoutFullScreen];
 
-    self.fullScreenRotating = NO;
-    self.fullScreen = YES;
+    __weak typeof(self)weakSelf = self;
+    [[UIWindow xj_visibleViewController] setStatusBarHidden:YES
+                                                  animation:UIStatusBarAnimationFade
+                                                 completion:^
+    {
+
+        [weakSelf presentFullScreenWithPlayerView:weakSelf containerView:weakSelf.playerContainer];
+        [weakSelf.player xj_layoutFullScreen];
+        [weakSelf.controlView xj_controlsLayoutFullScreen];
+
+        weakSelf.fullScreenRotating = NO;
+        weakSelf.fullScreen = YES;
+
+    }];
 }
 
 - (void)presentFullScreenWithPlayerView:(UIView *)playerView containerView:(UIView *)containerView
@@ -616,9 +626,15 @@
     __weak typeof(self)weakSelf = self;
     [self.rootViewController dismissViewControllerAnimated:YES completion:^{
 
-        weakSelf.fullScreenRotating = NO;
-        weakSelf.fullScreen = NO;
-        if (completion) completion();
+        [[UIWindow xj_visibleViewController] setStatusBarHidden:NO
+                                                      animation:UIStatusBarAnimationFade
+                                                     completion:^
+        {
+            weakSelf.fullScreenRotating = NO;
+            weakSelf.fullScreen = NO;
+            if (completion) completion();
+
+        }];
 
     }];
 }

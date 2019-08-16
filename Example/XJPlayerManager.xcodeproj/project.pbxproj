@@ -52,7 +52,6 @@
 		90351A1222FF080A002C9615 /* XJPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F722FF080A002C9615 /* XJPlayerView.m */; };
 		90351A1322FF080A002C9615 /* XJPlayerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519FA22FF080A002C9615 /* XJPlayerAdapter.m */; };
 		90351A1422FF080A002C9615 /* XJPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519FB22FF080A002C9615 /* XJPlayerManager.m */; };
-		903F917722F44CE80001B44F /* UINavigationController+Portrait.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F917522F44CE70001B44F /* UINavigationController+Portrait.m */; };
 		903F923622F56AD00001B44F /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F922B22F56AD00001B44F /* AlbumsViewController.m */; };
 		903F923722F56AD00001B44F /* AlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F922E22F56AD00001B44F /* AlbumModel.m */; };
 		903F923822F56AD00001B44F /* AlbumHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F923022F56AD00001B44F /* AlbumHeader.m */; };
@@ -162,8 +161,6 @@
 		903519FE22FF080A002C9615 /* XJPlayerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdManager.m; sourceTree = "<group>"; };
 		90351A1722FF1EDB002C9615 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../XJPlayerManager/Frameworks/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		90351A1922FF1EEB002C9615 /* GoogleInteractiveMediaAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInteractiveMediaAds.framework; path = ../XJPlayerManager/Frameworks/GoogleInteractiveMediaAds.framework; sourceTree = "<group>"; };
-		903F917522F44CE70001B44F /* UINavigationController+Portrait.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Portrait.m"; sourceTree = "<group>"; };
-		903F917622F44CE80001B44F /* UINavigationController+Portrait.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Portrait.h"; sourceTree = "<group>"; };
 		903F922A22F56AD00001B44F /* AlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsViewController.h; sourceTree = "<group>"; };
 		903F922B22F56AD00001B44F /* AlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsViewController.m; sourceTree = "<group>"; };
 		903F922D22F56AD00001B44F /* AlbumModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumModel.h; sourceTree = "<group>"; };
@@ -261,8 +258,6 @@
 				6003F59D195388D20070C39A /* XJAppDelegate.m */,
 				9033597F22F9A059007F20CF /* Drama */,
 				903F922922F56AD00001B44F /* Albums */,
-				903F917622F44CE80001B44F /* UINavigationController+Portrait.h */,
-				903F917522F44CE70001B44F /* UINavigationController+Portrait.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
@@ -444,8 +439,8 @@
 			isa = PBXGroup;
 			children = (
 				903519D122FF080A002C9615 /* XJPlayerControlsView.h */,
-				903519D222FF080A002C9615 /* XJPlayerGesture.m */,
 				903519D322FF080A002C9615 /* XJPlayerControlsView.m */,
+				903519D222FF080A002C9615 /* XJPlayerGesture.m */,
 				903519D422FF080A002C9615 /* XJPlayerControlsViewDelegate.h */,
 				903519D522FF080A002C9615 /* XJPlayerGesture.h */,
 				903519D622FF080A002C9615 /* PlayerErrorInfoView */,
@@ -790,7 +785,6 @@
 				6003F59E195388D20070C39A /* XJAppDelegate.m in Sources */,
 				90351A0822FF080A002C9615 /* XJPlayerFullScreenViewController.m in Sources */,
 				90351A0F22FF080A002C9615 /* XJBufferingView.m in Sources */,
-				903F917722F44CE80001B44F /* UINavigationController+Portrait.m in Sources */,
 				90351A0322FF080A002C9615 /* XJPlayerGesture.m in Sources */,
 				90351A0C22FF080A002C9615 /* UIView+XJBasePlayerView.m in Sources */,
 				90351A1322FF080A002C9615 /* XJPlayerAdapter.m in Sources */,

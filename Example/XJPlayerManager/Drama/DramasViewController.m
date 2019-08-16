@@ -18,6 +18,7 @@
 #import "XJPlayerModel.h"
 #import "XJPlayerFullScreenViewController.h"
 #import "XJPlayerUtils.h"
+#import <XJUtil/UIViewController+XJStatusBar.h>
 
 @interface DramasViewController () < XJCollectionViewDelegate >
 
@@ -37,7 +38,6 @@
     [self reloadData];
 
     self.playerManager = [[XJPlayerManager alloc] init];
-    //[self.playerManager autoPlayInScrollView:self.collectionView rootViewController:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -69,16 +69,18 @@
     collectionView.collectionViewDelegate = self;
     [self.view addSubview:collectionView];
     [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
+        make.top.equalTo(self.view).mas_offset(20.0f);
+        make.left.bottom.right.equalTo(self.view);
     }];
 
     self.collectionView = collectionView;
-
+    /*
     if (@available(iOS 11.0, *)) {
         self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
     } else {
         self.edgesForExtendedLayout = UIRectEdgeTop;
-    }
+    }*/
+
 
 }
 
@@ -117,7 +119,7 @@
         
         NSString *url = @"https://www.youtube.com/watch?v=4ZVUmEUFwaY";
         //url = @"4ZVUmEUFwaY";
-        url = (i%2) ? @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8" : @"http://www.youtube.com/embed/4ZVUmEUFwaY";
+        url = (i%2) ? @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8" : @"http://www.youtube.com/embed/19JrIWjBIJI";
         //url = @"ulKrn-3GraI";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
@@ -152,20 +154,16 @@
     [self.collectionView appendDataModel:newDataModel];
 }
 
-- (BOOL)shouldAutorotate {
-    return NO;
+- (BOOL)prefersStatusBarHidden {
+    return [super prefersStatusBarHidden];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
 
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return YES;
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end
