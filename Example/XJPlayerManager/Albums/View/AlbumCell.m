@@ -20,6 +20,7 @@
     if ([data isKindOfClass:[AlbumModel class]])
     {
         AlbumModel *album = (AlbumModel *)data;
+        self.playerData = album.playerModel;
         self.coverImageView.image = [UIImage imageNamed:album.imageName];
         self.titleLabel.text = album.albumName;
         self.subtitleLabel.text = album.artistName;

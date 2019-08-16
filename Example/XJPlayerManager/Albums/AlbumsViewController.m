@@ -94,9 +94,12 @@
         model.albumName = @"Scorpion (OVO Updated Version) [iTunes][2018]";
         model.artistName = [NSString stringWithFormat:@"%f - Drake", time];
         model.imageName = @"drake";
-        NSString *youtubeId = @"3FjCmsQbW3g";
-        NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", youtubeId];
-        model.playerModel = [XJPlayerModel initWithUrl:youtubeId
+        NSString *url = @"https://www.youtube.com/watch?v=4ZVUmEUFwaY";
+        //url = @"4ZVUmEUFwaY";
+        url = (i%2) ? @"http://d2e6xlgy8sg8ji.cloudfront.net/liveedge/eratv1/chunklist.m3u8" : @"http://www.youtube.com/embed/19JrIWjBIJI";
+        //url = @"ulKrn-3GraI";
+        NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
+        model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:imageUrl];
 
         XJTableViewCellModel *cellModel = [XJTableViewCellModel

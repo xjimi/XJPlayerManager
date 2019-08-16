@@ -39,12 +39,12 @@
     toView.clipsToBounds = YES;
     toView.bounds = self.sourceView.bounds;
     toView.center = sourceCenter;
+    [containerView addSubview:toView];
     [toView setNeedsLayout];
     [toView layoutIfNeeded];
-    [containerView addSubview:toView];
 
     [toView addSubview:self.playerView];
-    self.playerView.frame = containerView.bounds;
+
 
     CGAffineTransform transform = toView.transform;
     UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
@@ -71,6 +71,7 @@
         toView.transform = CGAffineTransformIdentity;
         toView.bounds = containerView.bounds;
         toView.center = containerView.center;
+        self.playerView.frame = containerView.bounds;
         [toView layoutIfNeeded];
 
     } completion:^(BOOL finished) {
@@ -96,13 +97,8 @@
     [fromView layoutIfNeeded];
     [toView layoutIfNeeded];
 
-    CGRect targetRect = [self.targetView convertRect:self.targetView.frame toView:toView];
-    NSLog(@"dismiss - targetRect : %@", NSStringFromCGRect(targetRect));
-
-    if ([UIApplication sharedApplication].statusBarFrame.size.height == 40) {
-        targetRect.origin.y += 10.0f;
-        NSLog(@"dismiss - targetRect : %@", NSStringFromCGRect(targetRect));
-    }
+    CGRect targetRect = [self.targetView convertRect:self.targetView.bounds toView:toView];
+    CGRect targetBounds = CGRectMake(0, 0, targetRect.size.width, targetRect.size.height);
 
     BOOL isYoutuePlayer = NO;
     UIView *bgView = nil;
@@ -115,7 +111,6 @@
         bgView.alpha = 0.0f;
     }
 
-    NSLog(@"dismiss - playerView1 : %@", self.playerView);
     NSTimeInterval duration = [self transitionDuration:transitionContext] - 0.3f;
     [UIView animateWithDuration:duration
                           delay:0
@@ -126,16 +121,17 @@
          fromView.frame = targetRect;
          [fromView layoutIfNeeded];
          bgView.alpha = 1.0f;
+         bgView.frame = targetBounds;
          if (!isYoutuePlayer) {
-             [self.playerView refreshPlayerFrame:CGRectMake(0, 0, targetRect.size.width, targetRect.size.height)];
+             [self.playerView refreshPlayerFrame:targetBounds];
          }
 
      } completion:^(BOOL finished) {
 
          [self.targetView addSubview:self.playerView];
-         self.playerView.frame = CGRectMake(0, 0, targetRect.size.width, targetRect.size.height);
+         self.playerView.frame = targetBounds;
+         [toView layoutIfNeeded];
          [fromView removeFromSuperview];
-         NSLog(@"dismiss - playerView2 : %@", self.playerView);
 
          if (isYoutuePlayer)
          {
