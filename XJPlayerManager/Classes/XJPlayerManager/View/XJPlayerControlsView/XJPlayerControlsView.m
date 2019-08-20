@@ -72,6 +72,9 @@
 
 @property (nonatomic, assign, getter=isHiddenControlsView) BOOL hiddenControlsView;
 
+@property (nonatomic, assign) BOOL isMakeConstraints;
+
+
 @end
 
 @implementation XJPlayerControlsView
@@ -88,7 +91,6 @@
     if (self)
     {
         [self createView];
-        [self makeConstraints];
         [self xj_controlsLayoutPortrait];
         [self xj_controlsReset];
     }
@@ -98,6 +100,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    [self makeConstraints];
     [self.btn_error centerImageWithTitleGap:10 imageOnTop:YES];
 }
 
@@ -403,15 +406,13 @@
 {
     self.titleLabel.hidden = YES;
     self.btn_fullScreen.selected = NO;
-
-    if (XJP_ISNEATBANG && self.bounds.size.width)
+    
+    if (XJP_ISNEATBANG &&  self.bounds.size.width)
     {
-        [self.slider mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(XJP_PortraitW);
+        [self.slider mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.edges.equalTo(self);
         }];
-        //[UIView animateWithDuration:.3 animations:^{
-            [self layoutIfNeeded];
-        //}];
+        [self layoutIfNeeded];
     }
 }
 
@@ -426,11 +427,14 @@
         CGFloat height = XJP_PortraitW;
         CGFloat mw = roundf(height * (16.0 / 9.0));
         [self.slider mas_updateConstraints:^(MASConstraintMaker *make) {
+
+            make.top.equalTo(self.mas_top);
+            make.bottom.equalTo(self.mas_bottom);
+            make.centerX.equalTo(self);
             make.width.mas_equalTo(mw);
+
         }];
-        //[UIView animateWithDuration:.3 animations:^{
-            [self layoutIfNeeded];
-        //}];
+        [self layoutIfNeeded];
     }
 }
 
@@ -812,6 +816,9 @@
 
 - (void)makeConstraints
 {
+    if (self.isMakeConstraints) return;
+    self.isMakeConstraints = YES;
+
     [self.placeholderView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
@@ -827,7 +834,7 @@
             make.top.equalTo(self.mas_top);
             make.bottom.equalTo(self.mas_bottom);
             make.centerX.equalTo(self);
-            make.width.mas_equalTo(XJP_PortraitW);
+            make.width.mas_equalTo(self.bounds.size.width);
         }
         else
         {

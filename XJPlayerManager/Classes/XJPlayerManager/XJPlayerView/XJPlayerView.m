@@ -116,15 +116,15 @@
     [self removeFromSuperview];
 }
 
-/*- (void)layoutSubviews
+- (void)layoutSubviews
 {
     [super layoutSubviews];
-
+    
     if (self.playerContainer && !self.isFullScreening) {
-        //self.frame = self.playerContainer.bounds;
-        //[self layoutIfNeeded];
+        self.frame = self.playerContainer.bounds;
+        [self layoutIfNeeded];
     }
-}*/
+}
 
 - (void)setPlayerView:(UIView *)playerView
           controlView:(nullable UIView *)controlView
