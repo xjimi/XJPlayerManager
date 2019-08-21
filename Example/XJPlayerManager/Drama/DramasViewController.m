@@ -26,6 +26,8 @@
 
 @property (nonatomic, strong) XJPlayerManager *playerManager;
 
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
 @end
 
 @implementation DramasViewController
@@ -44,6 +46,17 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (self.indexPath) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.playerManager playInScrollView:self.collectionView indexPath:self.indexPath rootViewController:self];
+        });
+    }
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -52,6 +65,7 @@
 
 - (void)xj_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.indexPath = indexPath;
     [self.playerManager playInScrollView:self.collectionView indexPath:indexPath rootViewController:self];
 }
 
@@ -69,7 +83,7 @@
     collectionView.collectionViewDelegate = self;
     [self.view addSubview:collectionView];
     [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).mas_offset(20.0f);
+        make.top.equalTo(self.view).mas_offset(100.0f);
         make.left.bottom.right.equalTo(self.view);
     }];
 
@@ -91,7 +105,7 @@
 - (XJCollectionViewDataModel *)createDataModel
 {
     XJCollectionViewDataModel *dataModel = [XJCollectionViewDataModel
-                                            modelWithSection:[self createHeaderModel]
+                                            modelWithSection:nil//[self createHeaderModel]
                                             rows:[self createRows]];
     return dataModel;
 }

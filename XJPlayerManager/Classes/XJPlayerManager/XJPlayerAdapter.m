@@ -25,6 +25,8 @@
 
 @property (nonatomic, strong) NSMutableArray *playerKeys;
 
+@property (nonatomic, assign) NSUInteger maxCachePlayerNum;
+
 @end
 
 @implementation XJPlayerAdapter
@@ -104,6 +106,7 @@
                         if (!playerContainer) break;
 
                         CGRect targetRect = [playerContainer convertRect:playerContainer.bounds toView:self.rootViewController.view];
+                        CGFloat targetPosY = targetRect.origin.y - self.scrollView.frame.origin.y;
                         CGFloat rnageH = targetRect.size.height * .5;
 
                         if (![playerContainer.subviews containsObject:pv])
@@ -114,7 +117,7 @@
                             //[playerContainer addSubview:pv];
                         }
                         
-                        if (targetRect.origin.y <= -rnageH ||
+                        if (targetPosY <= -rnageH ||
                             targetRect.origin.y + rnageH >= self.scrollView.frame.size.height)
                         {
                             //NSLog(@"- 關 %ld", (long)indexPath.row);
@@ -307,19 +310,21 @@
 - (void)playAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!indexPath) return;
+
     NSString *identifier = [NSString stringWithFormat:@"%ld_%ld", (long)indexPath.section, (long)indexPath.row];
     XJPlayerView *playerView = [self.players objectForKey:identifier];
 
+    if (playerView.isFullScreening) return;
+
     UIView *playerContainer = nil;
     XJPlayerModel *playerData = nil;
-    
     playerContainer = [self playerContainerAtIndexPath:indexPath];
     playerData = [self playerDataAtIndexPath:indexPath];
 
     for (NSString *key in self.players.allKeys)
     {
-        if (![key isEqualToString:identifier]) {
-
+        if (![key isEqualToString:identifier])
+        {
             XJPlayerView *pv = [self.players objectForKey:key];
             if (pv.isPlayable)
             {
@@ -330,7 +335,6 @@
                 }];
             }
             pv.playable = NO;
-
         }
     }
 
@@ -340,7 +344,7 @@
     }
     else
     {
-        if (self.playerKeys.count > 0)
+        if (self.playerKeys.count > self.maxCachePlayerNum)
         {
             NSString *playerKey = self.playerKeys.lastObject;
             XJPlayerView *pv = [self.players objectForKey:playerKey];
