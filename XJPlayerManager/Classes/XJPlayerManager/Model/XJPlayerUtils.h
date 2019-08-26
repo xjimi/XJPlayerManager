@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define XJP_PortraitH MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)
 
-#define XJP_ISNEATBANG (XJP_PortraitH - 812) ? NO : YES
+#define XJP_ISNEATBANG (XJP_PortraitH == 812 || XJP_PortraitH == 896)
 
 
 @interface XJPlayerUtils : NSObject

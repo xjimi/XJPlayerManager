@@ -28,6 +28,8 @@ typedef void(^_Nullable XJPlayerManagerDismiss)(void);
 
 @interface XJPlayerManager : NSObject
 
+@property (nonatomic, assign) BOOL muted;
+
 + (instancetype)shared;
 
 - (void)playInScrollView:(UIScrollView *)scrollView

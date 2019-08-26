@@ -14,6 +14,8 @@ typedef void(^DidTapViewBlock)(void);
 
 @property (nonatomic, weak) IBOutlet UILabel *infoLabel;
 
+@property (weak, nonatomic) IBOutlet UIImageView *infoImageView;
+
 + (instancetype)createInView:(UIView *)inView didTapViewBlock:(DidTapViewBlock)block;
 
 - (void)show;

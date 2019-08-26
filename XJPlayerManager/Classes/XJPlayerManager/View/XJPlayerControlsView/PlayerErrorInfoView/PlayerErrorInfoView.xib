@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,18 +15,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OFU-VX-xir">
-                    <rect key="frame" x="20" y="62" width="280" height="56.5"/>
+                    <rect key="frame" x="20" y="59.5" width="280" height="61"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_network_error" translatesAutoresizingMaskIntoConstraints="NO" id="6iU-un-UZ8">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6iU-un-UZ8">
                             <rect key="frame" x="118.5" y="0.0" width="43" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="33" id="URD-qR-o6j"/>
                                 <constraint firstAttribute="width" constant="43" id="hLq-WI-xC9"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="info" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="II2-n6-4lK">
-                            <rect key="frame" x="0.0" y="40" width="280" height="16.5"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Network Error" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="II2-n6-4lK">
+                            <rect key="frame" x="0.0" y="43" width="280" height="18"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -35,7 +34,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="II2-n6-4lK" secondAttribute="trailing" id="4kb-jX-2GI"/>
-                        <constraint firstItem="II2-n6-4lK" firstAttribute="top" secondItem="6iU-un-UZ8" secondAttribute="bottom" constant="7" id="GtV-s7-5Pa"/>
+                        <constraint firstItem="II2-n6-4lK" firstAttribute="top" secondItem="6iU-un-UZ8" secondAttribute="bottom" constant="10" id="GtV-s7-5Pa"/>
                         <constraint firstItem="6iU-un-UZ8" firstAttribute="top" secondItem="OFU-VX-xir" secondAttribute="top" id="Trl-I6-cEo"/>
                         <constraint firstItem="II2-n6-4lK" firstAttribute="leading" secondItem="OFU-VX-xir" secondAttribute="leading" id="Ug9-Fq-PeL"/>
                         <constraint firstAttribute="bottom" secondItem="II2-n6-4lK" secondAttribute="bottom" id="luX-Jb-JFe"/>
@@ -54,12 +53,10 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="infoImageView" destination="6iU-un-UZ8" id="Kyi-PN-oGO"/>
                 <outlet property="infoLabel" destination="II2-n6-4lK" id="Uts-Xj-muh"/>
             </connections>
-            <point key="canvasLocation" x="45.600000000000001" y="-169.56521739130437"/>
+            <point key="canvasLocation" x="44.799999999999997" y="-170.01499250374815"/>
         </view>
     </objects>
-    <resources>
-        <image name="ic_network_error" width="43" height="33.5"/>
-    </resources>
 </document>

@@ -22,8 +22,10 @@
 - (void)xj_controlsView:(UIView *)controlsView actionPrev:(UIButton *)sender;
 - (void)xj_controlsView:(UIView *)controlsView actionNext:(UIButton *)sender;
 - (void)xj_controlsView:(UIView *)controlsView actionReplay:(UIButton *)sender;
+- (void)xj_controlsView:(UIView *)controlsView actionMute:(UIButton *)sender;
 - (void)xj_controlsView:(UIView *)controlsView actionFullScreen:(UIButton *)sender;
 
+- (void)xj_controlsView:(UIView *)controlsView actionReload:(UIView *)sender;
 - (void)xj_controlsView:(UIView *)controlsView actionShare:(UIButton *)sender;
 - (void)xj_controlsView:(UIView *)controlsView actionError:(UIButton *)sender;
 

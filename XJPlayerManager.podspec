@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XJPlayerManager'
-  s.version          = '0.0.53'
+  s.version          = '0.0.54'
   s.summary          = 'A short description of XJPlayerManager.'
   s.homepage         = 'https://github.com/xjimi/XJPlayerManager'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -22,6 +22,7 @@ Pod::Spec.new do |s|
   s.dependency 'XJScrollViewStateManager'
   s.dependency 'Masonry'
   s.dependency 'YoutubePlayer-in-WKWebView'
+  s.dependency 'youtube-ios-player-helper', '<= 0.1.4'
   s.dependency 'PINRemoteImage', '<= 3.0.0-beta.13'
 
   s.subspec 'XJPlayerAdManager' do |ss|
@@ -45,7 +46,8 @@ Pod::Spec.new do |s|
   end
 
   s.resource_bundles = {
-      s.name + '_resource_image' => ['XJPlayerManager/Assets/*.xcassets']
+      s.name + '_resource_image' => ['XJPlayerManager/Assets/*.xcassets'],
+      s.name + '_resource_xib' => ['XJPlayerManager/Classes/**/**/**/*.xib']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

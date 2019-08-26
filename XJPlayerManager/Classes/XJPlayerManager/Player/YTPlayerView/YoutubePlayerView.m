@@ -6,7 +6,7 @@
 //  Copyright © 2018年 XJIMI. All rights reserved.
 //
 
-#import "YTPlayerView.h"
+#import "YoutubePlayerView.h"
 #import "UIView+XJBasePlayerView.h"
 #import <YoutubePlayer_in_WKWebView/WKYTPlayerView.h>
 #import <Masonry/Masonry.h>
@@ -15,7 +15,7 @@
 
 typedef void(^SeekCompletionHandler)(BOOL);
 
-@interface YTPlayerView () < WKYTPlayerViewDelegate >
+@interface YoutubePlayerView () < WKYTPlayerViewDelegate >
 
 @property (nonatomic, strong) WKYTPlayerView *player;
 
@@ -35,9 +35,12 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 @property (nonatomic, assign) WKYTPlayerState playerState;
 
+@property (nonatomic, assign, getter=isLive) BOOL live;
+
+
 @end
 
-@implementation YTPlayerView
+@implementation YoutubePlayerView
 
 - (void)dealloc
 {
@@ -73,7 +76,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
                      weakSelf.timeLastPlayed = [weakSelf xj_currentTime];
                  }
                  [weakSelf.player loadWithVideoId:weakSelf.videoId
-                                       playerVars:[YTPlayerView playerVars]];
+                                       playerVars:[YoutubePlayerView playerVars]];
              }
          }
      }];
@@ -81,7 +84,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 + (NSDictionary *)playerVars
 {
-    return @{@"origin" :@"https://www.youtube.com",
+    return @{@"origin"         : @"https://www.youtube.com",
              @"controls"       : @0,
              @"playsinline"    : @1,
              @"autohide"       : @1,
@@ -129,6 +132,10 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 - (void)xj_mute {
     [self.player mute];
+}
+
+- (void)xj_unMute {
+    [self.player unMute];
 }
 
 - (void)xj_seekToTime:(NSTimeInterval)time
@@ -179,9 +186,11 @@ typedef void(^SeekCompletionHandler)(BOOL);
         [self.player mas_updateConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        //[UIView animateWithDuration:.3 animations:^{
-            [self layoutIfNeeded];
-        //}];
+
+        [self layoutIfNeeded];
+        if (self.isLive) {
+            [self.player seekToSeconds:-1 allowSeekAhead:YES];
+        }
     }
 }
 
@@ -193,9 +202,11 @@ typedef void(^SeekCompletionHandler)(BOOL);
             make.bottom.equalTo(self).offset(21);
             make.top.left.right.equalTo(self);
         }];
-        //[UIView animateWithDuration:.3 animations:^{
-            [self layoutIfNeeded];
-        //}];
+
+        [self layoutIfNeeded];
+        if (self.isLive) {
+            [self.player seekToSeconds:-1 allowSeekAhead:YES];
+        }
     }
 }
 
@@ -219,6 +230,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
     __weak typeof(self)weakSelf = self;
     [self.player getDuration:^(NSTimeInterval duration, NSError * _Nullable error) {
 
+        weakSelf.live = !duration;
         weakSelf.readyToPlay = YES;
         weakSelf.duration = duration;
         [weakSelf playerViewChangedStatus:XJPlayerStatusReadyToPlay];
@@ -232,7 +244,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 - (void)playerView:(WKYTPlayerView *)playerView didChangeToState:(WKYTPlayerState)state
 {
-    //NSLog(@"WKYTPlayerState : %ld", (long)state);
+    NSLog(@"WKYTPlayerState : %ld", (long)state);
     switch (state)
     {
         case kWKYTPlayerStateBuffering:

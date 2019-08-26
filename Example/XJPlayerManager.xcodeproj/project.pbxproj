@@ -44,7 +44,7 @@
 		90351A0A22FF080A002C9615 /* UIView+PlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E322FF080A002C9615 /* UIView+PlayerControlsView.m */; };
 		90351A0B22FF080A002C9615 /* UIButton+CenterSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E522FF080A002C9615 /* UIButton+CenterSpace.m */; };
 		90351A0C22FF080A002C9615 /* UIView+XJBasePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E622FF080A002C9615 /* UIView+XJBasePlayerView.m */; };
-		90351A0D22FF080A002C9615 /* YTPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519EC22FF080A002C9615 /* YTPlayerView.m */; };
+		90351A0D22FF080A002C9615 /* YoutubePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519EC22FF080A002C9615 /* YoutubePlayerView.m */; };
 		90351A0E22FF080A002C9615 /* ic_buffering.psd in Resources */ = {isa = PBXBuildFile; fileRef = 903519EF22FF080A002C9615 /* ic_buffering.psd */; };
 		90351A0F22FF080A002C9615 /* XJBufferingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F022FF080A002C9615 /* XJBufferingView.m */; };
 		90351A1022FF080A002C9615 /* XJPlayerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F322FF080A002C9615 /* XJPlayerUtils.m */; };
@@ -143,8 +143,8 @@
 		903519E722FF080A002C9615 /* UIView+PlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PlayerControlsView.h"; sourceTree = "<group>"; };
 		903519E822FF080A002C9615 /* XJPlayerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdapter.h; sourceTree = "<group>"; };
 		903519E922FF080A002C9615 /* XJPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerManager.h; sourceTree = "<group>"; };
-		903519EB22FF080A002C9615 /* YTPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTPlayerView.h; sourceTree = "<group>"; };
-		903519EC22FF080A002C9615 /* YTPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTPlayerView.m; sourceTree = "<group>"; };
+		903519EB22FF080A002C9615 /* YoutubePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoutubePlayerView.h; sourceTree = "<group>"; };
+		903519EC22FF080A002C9615 /* YoutubePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoutubePlayerView.m; sourceTree = "<group>"; };
 		903519EE22FF080A002C9615 /* XJBufferingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBufferingView.h; sourceTree = "<group>"; };
 		903519EF22FF080A002C9615 /* ic_buffering.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = ic_buffering.psd; sourceTree = "<group>"; };
 		903519F022FF080A002C9615 /* XJBufferingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJBufferingView.m; sourceTree = "<group>"; };
@@ -489,8 +489,8 @@
 		903519EA22FF080A002C9615 /* YTPlayerView */ = {
 			isa = PBXGroup;
 			children = (
-				903519EB22FF080A002C9615 /* YTPlayerView.h */,
-				903519EC22FF080A002C9615 /* YTPlayerView.m */,
+				903519EB22FF080A002C9615 /* YoutubePlayerView.h */,
+				903519EC22FF080A002C9615 /* YoutubePlayerView.m */,
 			);
 			path = YTPlayerView;
 			sourceTree = "<group>";
@@ -740,6 +740,7 @@
 				"${BUILT_PRODUCTS_DIR}/XJTableViewManager/XJTableViewManager.framework",
 				"${BUILT_PRODUCTS_DIR}/XJUtil/XJUtil.framework",
 				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
+				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -757,6 +758,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJTableViewManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJUtil.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -800,7 +802,7 @@
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				903F923822F56AD00001B44F /* AlbumHeader.m in Sources */,
 				903F923722F56AD00001B44F /* AlbumModel.m in Sources */,
-				90351A0D22FF080A002C9615 /* YTPlayerView.m in Sources */,
+				90351A0D22FF080A002C9615 /* YoutubePlayerView.m in Sources */,
 				90351A0122FF080A002C9615 /* XJSliderTrackView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

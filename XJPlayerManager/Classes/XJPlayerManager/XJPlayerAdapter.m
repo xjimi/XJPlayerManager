@@ -7,7 +7,7 @@
 //
 
 #import "XJPlayerAdapter.h"
-#import "YTPlayerView.h"
+#import "YoutubePlayerView.h"
 #import "AVPlayerView.h"
 #import "XJPlayerManager.h"
 
@@ -118,7 +118,7 @@
                         }
                         
                         if (targetPosY <= -rnageH ||
-                            targetRect.origin.y + rnageH >= self.scrollView.frame.size.height)
+                            targetPosY + rnageH >= self.scrollView.frame.size.height)
                         {
                             //NSLog(@"- 關 %ld", (long)indexPath.row);
                             [pv systemPause];
@@ -152,15 +152,16 @@
             if (playerContainer)
             {
                 CGRect targetRect = [playerContainer convertRect:playerContainer.bounds toView:self.rootViewController.view];
+                CGFloat targetPosY = targetRect.origin.y - self.scrollView.frame.origin.y;
                 CGFloat rnageH = targetRect.size.height * .5;
-                if (targetRect.origin.y <= -rnageH)
+                if (targetPosY <= -rnageH)
                 {
                     closeIndexPath = indexPath;
                     //playerView.hidden = NO;
                     //NSLog(@"tg %ld : %f : %@", [tableView indexPathForCell:videoCell].row, maxH, NSStringFromCGRect(targetRect));
                     //NSLog(@"- 關 %ld", closeIndexPath.row);
                 }
-                else if (targetRect.origin.y + rnageH <= self.scrollView.frame.size.height)
+                else if (targetPosY + rnageH <= self.scrollView.frame.size.height)
                 {
                     if (!playableIndexPath) {
                         playableIndexPath = indexPath;
@@ -281,6 +282,15 @@
 {
     self.systemPause = NO;
     [self scrollViewDidScroll];
+}
+
+- (void)muted:(BOOL)muted
+{
+    for (XJPlayerView *player in self.players.allValues) {
+        if (player.playable) {
+            player.muted = muted;
+        }
+    }
 }
 
 - (void)remove
@@ -406,7 +416,7 @@
             player = [[AVPlayerView alloc] init];
             break;
         case XJPlayerTypeYoutube:
-            player = [[YTPlayerView alloc] init];
+            player = [[YoutubePlayerView alloc] init];
             break;
         default:
             break;

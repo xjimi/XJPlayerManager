@@ -29,8 +29,16 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _shared = [[XJPlayerManager alloc] init];
+        _shared.muted = YES;
+
     });
     return _shared;
+}
+
+- (void)setMuted:(BOOL)muted
+{
+    _muted = muted;
+    [self.currentPlayerAdapter muted:muted];
 }
 
 - (void)playInScrollView:(UIScrollView *)scrollView

@@ -17,6 +17,7 @@
 #import "UIImageView+XJPlayerImageManager.h"
 #import "XJPlayerUtils.h"
 #import "XJPlayerBundleResource.h"
+#import "PlayerErrorInfoView.h"
 
 @interface XJPlayerControlsView ()
 
@@ -44,7 +45,9 @@
 
 @property (nonatomic, strong) UIButton                *btn_replay;
 
-@property (nonatomic, strong) UIButton                *btn_error;
+@property (nonatomic, strong) UIButton                *btn_mute;
+
+@property (nonatomic, strong) PlayerErrorInfoView     *errorView;
 
 
 @property (nonatomic, strong) XJSlider                *slider;
@@ -101,7 +104,6 @@
 {
     [super layoutSubviews];
     [self makeConstraints];
-    [self.btn_error centerImageWithTitleGap:10 imageOnTop:YES];
 }
 
 - (void)xj_controlsReset
@@ -421,18 +423,15 @@
     self.titleLabel.hidden = NO;
     self.btn_fullScreen.selected = YES;
     //self.slider.fullScreenMode = YES;
-
     if (XJP_ISNEATBANG && self.bounds.size.width)
     {
         CGFloat height = XJP_PortraitW;
         CGFloat mw = roundf(height * (16.0 / 9.0));
-        [self.slider mas_updateConstraints:^(MASConstraintMaker *make) {
-
+        [self.slider mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.mas_top);
             make.bottom.equalTo(self.mas_bottom);
             make.centerX.equalTo(self);
             make.width.mas_equalTo(mw);
-
         }];
         [self layoutIfNeeded];
     }
@@ -440,9 +439,9 @@
 
 - (void)hideError
 {
-    if (self.btn_error.alpha == 0) return;
+    if (self.errorView.alpha == 0) return;
     [UIView animateWithDuration:.3 animations:^{
-        self.btn_error.alpha = 0.0f;
+        self.errorView.alpha = 0.0f;
     }];
 }
 
@@ -451,7 +450,7 @@
     //有可能錯誤發生在ReadyToPlay前
     self.userInteractionEnabled = YES;
     [UIView animateWithDuration:.3 animations:^{
-        self.btn_error.alpha = 1.0f;
+        self.errorView.alpha = 1.0f;
     }];
 }
 
@@ -561,6 +560,14 @@
 {
     if ([self.delegate respondsToSelector:@selector(xj_controlsView:actionPrev:)]) {
         [self.delegate xj_controlsView:self actionPrev:sender];
+    }
+}
+
+- (void)action_mute:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    if ([self.delegate respondsToSelector:@selector(xj_controlsView:actionMute:)]) {
+        [self.delegate xj_controlsView:self actionMute:sender];
     }
 }
 
@@ -758,6 +765,19 @@
     return _btn_prev;
 }
 
+- (UIButton *)btn_mute
+{
+    if (!_btn_mute)
+    {
+        _btn_mute = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_btn_mute setImage:[XJPlayerBundleResource imageNamed:@"ic_player_unMute"] forState:UIControlStateNormal];
+        [_btn_mute setImage:[XJPlayerBundleResource imageNamed:@"ic_player_mute"] forState:UIControlStateSelected];
+        [_btn_mute addTarget:self action:@selector(action_mute:) forControlEvents:UIControlEventTouchUpInside];
+        _btn_mute.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    return _btn_mute;
+}
+
 - (UILabel *)timeLabel
 {
     if (!_timeLabel)
@@ -792,7 +812,14 @@
     [self addSubview:self.placeholderView];
     [self addSubview:self.maskView];
     [self addSubview:self.slider];
-    [self addSubview:self.btn_error];
+
+    __weak typeof(self)weakSelf = self;
+    self.errorView = [PlayerErrorInfoView createInView:self didTapViewBlock:^{
+        
+        if ([self.delegate respondsToSelector:@selector(xj_controlsView:actionReload:)]) {
+            [self.delegate xj_controlsView:weakSelf actionReload:weakSelf.errorView];
+        }
+    }];
 
     [self addSliderGesture];
     [self.slider addSubview:self.controlsView];
@@ -809,6 +836,7 @@
     [self.bottomControlsView addSubview:self.btn_play];
     [self.bottomControlsView addSubview:self.btn_prev];
     [self.bottomControlsView addSubview:self.btn_next];
+    [self.bottomControlsView addSubview:self.btn_mute];
     [self.bottomControlsView addSubview:self.slider.mpVolumeView];
 
     [self.controlsView addSubview:self.btn_replay];
@@ -841,10 +869,6 @@
             make.edges.equalTo(self);
         }
 
-    }];
-
-    [self.btn_error mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
 
     [self.controlsView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -907,8 +931,15 @@
         make.width.height.equalTo(self.bottomControlsView.mas_height);
     }];
 
-    [self.slider.mpVolumeView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.btn_mute mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.equalTo(self.btn_fullScreen.mas_leading).offset(-10);
+        make.centerY.equalTo(self.bottomControlsView.mas_centerY);
+        make.height.mas_equalTo(self.bottomControlsView.mas_height);
+        make.width.mas_equalTo(self.bottomControlsView.mas_height);
+    }];
+
+    [self.slider.mpVolumeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.trailing.equalTo(self.btn_mute.mas_leading).offset(-10);
         make.centerY.equalTo(self.bottomControlsView.mas_centerY);
         make.width.height.equalTo(self.bottomControlsView.mas_height);
     }];

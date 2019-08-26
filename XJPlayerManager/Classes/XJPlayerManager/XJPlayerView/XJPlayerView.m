@@ -18,7 +18,8 @@
 #import <XJScrollViewStateManager/XJNetworkStatusMonitor.h>
 #import <XJUtil/UIWindow+XJVisible.h>
 #import <XJUtil/UIViewController+XJStatusBar.h>
-#import "YTPlayerView.h"
+#import "YoutubePlayerView.h"
+#import "XJPlayerManager.h"
 
 @interface XJPlayerView () < XJBasePlayerViewDelegate, XJPlayerControlsViewDelegate, XJPlayerGestureDelegate >
 
@@ -303,7 +304,7 @@
     //不改變任何播放變數，單純控制UI與播放影片
     if (isPlay)
     {
-        if ([self.player isKindOfClass:[YTPlayerView class]]) {
+        if ([self.player isKindOfClass:[YoutubePlayerView class]]) {
             [self audioSessionCategoryPlaybackEnabled:NO];
         } else {
             [self audioSessionCategoryPlaybackEnabled:YES];
@@ -461,7 +462,7 @@
         [self.controlView xj_controlsSliderPorgressEnabled:YES];
     }
 
-    self.muted = self.playerModel.muted;
+    self.muted = [XJPlayerManager shared].muted;
     [self safePlay];
 
     //由上層決定是否要播放
@@ -708,6 +709,10 @@
 
     if (self.pauseByUser) [self pause];
     else [self play];
+}
+
+- (void)xj_controlsView:(UIView *)controlsView actionMute:(UIButton *)sender {
+    self.muted = sender.selected;
 }
 
 - (void)xj_controlsView:(UIView *)controlsView actionFullScreen:(UIButton *)sender

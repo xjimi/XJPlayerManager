@@ -7,7 +7,8 @@
 //
 
 #import "XJPlayerAnimatedTransitioning.h"
-#import "YTPlayerView.h"
+#import "YoutubePlayerView.h"
+#import "XJPlayerUtils.h"
 
 @interface XJPlayerAnimatedTransitioning ()
 
@@ -90,10 +91,10 @@
 
     UIView *containerView = [transitionContext containerView];
     [containerView insertSubview:toView belowSubview:fromView];
+
     toView.transform = CGAffineTransformIdentity;
     toView.center = containerView.center;
     toView.frame = containerView.bounds;
-
     [fromView layoutIfNeeded];
     [toView layoutIfNeeded];
 
@@ -102,13 +103,18 @@
 
     BOOL isYoutuePlayer = NO;
     UIView *bgView = nil;
-    if ([self.playerView.player isKindOfClass:[YTPlayerView class]])
+    if ([self.playerView.player isKindOfClass:[YoutubePlayerView class]])
     {
         isYoutuePlayer = YES;
         bgView = [[UIView alloc] initWithFrame:self.playerView.bounds];
         bgView.backgroundColor = [UIColor blackColor];
         [self.playerView insertSubview:bgView atIndex:1];
         bgView.alpha = 0.0f;
+
+        CGRect playerFrame = self.playerView.frame;
+        playerFrame.origin.y -= 44.0f;
+        playerFrame.origin.x -= 84.0f;
+        self.playerView.frame = playerFrame;
     }
 
     NSTimeInterval duration = [self transitionDuration:transitionContext] - 0.3f;
@@ -121,10 +127,10 @@
          fromView.frame = targetRect;
          [fromView layoutIfNeeded];
          bgView.alpha = 1.0f;
-         bgView.frame = targetBounds;
          if (!isYoutuePlayer) {
-             [self.playerView refreshPlayerFrame:targetBounds];
          }
+         [self.playerView refreshPlayerFrame:targetBounds];
+
 
      } completion:^(BOOL finished) {
 

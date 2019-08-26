@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YTPlayerView : UIView
+@interface YoutubePlayerView : UIView
 
 @end

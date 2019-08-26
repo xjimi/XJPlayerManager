@@ -8,6 +8,7 @@
 
 #import "PlayerErrorInfoView.h"
 #import <Masonry/Masonry.h>
+#import "XJPlayerBundleResource.h"
 
 @interface PlayerErrorInfoView () < UIGestureRecognizerDelegate >
 
@@ -19,14 +20,19 @@
 
 + (instancetype)createInView:(UIView *)inView didTapViewBlock:(DidTapViewBlock)block
 {
-    PlayerErrorInfoView *nibView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:nil options:nil] firstObject];
+    PlayerErrorInfoView *nibView  = (PlayerErrorInfoView *)[XJPlayerBundleResource nibViewWithNamed:NSStringFromClass(self)];
+
     nibView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [inView addSubview:nibView];
     nibView.backgroundColor = [UIColor blackColor];
     nibView.frame = inView.bounds;
+    UIImage *reload = [XJPlayerBundleResource imageNamed:@"ic_reload_light"];
+    nibView.infoImageView.image = reload;
     nibView.alpha = 0.0f;
-    if (block) {
+    if (block)
+    {
         nibView.didTapViewBlock = block;
+        [nibView addGesture];
     }
     return nibView;
 }
@@ -40,7 +46,9 @@
     [self addGestureRecognizer:singleTap];
 }
 
-- (void)tapDetected:(UIGestureRecognizer *)gestureRecognizer {
+- (void)tapDetected:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self hide];
     if (self.didTapViewBlock) self.didTapViewBlock();
 }
 
