@@ -28,9 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)systemPlay;
 
-- (void)muted:(BOOL)muted;
-
 - (void)remove;
+
+- (void)mute:(BOOL)mute;
 
 + (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
                             playerContainer:(UIView *)playerContainer

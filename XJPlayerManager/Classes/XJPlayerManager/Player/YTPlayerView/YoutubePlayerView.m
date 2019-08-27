@@ -10,7 +10,7 @@
 #import "UIView+XJBasePlayerView.h"
 #import <YoutubePlayer_in_WKWebView/WKYTPlayerView.h>
 #import <Masonry/Masonry.h>
-#import <XJScrollViewStateManager/XJNetworkStatusMonitor.h>
+#import <XJUtil/XJNetworkStatusMonitor.h>
 #import "XJPlayerUtils.h"
 
 typedef void(^SeekCompletionHandler)(BOOL);
@@ -244,7 +244,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 - (void)playerView:(WKYTPlayerView *)playerView didChangeToState:(WKYTPlayerState)state
 {
-    NSLog(@"WKYTPlayerState : %ld", (long)state);
+    //NSLog(@"WKYTPlayerState : %ld", (long)state);
     switch (state)
     {
         case kWKYTPlayerStateBuffering:

@@ -19,6 +19,8 @@
 #import "XJPlayerFullScreenViewController.h"
 #import "XJPlayerUtils.h"
 #import <XJUtil/UIViewController+XJStatusBar.h>
+#import "XJPlayerManager.h"
+#import "CustomControlsView.h"
 
 @interface DramasViewController () < XJCollectionViewDelegate >
 
@@ -38,6 +40,8 @@
     
     [self createCollectionView];
     [self reloadData];
+
+    XJPlayerMANAGER.defaultControlsView = [CustomControlsView class];
 
     self.playerManager = [[XJPlayerManager alloc] init];
 }
@@ -138,8 +142,10 @@
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:imageUrl];
+        model.playerModel.preRollAdUrl = @"https://pubads.g.doubleclick.net/gampad/ads?sz=1024x768&iu=/123939770/Vidol-test20180420&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]";
+        
         CGFloat vw = CGRectGetWidth(self.view.frame) - 40.0f;
-        CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70;
+        CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70.0f;
         XJCollectionViewCellModel *cellModel = [XJCollectionViewCellModel
                                                 modelWithReuseIdentifier:[DramaCell identifier]
                                                 size:CGSizeMake(vw, cellh)

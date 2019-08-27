@@ -47,14 +47,13 @@
 
 @property (nonatomic, strong) UIButton                *btn_mute;
 
-@property (nonatomic, strong) PlayerErrorInfoView     *errorView;
-
-
 @property (nonatomic, strong) XJSlider                *slider;
 
 @property (nonatomic, strong) UILabel                 *timeLabel;
 
 @property (nonatomic, strong) UILabel                 *sliderTimeLabel;
+
+@property (nonatomic, strong) PlayerErrorInfoView     *errorView;
 
 
 @property (nonatomic, assign, getter=isShowing) BOOL  showing;
@@ -317,6 +316,10 @@
     self.titleLabel.text = title ? : @"";
 }
 
+- (void)xj_controlsMute:(BOOL)mute {
+    self.btn_mute.selected = mute;
+}
+
 - (void)xj_controlsShowCoverImageWithUrl:(NSString *)url
 {
     if (!url)
@@ -471,8 +474,8 @@
                      totalTime:(NSInteger)totalTime
                    sliderValue:(CGFloat)value
 {
-    NSString *curTimeStr = [XJPlayerControlsView formatTime:currentTime];
-    NSString *durTimeStr =  [XJPlayerControlsView formatTime:totalTime];
+    NSString *curTimeStr = [XJPlayerUtils videoFormatTime:currentTime];
+    NSString *durTimeStr =  [XJPlayerUtils videoFormatTime:totalTime];
     NSString *timeStr = [NSString stringWithFormat:@"%@ / %@", curTimeStr, durTimeStr];
     self.timeLabel.text = timeStr;
     //playingProgress 紀錄正在播放的時間
@@ -512,7 +515,7 @@
 - (void)xj_controlsDraggedTime:(NSInteger)draggedTime
                    sliderValue:(CGFloat)value
 {
-    NSString *curTimeStr = [XJPlayerControlsView formatTime:draggedTime];
+    NSString *curTimeStr = [XJPlayerUtils videoFormatTime:draggedTime];
     self.sliderTimeLabel.text = curTimeStr;
 
     CGFloat vw = self.slider.bounds.size.width;
@@ -531,7 +534,7 @@
 - (void)xj_controlsDraggedTime:(NSInteger)draggedTime
                      totalTime:(NSInteger)totalTime
 {
-    NSString *dragTimeStr = [XJPlayerControlsView formatTime:draggedTime];
+    NSString *dragTimeStr = [XJPlayerUtils videoFormatTime:draggedTime];
     self.sliderTimeLabel.text = dragTimeStr;
 }
 
@@ -604,22 +607,6 @@
 - (void)action_back:(UIButton *)sender
 {
     [self action_fullScreen:self.btn_fullScreen];
-}
-
-+ (NSString *)formatTime:(NSTimeInterval)time
-{
-    time = isnan(time) ? 0 : time;
-    NSInteger hr  = floor(time / 60.0f / 60.0f);
-    NSInteger min = (NSInteger)(time / 60.0f) % 60;
-    NSInteger sec = (NSInteger)time % 60;
-
-    NSString *timeStr;
-    if (hr > 0) {
-        timeStr = [NSString stringWithFormat:@"%02zd:%02zd:%02zd", hr, min, sec];
-    } else {
-        timeStr = [NSString stringWithFormat:@"%02zd:%02zd", min, sec];
-    }
-    return timeStr;
 }
 
 #pragma mark - create controls view
@@ -816,8 +803,8 @@
     __weak typeof(self)weakSelf = self;
     self.errorView = [PlayerErrorInfoView createInView:self didTapViewBlock:^{
         
-        if ([self.delegate respondsToSelector:@selector(xj_controlsView:actionReload:)]) {
-            [self.delegate xj_controlsView:weakSelf actionReload:weakSelf.errorView];
+        if ([weakSelf.delegate respondsToSelector:@selector(xj_controlsView:actionReload:)]) {
+            [weakSelf.delegate xj_controlsView:weakSelf actionReload:weakSelf.errorView];
         }
     }];
 
@@ -834,10 +821,12 @@
     [self.controlsView addSubview:self.bottomControlsView];
     [self.bottomControlsView addSubview:self.btn_fullScreen];
     [self.bottomControlsView addSubview:self.btn_play];
+    /*
     [self.bottomControlsView addSubview:self.btn_prev];
     [self.bottomControlsView addSubview:self.btn_next];
-    [self.bottomControlsView addSubview:self.btn_mute];
     [self.bottomControlsView addSubview:self.slider.mpVolumeView];
+     */
+    [self.bottomControlsView addSubview:self.btn_mute];
 
     [self.controlsView addSubview:self.btn_replay];
 }
@@ -848,7 +837,8 @@
     self.isMakeConstraints = YES;
 
     [self.placeholderView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
+        make.top.bottom.centerX.equalTo(self);
+        make.width.equalTo(self.mas_height).multipliedBy(1.7777);
     }];
 
     [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -878,7 +868,7 @@
 
     [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bottomControlsView);
-        make.leading.equalTo(self.btn_next.mas_trailing).offset(10);
+        make.leading.equalTo(self.btn_play.mas_trailing).offset(10);
         make.width.mas_equalTo(150);
         make.height.equalTo(self.bottomControlsView.mas_height);
     }];
@@ -912,7 +902,7 @@
         make.centerY.equalTo(self.bottomControlsView.mas_centerY);
         make.width.height.mas_equalTo(self.bottomControlsView.mas_height);
     }];
-
+    /*
     [self.btn_prev mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.equalTo(self.btn_play.mas_trailing).offset(5);
         make.centerY.equalTo(self.bottomControlsView.mas_centerY);
@@ -924,7 +914,7 @@
         make.centerY.equalTo(self.bottomControlsView.mas_centerY);
         make.width.height.mas_equalTo(self.bottomControlsView.mas_height);
     }];
-
+     */
     [self.btn_fullScreen mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.equalTo(self.bottomControlsView.mas_trailing);
         make.centerY.equalTo(self.bottomControlsView.mas_centerY);
@@ -937,12 +927,13 @@
         make.height.mas_equalTo(self.bottomControlsView.mas_height);
         make.width.mas_equalTo(self.bottomControlsView.mas_height);
     }];
-
+    
+    /*
     [self.slider.mpVolumeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.trailing.equalTo(self.btn_mute.mas_leading).offset(-10);
         make.centerY.equalTo(self.bottomControlsView.mas_centerY);
         make.width.height.equalTo(self.bottomControlsView.mas_height);
-    }];
+    }];*/
 
     [self.btn_replay mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.controlsView);

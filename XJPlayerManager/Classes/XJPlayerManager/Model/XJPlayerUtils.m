@@ -31,4 +31,20 @@
     return link;
 }
 
++ (NSString *)videoFormatTime:(NSTimeInterval)time
+{
+    time = isnan(time) ? 0 : time;
+    NSInteger hr  = floor(time / 60.0f / 60.0f);
+    NSInteger min = (NSInteger)(time / 60.0f) % 60;
+    NSInteger sec = (NSInteger)time % 60;
+
+    NSString *timeStr;
+    if (hr > 0) {
+        timeStr = [NSString stringWithFormat:@"%02zd:%02zd:%02zd", hr, min, sec];
+    } else {
+        timeStr = [NSString stringWithFormat:@"%02zd:%02zd", min, sec];
+    }
+    return timeStr;
+}
+
 @end

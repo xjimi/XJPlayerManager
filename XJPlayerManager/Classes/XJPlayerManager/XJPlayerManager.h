@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-//#define XJPlayerMANAGER [XJPlayerManager shared]
+#define XJPlayerMANAGER [XJPlayerManager shared]
 
 typedef void(^_Nullable XJPlayerManagerDismiss)(void);
 
@@ -28,7 +28,10 @@ typedef void(^_Nullable XJPlayerManagerDismiss)(void);
 
 @interface XJPlayerManager : NSObject
 
-@property (nonatomic, assign) BOOL muted;
+@property (nonatomic, assign, getter=isMuted) BOOL muted;
+
+@property (nonatomic, assign) Class defaultControlsView;
+
 
 + (instancetype)shared;
 
@@ -44,6 +47,8 @@ typedef void(^_Nullable XJPlayerManagerDismiss)(void);
 - (void)systemPlay;
 
 - (void)remove;
+
+- (void)mute:(BOOL)mute;
 
 @end
 

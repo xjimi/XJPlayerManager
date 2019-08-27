@@ -10,6 +10,4 @@
 
 @interface XJPlayerControlsView : UIView
 
-+ (NSString *)formatTime:(NSTimeInterval)time;
-
 @end

@@ -7,8 +7,10 @@
 //
 
 #import "XJPlayerAdManager.h"
+#import <Masonry/Masonry.h>
 #import <GoogleInteractiveMediaAds/GoogleInteractiveMediaAds.h>
 //#import <FBAudienceNetwork/FBAudienceNetwork.h>
+#import "XJPlayerManager.h"
 
 typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
     XJPlayerAdSourceNone,
@@ -24,7 +26,7 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
 
 @property(nonatomic, strong) IMAAdsManager *imaManager;
 
-@property (nonatomic, getter=isAdPlaying, assign) BOOL adPlaying;
+@property (nonatomic, assign, getter=isAdPlaying) BOOL adPlaying;
 
 @property (nonatomic, weak) UIView *adContainer;
 
@@ -44,6 +46,8 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
 
 @property (nonatomic, assign) XJPlayerAdSource adSource;
 
+@property (nonatomic, strong) UIActivityIndicatorView *indicatrView;
+
 @end
 
 @implementation XJPlayerAdManager
@@ -59,6 +63,7 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
 {
     XJPlayerAdManager *adManager = [[XJPlayerAdManager alloc] init];
     adManager.adContainer = adContainer;
+    [adManager createView];
     adManager.adViewController = adViewController;
     return adManager;
 }
@@ -72,6 +77,14 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
         [self addNotification];
     }
     return self;
+}
+
+- (void)createView
+{
+    [self.adContainer addSubview:self.indicatrView];
+    [self.indicatrView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.adContainer);
+    }];
 }
 
 - (void)pause {
@@ -88,7 +101,9 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
     {
         case XJPlayerAdSourceGoogle:
         {
-            if (self.imaManager) {
+            if (self.imaManager)
+            {
+                self.imaManager.volume = !XJPlayerMANAGER.isMuted;
                 [self.imaManager start];
             }
             break;
@@ -116,10 +131,11 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
     if (!adTagUrl.length || self.requestAdUrl) return;
     BOOL isPlayed = [self.adPlayedUrls[adTagUrl] boolValue];
     if (self.isAdPlaying || isPlayed) return;
+
+    [self.indicatrView startAnimating];
     self.requestAdUrl = adTagUrl;
 
     self.adSource = XJPlayerAdSourceGoogle;
-    
     IMAAdDisplayContainer *adDisplayContainer =
     [[IMAAdDisplayContainer alloc] initWithAdContainer:self.adContainer companionSlots:nil];
     IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:adTagUrl
@@ -172,7 +188,7 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
             self.needResumeIMAAd = YES;
             return;
         }
-        
+
         // 由playAD()控制
         if ([self.delegate respondsToSelector:@selector(xj_adManagerDidFinishLoading:)]) {
             [self.delegate xj_adManagerDidFinishLoading:self];
@@ -202,9 +218,11 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
 {
     NSLog(@"AdsManager = Resume");
     self.adPlaying = NO;
+    self.preRoll = NO;
     self.needResumeIMAAd = NO;
     [self recordAdPlayedUrl];
     [self removeIMAAD];
+    [self.indicatrView stopAnimating];
 
     if ([self.delegate respondsToSelector:@selector(xj_adManagerDidEnd:)]) {
         [self.delegate xj_adManagerDidEnd:self];
@@ -231,6 +249,15 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
 
 - (void)loadInstreamAd
 {
+    self.adPlaying = NO;
+    self.preRoll = NO;
+    self.needResumeIMAAd = NO;
+    [self.indicatrView stopAnimating];
+
+    if ([self.delegate respondsToSelector:@selector(xj_adManagerDidFail:)]) {
+        [self.delegate xj_adManagerDidFail:self];
+    }
+
     /*
     [self removeIMAAD];
     
@@ -360,5 +387,16 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
     [FBAdSettings addTestDevice:[FBAdSettings testDeviceHash]];
 }
 */
+
+
+- (UIActivityIndicatorView *)indicatrView
+{
+    if (!_indicatrView)
+    {
+        _indicatrView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _indicatrView.hidesWhenStopped = YES;
+    }
+    return _indicatrView;
+}
 
 @end

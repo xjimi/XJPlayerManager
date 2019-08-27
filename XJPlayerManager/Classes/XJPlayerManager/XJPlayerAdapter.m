@@ -284,11 +284,11 @@
     [self scrollViewDidScroll];
 }
 
-- (void)muted:(BOOL)muted
+- (void)mute:(BOOL)mute
 {
     for (XJPlayerView *player in self.players.allValues) {
         if (player.playable) {
-            player.muted = muted;
+            player.muted = mute;
         }
     }
 }
@@ -399,7 +399,7 @@
                          rootViewController:(UIViewController *)rootViewController
 {
     return [XJPlayerAdapter playerViewWithPlayerModel:playerModel
-                                          controlView:nil
+                                          controlView:[[XJPlayerMANAGER.defaultControlsView alloc] init]
                                       playerContainer:playerContainer
                                    rootViewController:rootViewController];
 }

@@ -62,8 +62,6 @@ typedef NS_ENUM(NSInteger, XJPlayerStatus) {
 
 @property (nonatomic, readonly, getter=isDragged) BOOL dragged;
 
-@property (nonatomic, readonly) BOOL isAdDisplaying;
-
 @property (nonatomic, readonly) BOOL isReadyToPlay;
 
 @property (nonatomic, readonly) BOOL isStatusFailed;

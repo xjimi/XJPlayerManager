@@ -45,7 +45,6 @@
 		90351A0B22FF080A002C9615 /* UIButton+CenterSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E522FF080A002C9615 /* UIButton+CenterSpace.m */; };
 		90351A0C22FF080A002C9615 /* UIView+XJBasePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E622FF080A002C9615 /* UIView+XJBasePlayerView.m */; };
 		90351A0D22FF080A002C9615 /* YoutubePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519EC22FF080A002C9615 /* YoutubePlayerView.m */; };
-		90351A0E22FF080A002C9615 /* ic_buffering.psd in Resources */ = {isa = PBXBuildFile; fileRef = 903519EF22FF080A002C9615 /* ic_buffering.psd */; };
 		90351A0F22FF080A002C9615 /* XJBufferingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F022FF080A002C9615 /* XJBufferingView.m */; };
 		90351A1022FF080A002C9615 /* XJPlayerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F322FF080A002C9615 /* XJPlayerUtils.m */; };
 		90351A1122FF080A002C9615 /* XJPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F422FF080A002C9615 /* XJPlayerModel.m */; };
@@ -58,6 +57,8 @@
 		903F923922F56AD00001B44F /* AlbumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 903F923122F56AD00001B44F /* AlbumCell.xib */; };
 		903F923A22F56AD00001B44F /* AlbumHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 903F923422F56AD00001B44F /* AlbumHeader.xib */; };
 		903F923B22F56AD00001B44F /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F923522F56AD00001B44F /* AlbumCell.m */; };
+		90D2AD732314EA63008602A6 /* CustomControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD722314EA63008602A6 /* CustomControlsView.m */; };
+		90D2AD762315448E008602A6 /* XJPlayerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD752315448E008602A6 /* XJPlayerAdManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,7 +147,6 @@
 		903519EB22FF080A002C9615 /* YoutubePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoutubePlayerView.h; sourceTree = "<group>"; };
 		903519EC22FF080A002C9615 /* YoutubePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoutubePlayerView.m; sourceTree = "<group>"; };
 		903519EE22FF080A002C9615 /* XJBufferingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBufferingView.h; sourceTree = "<group>"; };
-		903519EF22FF080A002C9615 /* ic_buffering.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = ic_buffering.psd; sourceTree = "<group>"; };
 		903519F022FF080A002C9615 /* XJBufferingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJBufferingView.m; sourceTree = "<group>"; };
 		903519F222FF080A002C9615 /* XJPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerModel.h; sourceTree = "<group>"; };
 		903519F322FF080A002C9615 /* XJPlayerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerUtils.m; sourceTree = "<group>"; };
@@ -157,8 +157,6 @@
 		903519F922FF080A002C9615 /* XJPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerView.h; sourceTree = "<group>"; };
 		903519FA22FF080A002C9615 /* XJPlayerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdapter.m; sourceTree = "<group>"; };
 		903519FB22FF080A002C9615 /* XJPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerManager.m; sourceTree = "<group>"; };
-		903519FD22FF080A002C9615 /* XJPlayerAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdManager.h; sourceTree = "<group>"; };
-		903519FE22FF080A002C9615 /* XJPlayerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdManager.m; sourceTree = "<group>"; };
 		90351A1722FF1EDB002C9615 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../XJPlayerManager/Frameworks/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		90351A1922FF1EEB002C9615 /* GoogleInteractiveMediaAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInteractiveMediaAds.framework; path = ../XJPlayerManager/Frameworks/GoogleInteractiveMediaAds.framework; sourceTree = "<group>"; };
 		903F922A22F56AD00001B44F /* AlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsViewController.h; sourceTree = "<group>"; };
@@ -171,6 +169,10 @@
 		903F923322F56AD00001B44F /* AlbumHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumHeader.h; sourceTree = "<group>"; };
 		903F923422F56AD00001B44F /* AlbumHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlbumHeader.xib; sourceTree = "<group>"; };
 		903F923522F56AD00001B44F /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
+		90D2AD712314EA63008602A6 /* CustomControlsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomControlsView.h; sourceTree = "<group>"; };
+		90D2AD722314EA63008602A6 /* CustomControlsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomControlsView.m; sourceTree = "<group>"; };
+		90D2AD742315448E008602A6 /* XJPlayerAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdManager.h; sourceTree = "<group>"; };
+		90D2AD752315448E008602A6 /* XJPlayerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdManager.m; sourceTree = "<group>"; };
 		C1B969E6426D19CF3740A7CE /* Pods_XJPlayerManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJPlayerManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1375CB9AACE96D4D2EBC71D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -314,6 +316,8 @@
 				9033598022F9A059007F20CF /* DramasViewController.m */,
 				9033598122F9A059007F20CF /* Model */,
 				9033598422F9A059007F20CF /* View */,
+				90D2AD712314EA63008602A6 /* CustomControlsView.h */,
+				90D2AD722314EA63008602A6 /* CustomControlsView.m */,
 			);
 			path = Drama;
 			sourceTree = "<group>";
@@ -383,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				903519C422FF080A002C9615 /* XJPlayerManager */,
-				903519FC22FF080A002C9615 /* XJPlayerAdManager */,
 			);
 			name = Classes;
 			path = ../../XJPlayerManager/Classes;
@@ -401,6 +404,8 @@
 				903519FA22FF080A002C9615 /* XJPlayerAdapter.m */,
 				903519E922FF080A002C9615 /* XJPlayerManager.h */,
 				903519FB22FF080A002C9615 /* XJPlayerManager.m */,
+				90D2AD742315448E008602A6 /* XJPlayerAdManager.h */,
+				90D2AD752315448E008602A6 /* XJPlayerAdManager.m */,
 			);
 			path = XJPlayerManager;
 			sourceTree = "<group>";
@@ -499,7 +504,6 @@
 			isa = PBXGroup;
 			children = (
 				903519EE22FF080A002C9615 /* XJBufferingView.h */,
-				903519EF22FF080A002C9615 /* ic_buffering.psd */,
 				903519F022FF080A002C9615 /* XJBufferingView.m */,
 			);
 			path = XJBufferingView;
@@ -524,15 +528,6 @@
 				903519F822FF080A002C9615 /* XJBasePlayerViewDelegate.h */,
 			);
 			path = XJPlayerView;
-			sourceTree = "<group>";
-		};
-		903519FC22FF080A002C9615 /* XJPlayerAdManager */ = {
-			isa = PBXGroup;
-			children = (
-				903519FD22FF080A002C9615 /* XJPlayerAdManager.h */,
-				903519FE22FF080A002C9615 /* XJPlayerAdManager.m */,
-			);
-			path = XJPlayerAdManager;
 			sourceTree = "<group>";
 		};
 		903F922922F56AD00001B44F /* Albums */ = {
@@ -620,7 +615,7 @@
 				ORGANIZATIONNAME = xjimi;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = WGW4383NB8;
+						DevelopmentTeam = 4X5X5XJA6V;
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
@@ -654,7 +649,6 @@
 			files = (
 				90351A0622FF080A002C9615 /* PlayerErrorInfoView.xib in Resources */,
 				9033598E22F9A059007F20CF /* DramaCell.xib in Resources */,
-				90351A0E22FF080A002C9615 /* ic_buffering.psd in Resources */,
 				903F923A22F56AD00001B44F /* AlbumHeader.xib in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				9033599122F9A059007F20CF /* DramaHeader.xib in Resources */,
@@ -726,7 +720,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XJPlayerManager_Example/Pods-XJPlayerManager_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${PODS_ROOT}/GoogleAds-IMA-iOS-SDK/GoogleInteractiveMediaAds.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
@@ -736,15 +729,12 @@
 				"${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/XJCollectionViewManager/XJCollectionViewManager.framework",
 				"${BUILT_PRODUCTS_DIR}/XJPlayerManager/XJPlayerManager.framework",
-				"${BUILT_PRODUCTS_DIR}/XJScrollViewStateManager/XJScrollViewStateManager.framework",
 				"${BUILT_PRODUCTS_DIR}/XJTableViewManager/XJTableViewManager.framework",
 				"${BUILT_PRODUCTS_DIR}/XJUtil/XJUtil.framework",
 				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
-				"${BUILT_PRODUCTS_DIR}/youtube-ios-player-helper/youtube_ios_player_helper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleInteractiveMediaAds.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
@@ -754,11 +744,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJCollectionViewManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJPlayerManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJScrollViewStateManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJTableViewManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XJUtil.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/youtube_ios_player_helper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -776,6 +764,7 @@
 				9033599022F9A059007F20CF /* DramaCell.m in Sources */,
 				90351A0022FF080A002C9615 /* XJMarkSlider.m in Sources */,
 				90351A0522FF080A002C9615 /* PlayerErrorInfoView.m in Sources */,
+				90D2AD732314EA63008602A6 /* CustomControlsView.m in Sources */,
 				9034D76423017449000D902C /* XJPlayerBundleResource.m in Sources */,
 				9033598F22F9A059007F20CF /* DramaHeader.m in Sources */,
 				903519FF22FF080A002C9615 /* XJSlider.m in Sources */,
@@ -798,6 +787,7 @@
 				90351A0922FF080A002C9615 /* XJPlayerAnimatedTransitioning.m in Sources */,
 				90351A1022FF080A002C9615 /* XJPlayerUtils.m in Sources */,
 				90351A0A22FF080A002C9615 /* UIView+PlayerControlsView.m in Sources */,
+				90D2AD762315448E008602A6 /* XJPlayerAdManager.m in Sources */,
 				9033598D22F9A059007F20CF /* DramaModel.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				903F923822F56AD00001B44F /* AlbumHeader.m in Sources */,
@@ -932,7 +922,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WGW4383NB8;
+				DEVELOPMENT_TEAM = 4X5X5XJA6V;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/DZNEmptyDataSet\"",
@@ -970,7 +960,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = WGW4383NB8;
+				DEVELOPMENT_TEAM = 4X5X5XJA6V;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleAds-IMA-iOS-SDK",

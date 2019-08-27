@@ -12,16 +12,18 @@
 #import "AVPlayerView.h"
 #import "XJPlayerControlsView.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import <SafariServices/SafariServices.h>
 #import "XJPlayerFullScreenViewController.h"
 #import "XJPlayerGesture.h"
 #import <Masonry/Masonry.h>
-#import <XJScrollViewStateManager/XJNetworkStatusMonitor.h>
+#import <XJUtil/XJNetworkStatusMonitor.h>
 #import <XJUtil/UIWindow+XJVisible.h>
 #import <XJUtil/UIViewController+XJStatusBar.h>
 #import "YoutubePlayerView.h"
 #import "XJPlayerManager.h"
+#import "XJPlayerAdManager.h"
 
-@interface XJPlayerView () < XJBasePlayerViewDelegate, XJPlayerControlsViewDelegate, XJPlayerGestureDelegate >
+@interface XJPlayerView () < XJBasePlayerViewDelegate, XJPlayerControlsViewDelegate, XJPlayerGestureDelegate, XJPlayerAdManagerDelegate >
 
 @property (nonatomic, strong) UIView                 *player;
 
@@ -73,6 +75,8 @@
 
 @property (nonatomic, assign) AVAudioSessionInterruptionType audioSessionInterruptionType;
 
+@property (nonatomic, strong) XJPlayerAdManager *adManager;
+
 @end
 
 @implementation XJPlayerView
@@ -106,7 +110,6 @@
     self.backgroundColor = [UIColor blackColor];
     self.fullScreenEnabled = YES;
     [self addNetworkStatusMonitor];
-    [self addNotifications];
 }
 
 - (void)remove
@@ -255,7 +258,14 @@
 
 - (void)safePlay
 {
-    if (self.isPauseBySystem) {
+    if (self.isAdPlaying)
+    {
+        [self xj_pause];
+        return;
+    }
+
+    if (self.isPauseBySystem)
+    {
         [self systemPause];
         return;
     }
@@ -447,10 +457,15 @@
 
 - (void)processReadyToPlay
 {
+    if (self.playerModel.preRollAdUrl.length) {
+        [self xj_playerView:self.player didPassCuePointTime:0 adUrl:self.playerModel.preRollAdUrl];
+    }
+
     NSTimeInterval duration = [self.player xj_duration];
     NSLog(@" +++ Ready To Play +++ duration : %f", duration);
     if (!self.playerGesture)
     {
+        [self addNotifications];
         self.playerGesture = [XJPlayerGesture initWithView:self];
         self.playerGesture.delegate = self;
         [self.playerGesture addTapGesture];
@@ -462,14 +477,16 @@
         [self.controlView xj_controlsSliderPorgressEnabled:YES];
     }
 
-    self.muted = [XJPlayerManager shared].muted;
-    [self safePlay];
+    self.muted = XJPlayerMANAGER.isMuted;
+    [self.controlView xj_controlsMute:self.muted];
 
     //由上層決定是否要播放
     if ([self.delegate respondsToSelector:@selector(xj_playerViewReadyToPlay:duration:)]) {
         [self.delegate xj_playerViewReadyToPlay:self duration:duration];
     }
 
+    [self safePlay];
+    
     self.player.alpha = 0.0f;
     __weak typeof(self)weakSelf = self;
     [self.controlView xj_controlsHideCoverImageWithCompletion:^{
@@ -562,7 +579,8 @@
 {
     if (self.isStatusFailed ||
         self.status == XJPlayerStatusEnded ||
-        self.hiddenControlsView) return;
+        self.hiddenControlsView ||
+        self.isAdPlaying) return;
 
     self.pauseByUser = !self.isPauseByUser;
     [self safePlay];
@@ -586,7 +604,8 @@
     if (self.isPauseBySystem ||
         [UIWindow xj_rootViewController].presentedViewController ||
         self.isFullScreening ||
-        !self.isFullScreenEnabled) return;
+        !self.isFullScreenEnabled ||
+        self.isAdPlaying) return;
     
     self.fullScreenRotating = YES;
 
@@ -623,14 +642,15 @@
     self.fullScreenRotating = YES;
     [self endEditing:YES];
     [self.player xj_layoutPortrait];
-    [self.controlView xj_controlsLayoutPortrait];
     __weak typeof(self)weakSelf = self;
     [self.rootViewController dismissViewControllerAnimated:YES completion:^{
 
+        [weakSelf.controlView xj_controlsLayoutPortrait];
         [[UIWindow xj_visibleViewController] setStatusBarHidden:NO
                                                       animation:UIStatusBarAnimationFade
                                                      completion:^
         {
+
             weakSelf.fullScreenRotating = NO;
             weakSelf.fullScreen = NO;
             if (completion) completion();
@@ -711,8 +731,11 @@
     else [self play];
 }
 
-- (void)xj_controlsView:(UIView *)controlsView actionMute:(UIButton *)sender {
+- (void)xj_controlsView:(UIView *)controlsView actionMute:(UIButton *)sender
+{
     self.muted = sender.selected;
+    XJPlayerMANAGER.muted = self.muted;
+    NSLog(@"actionMute : %d", XJPlayerMANAGER.isMuted);
 }
 
 - (void)xj_controlsView:(UIView *)controlsView actionFullScreen:(UIButton *)sender
@@ -783,7 +806,9 @@
 
 - (void)deviceOrientationDidChange:(NSNotification *)notification
 {
-    if (self.didEnterBackground) return;
+    UIViewController *vc = [UIWindow xj_visibleViewController];
+    if (self.didEnterBackground ||
+        [vc isKindOfClass:[SFSafariViewController class]]) return;
 
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     switch (deviceOrientation)
@@ -855,6 +880,88 @@
 {
     self.frame = frame;
     [self layoutIfNeeded];
+}
+
+#pragma mark - XJPlayerAdManager
+
+- (void)xj_playerView:(UIView *)playerView
+  didPassCuePointTime:(NSTimeInterval)cuePointTime
+                adUrl:(NSString *)adUrl
+{
+    if (adUrl.length)
+    {
+        if (!self.adManager)
+        {
+            self.adContainer = [[UIView alloc] initWithFrame:self.bounds];
+            self.adContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            self.adContainer.backgroundColor = [UIColor blackColor];
+            self.adContainer.alpha = 0.0f;
+            [self addSubview:self.adContainer];
+            self.adManager = [XJPlayerAdManager initWithAdContainer:self.adContainer
+                                                   adViewController:self.rootViewController];
+            self.adManager.delegate = self;
+        }
+
+        if (cuePointTime == 0)
+        {
+            self.adManager.preRoll = YES;
+            [self showAd];
+        }
+
+        [self.adManager requestAdWithAdTagUrl:adUrl];
+    }
+}
+
+#pragma mark - XJPlayerAdManager delegate
+
+- (void)xj_adManagerDidRequest:(NSObject *)adManager
+{
+    /*if ([self.delegate respondsToSelector:@selector(xj_playerViewAdDidRequest:)]) {
+        [self.delegate xj_playerViewAdDidRequest:self];
+    }*/
+}
+
+- (void)xj_adManagerDidFinishLoading:(NSObject *)adManager {
+    [self.adManager play];
+}
+
+- (void)xj_adManagerDidStart:(NSObject *)adManager {
+    [self showAd];
+}
+
+- (void)xj_adManagerDidEnd:(NSObject *)adManager {
+    [self hideAd];
+}
+
+- (void)xj_adManagerDidFail:(NSObject *)adManager {    
+    [self hideAd];
+}
+
+- (BOOL)isAdPlaying {
+    return self.adManager.isAdPlaying || self.adManager.preRoll;
+}
+
+- (void)showAd
+{
+    [UIView animateWithDuration:.3 animations:^{
+        self.adContainer.alpha = 1.0f;
+    }];
+    [self.controlView xj_controlsHidden:YES];
+    [self.controlView xj_controlsEnabled:NO];
+    [self.player xj_pause];
+}
+
+- (void)hideAd
+{
+    [UIView animateWithDuration:.3 animations:^{
+        self.adContainer.alpha = 0.0f;
+    }];
+    [self.controlView xj_controlsHidden:NO];
+    [self.controlView xj_controlsEnabled:YES];
+    [self safePlay];
+    /*if ([self.delegate respondsToSelector:@selector(xj_playerViewAdDidEnd:)]) {
+        [self.delegate xj_playerViewAdDidEnd:self];
+    }*/
 }
 
 @end

@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSTimeInterval seekTime;
 
-@property (nonatomic, assign, getter=isAutoFullScreen) BOOL autoFullScreen;
+@property (nonatomic, copy) NSString *preRollAdUrl;
 
 + (instancetype)initWithUrl:(NSString *)url
               coverImageUrl:(nullable NSString *)coverImageUrl;

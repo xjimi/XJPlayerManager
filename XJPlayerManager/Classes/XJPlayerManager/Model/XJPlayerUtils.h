@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)extractYoutubeIdFromLink:(NSString *)link;
 
++ (NSString *)videoFormatTime:(NSTimeInterval)time;
+
 @end
 
 NS_ASSUME_NONNULL_END

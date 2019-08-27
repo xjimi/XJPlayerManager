@@ -248,7 +248,7 @@
                 if (![self.playerLayerView isDescendantOfView:self]) {
                     [self addSubview:self.playerLayerView];
                 }
-
+                [self xj_pause];
                 [self playerViewChangedStatus:XJPlayerStatusReadyToPlay];
             }
             else if (self.player.currentItem.status == AVPlayerItemStatusFailed)

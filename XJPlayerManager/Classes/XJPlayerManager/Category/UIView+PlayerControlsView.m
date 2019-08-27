@@ -35,6 +35,8 @@
 
 - (void)xj_controlsSetTitle:(NSString *)title {}
 
+- (void)xj_controlsMute:(BOOL)mute {}
+
 - (void)xj_controlsShowCoverImageWithUrl:(NSString *)url {}
 - (void)xj_controlsHideCoverImageWithCompletion:(void (^)(void))completion {}
 

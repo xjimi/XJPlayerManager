@@ -97,7 +97,7 @@
     toView.frame = containerView.bounds;
     [fromView layoutIfNeeded];
     [toView layoutIfNeeded];
-
+    
     CGRect targetRect = [self.targetView convertRect:self.targetView.bounds toView:toView];
     CGRect targetBounds = CGRectMake(0, 0, targetRect.size.width, targetRect.size.height);
 
@@ -110,11 +110,6 @@
         bgView.backgroundColor = [UIColor blackColor];
         [self.playerView insertSubview:bgView atIndex:1];
         bgView.alpha = 0.0f;
-
-        CGRect playerFrame = self.playerView.frame;
-        playerFrame.origin.y -= 44.0f;
-        playerFrame.origin.x -= 84.0f;
-        self.playerView.frame = playerFrame;
     }
 
     NSTimeInterval duration = [self transitionDuration:transitionContext] - 0.3f;
@@ -127,9 +122,10 @@
          fromView.frame = targetRect;
          [fromView layoutIfNeeded];
          bgView.alpha = 1.0f;
+         [self.playerView refreshPlayerFrame:targetBounds];
+
          if (!isYoutuePlayer) {
          }
-         [self.playerView refreshPlayerFrame:targetBounds];
 
 
      } completion:^(BOOL finished) {

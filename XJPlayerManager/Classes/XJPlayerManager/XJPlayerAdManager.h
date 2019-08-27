@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, nullable) id < XJPlayerAdManagerDelegate > delegate;
 
 @property (nonatomic, getter=isAdPlaying, readonly) BOOL adPlaying;
+@property (nonatomic, assign, getter=isPreRoll) BOOL preRoll;
 
 + (instancetype)initWithAdContainer:(UIView *)adContainer
                    adViewController:(UIViewController *)adViewController;
