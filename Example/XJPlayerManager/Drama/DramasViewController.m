@@ -7,20 +7,27 @@
 //
 
 #import "DramasViewController.h"
-#import <XJCollectionViewManager/XJCollectionViewManager.h>
 #import <Masonry/Masonry.h>
 #import "DramaHeader.h"
 #import "DramaCell.h"
 
+#import <XJCollectionViewManager/XJCollectionViewManager.h>
+#import <XJUtil/UIWindow+XJVisible.h>
+#import <XJUtil/UIViewController+XJStatusBar.h>
+
+//#import <XJPlayerManager/XJPlayerManager.h>
 //#import <XJPlayerManager/XJPlayerModel.h>
 //#import <XJPlayerManager/XJPlayerFullScreenViewController.h>
-#import <XJUtil/UIWindow+XJVisible.h>
+//#import <XJPlayerManager/XJPlayerUtils.h>
+
+#import "XJPlayerManager.h"
 #import "XJPlayerModel.h"
 #import "XJPlayerFullScreenViewController.h"
 #import "XJPlayerUtils.h"
-#import <XJUtil/UIViewController+XJStatusBar.h>
-#import "XJPlayerManager.h"
+
+
 #import "CustomControlsView.h"
+
 
 @interface DramasViewController () < XJCollectionViewDelegate >
 
@@ -143,7 +150,7 @@
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:imageUrl];
-        model.playerModel.preRollAdUrl = @"https://pubads.g.doubleclick.net/gampad/ads?sz=1024x768&iu=/123939770/Vidol-test20180420&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]";
+        //model.playerModel.preRollAdUrl = @"https://pubads.g.doubleclick.net/gampad/ads?sz=1024x768&iu=/123939770/Vidol-test20180420&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]";
         
         CGFloat vw = CGRectGetWidth(self.view.frame) - 40.0f;
         CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70.0f;

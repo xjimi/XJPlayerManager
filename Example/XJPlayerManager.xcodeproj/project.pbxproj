@@ -28,29 +28,6 @@
 		9033598F22F9A059007F20CF /* DramaHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9033598722F9A059007F20CF /* DramaHeader.m */; };
 		9033599022F9A059007F20CF /* DramaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9033598822F9A059007F20CF /* DramaCell.m */; };
 		9033599122F9A059007F20CF /* DramaHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9033598922F9A059007F20CF /* DramaHeader.xib */; };
-		9034D76423017449000D902C /* XJPlayerBundleResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9034D76323017449000D902C /* XJPlayerBundleResource.m */; };
-		9034D76923027BDF000D902C /* UIImageView+XJPlayerImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9034D76823027BDF000D902C /* UIImageView+XJPlayerImageManager.m */; };
-		903519FF22FF080A002C9615 /* XJSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519C622FF080A002C9615 /* XJSlider.m */; };
-		90351A0022FF080A002C9615 /* XJMarkSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519C922FF080A002C9615 /* XJMarkSlider.m */; };
-		90351A0122FF080A002C9615 /* XJSliderTrackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519CC22FF080A002C9615 /* XJSliderTrackView.m */; };
-		90351A0222FF080A002C9615 /* AVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519CE22FF080A002C9615 /* AVPlayerView.m */; };
-		90351A0322FF080A002C9615 /* XJPlayerGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519D222FF080A002C9615 /* XJPlayerGesture.m */; };
-		90351A0422FF080A002C9615 /* XJPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519D322FF080A002C9615 /* XJPlayerControlsView.m */; };
-		90351A0522FF080A002C9615 /* PlayerErrorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519D722FF080A002C9615 /* PlayerErrorInfoView.m */; };
-		90351A0622FF080A002C9615 /* PlayerErrorInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 903519D822FF080A002C9615 /* PlayerErrorInfoView.xib */; };
-		90351A0722FF080A002C9615 /* XJPlayerTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519DC22FF080A002C9615 /* XJPlayerTransitioningDelegate.m */; };
-		90351A0822FF080A002C9615 /* XJPlayerFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519DE22FF080A002C9615 /* XJPlayerFullScreenViewController.m */; };
-		90351A0922FF080A002C9615 /* XJPlayerAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E022FF080A002C9615 /* XJPlayerAnimatedTransitioning.m */; };
-		90351A0A22FF080A002C9615 /* UIView+PlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E322FF080A002C9615 /* UIView+PlayerControlsView.m */; };
-		90351A0B22FF080A002C9615 /* UIButton+CenterSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E522FF080A002C9615 /* UIButton+CenterSpace.m */; };
-		90351A0C22FF080A002C9615 /* UIView+XJBasePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519E622FF080A002C9615 /* UIView+XJBasePlayerView.m */; };
-		90351A0D22FF080A002C9615 /* YoutubePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519EC22FF080A002C9615 /* YoutubePlayerView.m */; };
-		90351A0F22FF080A002C9615 /* XJBufferingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F022FF080A002C9615 /* XJBufferingView.m */; };
-		90351A1022FF080A002C9615 /* XJPlayerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F322FF080A002C9615 /* XJPlayerUtils.m */; };
-		90351A1122FF080A002C9615 /* XJPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F422FF080A002C9615 /* XJPlayerModel.m */; };
-		90351A1222FF080A002C9615 /* XJPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519F722FF080A002C9615 /* XJPlayerView.m */; };
-		90351A1322FF080A002C9615 /* XJPlayerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519FA22FF080A002C9615 /* XJPlayerAdapter.m */; };
-		90351A1422FF080A002C9615 /* XJPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 903519FB22FF080A002C9615 /* XJPlayerManager.m */; };
 		903F923622F56AD00001B44F /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F922B22F56AD00001B44F /* AlbumsViewController.m */; };
 		903F923722F56AD00001B44F /* AlbumModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F922E22F56AD00001B44F /* AlbumModel.m */; };
 		903F923822F56AD00001B44F /* AlbumHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F923022F56AD00001B44F /* AlbumHeader.m */; };
@@ -58,7 +35,33 @@
 		903F923A22F56AD00001B44F /* AlbumHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 903F923422F56AD00001B44F /* AlbumHeader.xib */; };
 		903F923B22F56AD00001B44F /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 903F923522F56AD00001B44F /* AlbumCell.m */; };
 		90D2AD732314EA63008602A6 /* CustomControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD722314EA63008602A6 /* CustomControlsView.m */; };
-		90D2AD762315448E008602A6 /* XJPlayerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD752315448E008602A6 /* XJPlayerAdManager.m */; };
+		90D2ADC023167D67008602A6 /* UIView+PlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD8323167D67008602A6 /* UIView+PlayerControlsView.m */; };
+		90D2ADC123167D67008602A6 /* UIButton+CenterSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD8523167D67008602A6 /* UIButton+CenterSpace.m */; };
+		90D2ADC223167D67008602A6 /* UIImageView+XJPlayerImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD8623167D67008602A6 /* UIImageView+XJPlayerImageManager.m */; };
+		90D2ADC323167D67008602A6 /* UIView+XJBasePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD8723167D67008602A6 /* UIView+XJBasePlayerView.m */; };
+		90D2ADC423167D67008602A6 /* XJPlayerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD8E23167D67008602A6 /* XJPlayerUtils.m */; };
+		90D2ADC523167D67008602A6 /* XJPlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD8F23167D67008602A6 /* XJPlayerModel.m */; };
+		90D2ADC623167D67008602A6 /* XJSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD9323167D67008602A6 /* XJSlider.m */; };
+		90D2ADC723167D67008602A6 /* XJMarkSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD9623167D67008602A6 /* XJMarkSlider.m */; };
+		90D2ADC823167D67008602A6 /* XJSliderTrackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD9923167D67008602A6 /* XJSliderTrackView.m */; };
+		90D2ADC923167D67008602A6 /* XJPlayerGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD9C23167D67008602A6 /* XJPlayerGesture.m */; };
+		90D2ADCA23167D67008602A6 /* XJPlayerControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2AD9D23167D67008602A6 /* XJPlayerControlsView.m */; };
+		90D2ADCB23167D67008602A6 /* PlayerErrorInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADA123167D67008602A6 /* PlayerErrorInfoView.m */; };
+		90D2ADCC23167D67008602A6 /* PlayerErrorInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90D2ADA223167D67008602A6 /* PlayerErrorInfoView.xib */; };
+		90D2ADCD23167D67008602A6 /* XJPlayerTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADA623167D67008602A6 /* XJPlayerTransitioningDelegate.m */; };
+		90D2ADCE23167D67008602A6 /* XJPlayerFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADA823167D67008602A6 /* XJPlayerFullScreenViewController.m */; };
+		90D2ADCF23167D67008602A6 /* XJPlayerAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADAA23167D67008602A6 /* XJPlayerAnimatedTransitioning.m */; };
+		90D2ADD023167D67008602A6 /* XJPlayerBundleResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADAC23167D67008602A6 /* XJPlayerBundleResource.m */; };
+		90D2ADD123167D67008602A6 /* ic_buffering.psd in Resources */ = {isa = PBXBuildFile; fileRef = 90D2ADB023167D67008602A6 /* ic_buffering.psd */; };
+		90D2ADD223167D67008602A6 /* XJBufferingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADB123167D67008602A6 /* XJBufferingView.m */; };
+		90D2ADD323167D67008602A6 /* XJPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADB323167D67008602A6 /* XJPlayerView.m */; };
+		90D2ADD423167D67008602A6 /* XJPlayerAdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADB623167D67008602A6 /* XJPlayerAdManager.m */; };
+		90D2ADD523167D67008602A6 /* XJPlayerAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADB723167D67008602A6 /* XJPlayerAdapter.m */; };
+		90D2ADD623167D67008602A6 /* XJPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADB823167D67008602A6 /* XJPlayerManager.m */; };
+		90D2ADD723167D67008602A6 /* AVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADBB23167D67008602A6 /* AVPlayerView.m */; };
+		90D2ADD823167D67008602A6 /* YoutubePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90D2ADBF23167D67008602A6 /* YoutubePlayerView.m */; };
+		90D2ADDC23167D70008602A6 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 90D2ADDA23167D70008602A6 /* .gitkeep */; };
+		90D2ADDD23167D70008602A6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90D2ADDB23167D70008602A6 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,53 +113,6 @@
 		9033598B22F9A059007F20CF /* DramasViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DramasViewController.h; sourceTree = "<group>"; };
 		90340E012300108000B2C4E9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9034D75F230126A4000D902C /* GoogleInteractiveMediaAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleInteractiveMediaAds.framework; sourceTree = "<group>"; };
-		9034D76223017449000D902C /* XJPlayerBundleResource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XJPlayerBundleResource.h; sourceTree = "<group>"; };
-		9034D76323017449000D902C /* XJPlayerBundleResource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XJPlayerBundleResource.m; sourceTree = "<group>"; };
-		9034D76723027BDF000D902C /* UIImageView+XJPlayerImageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XJPlayerImageManager.h"; sourceTree = "<group>"; };
-		9034D76823027BDF000D902C /* UIImageView+XJPlayerImageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XJPlayerImageManager.m"; sourceTree = "<group>"; };
-		903519C622FF080A002C9615 /* XJSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSlider.m; sourceTree = "<group>"; };
-		903519C722FF080A002C9615 /* XJSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSlider.h; sourceTree = "<group>"; };
-		903519C922FF080A002C9615 /* XJMarkSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJMarkSlider.m; sourceTree = "<group>"; };
-		903519CA22FF080A002C9615 /* XJSliderTrackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSliderTrackView.h; sourceTree = "<group>"; };
-		903519CB22FF080A002C9615 /* XJMarkSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJMarkSlider.h; sourceTree = "<group>"; };
-		903519CC22FF080A002C9615 /* XJSliderTrackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSliderTrackView.m; sourceTree = "<group>"; };
-		903519CE22FF080A002C9615 /* AVPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVPlayerView.m; sourceTree = "<group>"; };
-		903519CF22FF080A002C9615 /* AVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVPlayerView.h; sourceTree = "<group>"; };
-		903519D122FF080A002C9615 /* XJPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerControlsView.h; sourceTree = "<group>"; };
-		903519D222FF080A002C9615 /* XJPlayerGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerGesture.m; sourceTree = "<group>"; };
-		903519D322FF080A002C9615 /* XJPlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerControlsView.m; sourceTree = "<group>"; };
-		903519D422FF080A002C9615 /* XJPlayerControlsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerControlsViewDelegate.h; sourceTree = "<group>"; };
-		903519D522FF080A002C9615 /* XJPlayerGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerGesture.h; sourceTree = "<group>"; };
-		903519D722FF080A002C9615 /* PlayerErrorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerErrorInfoView.m; sourceTree = "<group>"; };
-		903519D822FF080A002C9615 /* PlayerErrorInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerErrorInfoView.xib; sourceTree = "<group>"; };
-		903519D922FF080A002C9615 /* PlayerErrorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerErrorInfoView.h; sourceTree = "<group>"; };
-		903519DB22FF080A002C9615 /* XJPlayerFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerFullScreenViewController.h; sourceTree = "<group>"; };
-		903519DC22FF080A002C9615 /* XJPlayerTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerTransitioningDelegate.m; sourceTree = "<group>"; };
-		903519DD22FF080A002C9615 /* XJPlayerAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAnimatedTransitioning.h; sourceTree = "<group>"; };
-		903519DE22FF080A002C9615 /* XJPlayerFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerFullScreenViewController.m; sourceTree = "<group>"; };
-		903519DF22FF080A002C9615 /* XJPlayerTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerTransitioningDelegate.h; sourceTree = "<group>"; };
-		903519E022FF080A002C9615 /* XJPlayerAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAnimatedTransitioning.m; sourceTree = "<group>"; };
-		903519E222FF080A002C9615 /* UIButton+CenterSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+CenterSpace.h"; sourceTree = "<group>"; };
-		903519E322FF080A002C9615 /* UIView+PlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PlayerControlsView.m"; sourceTree = "<group>"; };
-		903519E422FF080A002C9615 /* UIView+XJBasePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XJBasePlayerView.h"; sourceTree = "<group>"; };
-		903519E522FF080A002C9615 /* UIButton+CenterSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+CenterSpace.m"; sourceTree = "<group>"; };
-		903519E622FF080A002C9615 /* UIView+XJBasePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XJBasePlayerView.m"; sourceTree = "<group>"; };
-		903519E722FF080A002C9615 /* UIView+PlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PlayerControlsView.h"; sourceTree = "<group>"; };
-		903519E822FF080A002C9615 /* XJPlayerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdapter.h; sourceTree = "<group>"; };
-		903519E922FF080A002C9615 /* XJPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerManager.h; sourceTree = "<group>"; };
-		903519EB22FF080A002C9615 /* YoutubePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoutubePlayerView.h; sourceTree = "<group>"; };
-		903519EC22FF080A002C9615 /* YoutubePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoutubePlayerView.m; sourceTree = "<group>"; };
-		903519EE22FF080A002C9615 /* XJBufferingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBufferingView.h; sourceTree = "<group>"; };
-		903519F022FF080A002C9615 /* XJBufferingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJBufferingView.m; sourceTree = "<group>"; };
-		903519F222FF080A002C9615 /* XJPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerModel.h; sourceTree = "<group>"; };
-		903519F322FF080A002C9615 /* XJPlayerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerUtils.m; sourceTree = "<group>"; };
-		903519F422FF080A002C9615 /* XJPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerModel.m; sourceTree = "<group>"; };
-		903519F522FF080A002C9615 /* XJPlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerUtils.h; sourceTree = "<group>"; };
-		903519F722FF080A002C9615 /* XJPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerView.m; sourceTree = "<group>"; };
-		903519F822FF080A002C9615 /* XJBasePlayerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBasePlayerViewDelegate.h; sourceTree = "<group>"; };
-		903519F922FF080A002C9615 /* XJPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerView.h; sourceTree = "<group>"; };
-		903519FA22FF080A002C9615 /* XJPlayerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdapter.m; sourceTree = "<group>"; };
-		903519FB22FF080A002C9615 /* XJPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerManager.m; sourceTree = "<group>"; };
 		90351A1722FF1EDB002C9615 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../XJPlayerManager/Frameworks/FBAudienceNetwork.framework; sourceTree = "<group>"; };
 		90351A1922FF1EEB002C9615 /* GoogleInteractiveMediaAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInteractiveMediaAds.framework; path = ../XJPlayerManager/Frameworks/GoogleInteractiveMediaAds.framework; sourceTree = "<group>"; };
 		903F922A22F56AD00001B44F /* AlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsViewController.h; sourceTree = "<group>"; };
@@ -171,8 +127,58 @@
 		903F923522F56AD00001B44F /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCell.m; sourceTree = "<group>"; };
 		90D2AD712314EA63008602A6 /* CustomControlsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomControlsView.h; sourceTree = "<group>"; };
 		90D2AD722314EA63008602A6 /* CustomControlsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomControlsView.m; sourceTree = "<group>"; };
-		90D2AD742315448E008602A6 /* XJPlayerAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdManager.h; sourceTree = "<group>"; };
-		90D2AD752315448E008602A6 /* XJPlayerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdManager.m; sourceTree = "<group>"; };
+		90D2AD8123167D67008602A6 /* UIButton+CenterSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+CenterSpace.h"; sourceTree = "<group>"; };
+		90D2AD8223167D67008602A6 /* UIImageView+XJPlayerImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+XJPlayerImageManager.h"; sourceTree = "<group>"; };
+		90D2AD8323167D67008602A6 /* UIView+PlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PlayerControlsView.m"; sourceTree = "<group>"; };
+		90D2AD8423167D67008602A6 /* UIView+XJBasePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+XJBasePlayerView.h"; sourceTree = "<group>"; };
+		90D2AD8523167D67008602A6 /* UIButton+CenterSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+CenterSpace.m"; sourceTree = "<group>"; };
+		90D2AD8623167D67008602A6 /* UIImageView+XJPlayerImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+XJPlayerImageManager.m"; sourceTree = "<group>"; };
+		90D2AD8723167D67008602A6 /* UIView+XJBasePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+XJBasePlayerView.m"; sourceTree = "<group>"; };
+		90D2AD8823167D67008602A6 /* UIView+PlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PlayerControlsView.h"; sourceTree = "<group>"; };
+		90D2AD8923167D67008602A6 /* XJPlayerAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdapter.h; sourceTree = "<group>"; };
+		90D2AD8A23167D67008602A6 /* XJPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerManager.h; sourceTree = "<group>"; };
+		90D2AD8B23167D67008602A6 /* XJPlayerAdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAdManager.h; sourceTree = "<group>"; };
+		90D2AD8D23167D67008602A6 /* XJPlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerModel.h; sourceTree = "<group>"; };
+		90D2AD8E23167D67008602A6 /* XJPlayerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerUtils.m; sourceTree = "<group>"; };
+		90D2AD8F23167D67008602A6 /* XJPlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerModel.m; sourceTree = "<group>"; };
+		90D2AD9023167D67008602A6 /* XJPlayerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerUtils.h; sourceTree = "<group>"; };
+		90D2AD9323167D67008602A6 /* XJSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSlider.m; sourceTree = "<group>"; };
+		90D2AD9423167D67008602A6 /* XJSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSlider.h; sourceTree = "<group>"; };
+		90D2AD9623167D67008602A6 /* XJMarkSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJMarkSlider.m; sourceTree = "<group>"; };
+		90D2AD9723167D67008602A6 /* XJSliderTrackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJSliderTrackView.h; sourceTree = "<group>"; };
+		90D2AD9823167D67008602A6 /* XJMarkSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJMarkSlider.h; sourceTree = "<group>"; };
+		90D2AD9923167D67008602A6 /* XJSliderTrackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJSliderTrackView.m; sourceTree = "<group>"; };
+		90D2AD9B23167D67008602A6 /* XJPlayerControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerControlsView.h; sourceTree = "<group>"; };
+		90D2AD9C23167D67008602A6 /* XJPlayerGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerGesture.m; sourceTree = "<group>"; };
+		90D2AD9D23167D67008602A6 /* XJPlayerControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerControlsView.m; sourceTree = "<group>"; };
+		90D2AD9E23167D67008602A6 /* XJPlayerControlsViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerControlsViewDelegate.h; sourceTree = "<group>"; };
+		90D2AD9F23167D67008602A6 /* XJPlayerGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerGesture.h; sourceTree = "<group>"; };
+		90D2ADA123167D67008602A6 /* PlayerErrorInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerErrorInfoView.m; sourceTree = "<group>"; };
+		90D2ADA223167D67008602A6 /* PlayerErrorInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerErrorInfoView.xib; sourceTree = "<group>"; };
+		90D2ADA323167D67008602A6 /* PlayerErrorInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerErrorInfoView.h; sourceTree = "<group>"; };
+		90D2ADA523167D67008602A6 /* XJPlayerFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerFullScreenViewController.h; sourceTree = "<group>"; };
+		90D2ADA623167D67008602A6 /* XJPlayerTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerTransitioningDelegate.m; sourceTree = "<group>"; };
+		90D2ADA723167D67008602A6 /* XJPlayerAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerAnimatedTransitioning.h; sourceTree = "<group>"; };
+		90D2ADA823167D67008602A6 /* XJPlayerFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerFullScreenViewController.m; sourceTree = "<group>"; };
+		90D2ADA923167D67008602A6 /* XJPlayerTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerTransitioningDelegate.h; sourceTree = "<group>"; };
+		90D2ADAA23167D67008602A6 /* XJPlayerAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAnimatedTransitioning.m; sourceTree = "<group>"; };
+		90D2ADAC23167D67008602A6 /* XJPlayerBundleResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerBundleResource.m; sourceTree = "<group>"; };
+		90D2ADAD23167D67008602A6 /* XJPlayerBundleResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerBundleResource.h; sourceTree = "<group>"; };
+		90D2ADAF23167D67008602A6 /* XJBufferingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBufferingView.h; sourceTree = "<group>"; };
+		90D2ADB023167D67008602A6 /* ic_buffering.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = ic_buffering.psd; sourceTree = "<group>"; };
+		90D2ADB123167D67008602A6 /* XJBufferingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJBufferingView.m; sourceTree = "<group>"; };
+		90D2ADB323167D67008602A6 /* XJPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerView.m; sourceTree = "<group>"; };
+		90D2ADB423167D67008602A6 /* XJBasePlayerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJBasePlayerViewDelegate.h; sourceTree = "<group>"; };
+		90D2ADB523167D67008602A6 /* XJPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XJPlayerView.h; sourceTree = "<group>"; };
+		90D2ADB623167D67008602A6 /* XJPlayerAdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdManager.m; sourceTree = "<group>"; };
+		90D2ADB723167D67008602A6 /* XJPlayerAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerAdapter.m; sourceTree = "<group>"; };
+		90D2ADB823167D67008602A6 /* XJPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XJPlayerManager.m; sourceTree = "<group>"; };
+		90D2ADBB23167D67008602A6 /* AVPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVPlayerView.m; sourceTree = "<group>"; };
+		90D2ADBC23167D67008602A6 /* AVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVPlayerView.h; sourceTree = "<group>"; };
+		90D2ADBE23167D67008602A6 /* YoutubePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YoutubePlayerView.h; sourceTree = "<group>"; };
+		90D2ADBF23167D67008602A6 /* YoutubePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YoutubePlayerView.m; sourceTree = "<group>"; };
+		90D2ADDA23167D70008602A6 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		90D2ADDB23167D70008602A6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C1B969E6426D19CF3740A7CE /* Pods_XJPlayerManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XJPlayerManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1375CB9AACE96D4D2EBC71D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -255,7 +261,8 @@
 		6003F593195388D20070C39A /* Example for XJPlayerManager */ = {
 			isa = PBXGroup;
 			children = (
-				903519C322FF080A002C9615 /* Classes */,
+				90D2AD7E23167D67008602A6 /* Classes */,
+				90D2ADD923167D70008602A6 /* Assets */,
 				6003F59C195388D20070C39A /* XJAppDelegate.h */,
 				6003F59D195388D20070C39A /* XJAppDelegate.m */,
 				9033597F22F9A059007F20CF /* Drama */,
@@ -353,183 +360,6 @@
 			path = "Pods/GoogleAds-IMA-iOS-SDK";
 			sourceTree = "<group>";
 		};
-		9034D76123017402000D902C /* XJPlayerBundleResource */ = {
-			isa = PBXGroup;
-			children = (
-				9034D76223017449000D902C /* XJPlayerBundleResource.h */,
-				9034D76323017449000D902C /* XJPlayerBundleResource.m */,
-			);
-			path = XJPlayerBundleResource;
-			sourceTree = "<group>";
-		};
-		9034D765230254FD000D902C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				903519DA22FF080A002C9615 /* XJPlayerTransition */,
-				903519D022FF080A002C9615 /* XJPlayerControlsView */,
-				903519C522FF080A002C9615 /* XJSlider */,
-				9034D76123017402000D902C /* XJPlayerBundleResource */,
-				903519ED22FF080A002C9615 /* XJBufferingView */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		9034D76623025535000D902C /* Player */ = {
-			isa = PBXGroup;
-			children = (
-				903519EA22FF080A002C9615 /* YTPlayerView */,
-				903519CD22FF080A002C9615 /* AVPlayerView */,
-			);
-			path = Player;
-			sourceTree = "<group>";
-		};
-		903519C322FF080A002C9615 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				903519C422FF080A002C9615 /* XJPlayerManager */,
-			);
-			name = Classes;
-			path = ../../XJPlayerManager/Classes;
-			sourceTree = "<group>";
-		};
-		903519C422FF080A002C9615 /* XJPlayerManager */ = {
-			isa = PBXGroup;
-			children = (
-				903519F622FF080A002C9615 /* XJPlayerView */,
-				9034D76623025535000D902C /* Player */,
-				9034D765230254FD000D902C /* View */,
-				903519E122FF080A002C9615 /* Category */,
-				903519F122FF080A002C9615 /* Model */,
-				903519E822FF080A002C9615 /* XJPlayerAdapter.h */,
-				903519FA22FF080A002C9615 /* XJPlayerAdapter.m */,
-				903519E922FF080A002C9615 /* XJPlayerManager.h */,
-				903519FB22FF080A002C9615 /* XJPlayerManager.m */,
-				90D2AD742315448E008602A6 /* XJPlayerAdManager.h */,
-				90D2AD752315448E008602A6 /* XJPlayerAdManager.m */,
-			);
-			path = XJPlayerManager;
-			sourceTree = "<group>";
-		};
-		903519C522FF080A002C9615 /* XJSlider */ = {
-			isa = PBXGroup;
-			children = (
-				903519C722FF080A002C9615 /* XJSlider.h */,
-				903519C622FF080A002C9615 /* XJSlider.m */,
-				903519C822FF080A002C9615 /* XJSliderTrackView */,
-			);
-			path = XJSlider;
-			sourceTree = "<group>";
-		};
-		903519C822FF080A002C9615 /* XJSliderTrackView */ = {
-			isa = PBXGroup;
-			children = (
-				903519C922FF080A002C9615 /* XJMarkSlider.m */,
-				903519CA22FF080A002C9615 /* XJSliderTrackView.h */,
-				903519CB22FF080A002C9615 /* XJMarkSlider.h */,
-				903519CC22FF080A002C9615 /* XJSliderTrackView.m */,
-			);
-			path = XJSliderTrackView;
-			sourceTree = "<group>";
-		};
-		903519CD22FF080A002C9615 /* AVPlayerView */ = {
-			isa = PBXGroup;
-			children = (
-				903519CF22FF080A002C9615 /* AVPlayerView.h */,
-				903519CE22FF080A002C9615 /* AVPlayerView.m */,
-			);
-			path = AVPlayerView;
-			sourceTree = "<group>";
-		};
-		903519D022FF080A002C9615 /* XJPlayerControlsView */ = {
-			isa = PBXGroup;
-			children = (
-				903519D122FF080A002C9615 /* XJPlayerControlsView.h */,
-				903519D322FF080A002C9615 /* XJPlayerControlsView.m */,
-				903519D222FF080A002C9615 /* XJPlayerGesture.m */,
-				903519D422FF080A002C9615 /* XJPlayerControlsViewDelegate.h */,
-				903519D522FF080A002C9615 /* XJPlayerGesture.h */,
-				903519D622FF080A002C9615 /* PlayerErrorInfoView */,
-			);
-			path = XJPlayerControlsView;
-			sourceTree = "<group>";
-		};
-		903519D622FF080A002C9615 /* PlayerErrorInfoView */ = {
-			isa = PBXGroup;
-			children = (
-				903519D722FF080A002C9615 /* PlayerErrorInfoView.m */,
-				903519D822FF080A002C9615 /* PlayerErrorInfoView.xib */,
-				903519D922FF080A002C9615 /* PlayerErrorInfoView.h */,
-			);
-			path = PlayerErrorInfoView;
-			sourceTree = "<group>";
-		};
-		903519DA22FF080A002C9615 /* XJPlayerTransition */ = {
-			isa = PBXGroup;
-			children = (
-				903519DB22FF080A002C9615 /* XJPlayerFullScreenViewController.h */,
-				903519DC22FF080A002C9615 /* XJPlayerTransitioningDelegate.m */,
-				903519DD22FF080A002C9615 /* XJPlayerAnimatedTransitioning.h */,
-				903519DE22FF080A002C9615 /* XJPlayerFullScreenViewController.m */,
-				903519DF22FF080A002C9615 /* XJPlayerTransitioningDelegate.h */,
-				903519E022FF080A002C9615 /* XJPlayerAnimatedTransitioning.m */,
-			);
-			path = XJPlayerTransition;
-			sourceTree = "<group>";
-		};
-		903519E122FF080A002C9615 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				903519E722FF080A002C9615 /* UIView+PlayerControlsView.h */,
-				903519E322FF080A002C9615 /* UIView+PlayerControlsView.m */,
-				903519E422FF080A002C9615 /* UIView+XJBasePlayerView.h */,
-				903519E622FF080A002C9615 /* UIView+XJBasePlayerView.m */,
-				903519E222FF080A002C9615 /* UIButton+CenterSpace.h */,
-				903519E522FF080A002C9615 /* UIButton+CenterSpace.m */,
-				9034D76723027BDF000D902C /* UIImageView+XJPlayerImageManager.h */,
-				9034D76823027BDF000D902C /* UIImageView+XJPlayerImageManager.m */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		903519EA22FF080A002C9615 /* YTPlayerView */ = {
-			isa = PBXGroup;
-			children = (
-				903519EB22FF080A002C9615 /* YoutubePlayerView.h */,
-				903519EC22FF080A002C9615 /* YoutubePlayerView.m */,
-			);
-			path = YTPlayerView;
-			sourceTree = "<group>";
-		};
-		903519ED22FF080A002C9615 /* XJBufferingView */ = {
-			isa = PBXGroup;
-			children = (
-				903519EE22FF080A002C9615 /* XJBufferingView.h */,
-				903519F022FF080A002C9615 /* XJBufferingView.m */,
-			);
-			path = XJBufferingView;
-			sourceTree = "<group>";
-		};
-		903519F122FF080A002C9615 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				903519F222FF080A002C9615 /* XJPlayerModel.h */,
-				903519F422FF080A002C9615 /* XJPlayerModel.m */,
-				903519F522FF080A002C9615 /* XJPlayerUtils.h */,
-				903519F322FF080A002C9615 /* XJPlayerUtils.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		903519F622FF080A002C9615 /* XJPlayerView */ = {
-			isa = PBXGroup;
-			children = (
-				903519F922FF080A002C9615 /* XJPlayerView.h */,
-				903519F722FF080A002C9615 /* XJPlayerView.m */,
-				903519F822FF080A002C9615 /* XJBasePlayerViewDelegate.h */,
-			);
-			path = XJPlayerView;
-			sourceTree = "<group>";
-		};
 		903F922922F56AD00001B44F /* Albums */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +391,194 @@
 				903F923422F56AD00001B44F /* AlbumHeader.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		90D2AD7E23167D67008602A6 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD7F23167D67008602A6 /* XJPlayerManager */,
+			);
+			name = Classes;
+			path = ../../XJPlayerManager/Classes;
+			sourceTree = "<group>";
+		};
+		90D2AD7F23167D67008602A6 /* XJPlayerManager */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD8023167D67008602A6 /* Category */,
+				90D2AD8923167D67008602A6 /* XJPlayerAdapter.h */,
+				90D2AD8A23167D67008602A6 /* XJPlayerManager.h */,
+				90D2AD8B23167D67008602A6 /* XJPlayerAdManager.h */,
+				90D2AD8C23167D67008602A6 /* Model */,
+				90D2AD9123167D67008602A6 /* View */,
+				90D2ADB223167D67008602A6 /* XJPlayerView */,
+				90D2ADB623167D67008602A6 /* XJPlayerAdManager.m */,
+				90D2ADB723167D67008602A6 /* XJPlayerAdapter.m */,
+				90D2ADB823167D67008602A6 /* XJPlayerManager.m */,
+				90D2ADB923167D67008602A6 /* Player */,
+			);
+			path = XJPlayerManager;
+			sourceTree = "<group>";
+		};
+		90D2AD8023167D67008602A6 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD8123167D67008602A6 /* UIButton+CenterSpace.h */,
+				90D2AD8223167D67008602A6 /* UIImageView+XJPlayerImageManager.h */,
+				90D2AD8323167D67008602A6 /* UIView+PlayerControlsView.m */,
+				90D2AD8423167D67008602A6 /* UIView+XJBasePlayerView.h */,
+				90D2AD8523167D67008602A6 /* UIButton+CenterSpace.m */,
+				90D2AD8623167D67008602A6 /* UIImageView+XJPlayerImageManager.m */,
+				90D2AD8723167D67008602A6 /* UIView+XJBasePlayerView.m */,
+				90D2AD8823167D67008602A6 /* UIView+PlayerControlsView.h */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		90D2AD8C23167D67008602A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD8D23167D67008602A6 /* XJPlayerModel.h */,
+				90D2AD8E23167D67008602A6 /* XJPlayerUtils.m */,
+				90D2AD8F23167D67008602A6 /* XJPlayerModel.m */,
+				90D2AD9023167D67008602A6 /* XJPlayerUtils.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		90D2AD9123167D67008602A6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD9223167D67008602A6 /* XJSlider */,
+				90D2AD9A23167D67008602A6 /* XJPlayerControlsView */,
+				90D2ADA423167D67008602A6 /* XJPlayerTransition */,
+				90D2ADAB23167D67008602A6 /* XJPlayerBundleResource */,
+				90D2ADAE23167D67008602A6 /* XJBufferingView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		90D2AD9223167D67008602A6 /* XJSlider */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD9323167D67008602A6 /* XJSlider.m */,
+				90D2AD9423167D67008602A6 /* XJSlider.h */,
+				90D2AD9523167D67008602A6 /* XJSliderTrackView */,
+			);
+			path = XJSlider;
+			sourceTree = "<group>";
+		};
+		90D2AD9523167D67008602A6 /* XJSliderTrackView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD9623167D67008602A6 /* XJMarkSlider.m */,
+				90D2AD9723167D67008602A6 /* XJSliderTrackView.h */,
+				90D2AD9823167D67008602A6 /* XJMarkSlider.h */,
+				90D2AD9923167D67008602A6 /* XJSliderTrackView.m */,
+			);
+			path = XJSliderTrackView;
+			sourceTree = "<group>";
+		};
+		90D2AD9A23167D67008602A6 /* XJPlayerControlsView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2AD9B23167D67008602A6 /* XJPlayerControlsView.h */,
+				90D2AD9C23167D67008602A6 /* XJPlayerGesture.m */,
+				90D2AD9D23167D67008602A6 /* XJPlayerControlsView.m */,
+				90D2AD9E23167D67008602A6 /* XJPlayerControlsViewDelegate.h */,
+				90D2AD9F23167D67008602A6 /* XJPlayerGesture.h */,
+				90D2ADA023167D67008602A6 /* PlayerErrorInfoView */,
+			);
+			path = XJPlayerControlsView;
+			sourceTree = "<group>";
+		};
+		90D2ADA023167D67008602A6 /* PlayerErrorInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADA123167D67008602A6 /* PlayerErrorInfoView.m */,
+				90D2ADA223167D67008602A6 /* PlayerErrorInfoView.xib */,
+				90D2ADA323167D67008602A6 /* PlayerErrorInfoView.h */,
+			);
+			path = PlayerErrorInfoView;
+			sourceTree = "<group>";
+		};
+		90D2ADA423167D67008602A6 /* XJPlayerTransition */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADA523167D67008602A6 /* XJPlayerFullScreenViewController.h */,
+				90D2ADA623167D67008602A6 /* XJPlayerTransitioningDelegate.m */,
+				90D2ADA723167D67008602A6 /* XJPlayerAnimatedTransitioning.h */,
+				90D2ADA823167D67008602A6 /* XJPlayerFullScreenViewController.m */,
+				90D2ADA923167D67008602A6 /* XJPlayerTransitioningDelegate.h */,
+				90D2ADAA23167D67008602A6 /* XJPlayerAnimatedTransitioning.m */,
+			);
+			path = XJPlayerTransition;
+			sourceTree = "<group>";
+		};
+		90D2ADAB23167D67008602A6 /* XJPlayerBundleResource */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADAC23167D67008602A6 /* XJPlayerBundleResource.m */,
+				90D2ADAD23167D67008602A6 /* XJPlayerBundleResource.h */,
+			);
+			path = XJPlayerBundleResource;
+			sourceTree = "<group>";
+		};
+		90D2ADAE23167D67008602A6 /* XJBufferingView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADAF23167D67008602A6 /* XJBufferingView.h */,
+				90D2ADB023167D67008602A6 /* ic_buffering.psd */,
+				90D2ADB123167D67008602A6 /* XJBufferingView.m */,
+			);
+			path = XJBufferingView;
+			sourceTree = "<group>";
+		};
+		90D2ADB223167D67008602A6 /* XJPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADB323167D67008602A6 /* XJPlayerView.m */,
+				90D2ADB423167D67008602A6 /* XJBasePlayerViewDelegate.h */,
+				90D2ADB523167D67008602A6 /* XJPlayerView.h */,
+			);
+			path = XJPlayerView;
+			sourceTree = "<group>";
+		};
+		90D2ADB923167D67008602A6 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADBA23167D67008602A6 /* AVPlayerView */,
+				90D2ADBD23167D67008602A6 /* YTPlayerView */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		90D2ADBA23167D67008602A6 /* AVPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADBB23167D67008602A6 /* AVPlayerView.m */,
+				90D2ADBC23167D67008602A6 /* AVPlayerView.h */,
+			);
+			path = AVPlayerView;
+			sourceTree = "<group>";
+		};
+		90D2ADBD23167D67008602A6 /* YTPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADBE23167D67008602A6 /* YoutubePlayerView.h */,
+				90D2ADBF23167D67008602A6 /* YoutubePlayerView.m */,
+			);
+			path = YTPlayerView;
+			sourceTree = "<group>";
+		};
+		90D2ADD923167D70008602A6 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				90D2ADDA23167D70008602A6 /* .gitkeep */,
+				90D2ADDB23167D70008602A6 /* Images.xcassets */,
+			);
+			name = Assets;
+			path = ../../XJPlayerManager/Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -647,13 +665,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90351A0622FF080A002C9615 /* PlayerErrorInfoView.xib in Resources */,
+				90D2ADD123167D67008602A6 /* ic_buffering.psd in Resources */,
 				9033598E22F9A059007F20CF /* DramaCell.xib in Resources */,
 				903F923A22F56AD00001B44F /* AlbumHeader.xib in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				90D2ADDD23167D70008602A6 /* Images.xcassets in Resources */,
 				9033599122F9A059007F20CF /* DramaHeader.xib in Resources */,
 				903F923922F56AD00001B44F /* AlbumCell.xib in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
+				90D2ADDC23167D70008602A6 /* .gitkeep in Resources */,
+				90D2ADCC23167D67008602A6 /* PlayerErrorInfoView.xib in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -760,40 +781,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90351A1422FF080A002C9615 /* XJPlayerManager.m in Sources */,
+				90D2ADC123167D67008602A6 /* UIButton+CenterSpace.m in Sources */,
+				90D2ADD423167D67008602A6 /* XJPlayerAdManager.m in Sources */,
+				90D2ADD223167D67008602A6 /* XJBufferingView.m in Sources */,
 				9033599022F9A059007F20CF /* DramaCell.m in Sources */,
-				90351A0022FF080A002C9615 /* XJMarkSlider.m in Sources */,
-				90351A0522FF080A002C9615 /* PlayerErrorInfoView.m in Sources */,
+				90D2ADC623167D67008602A6 /* XJSlider.m in Sources */,
+				90D2ADD823167D67008602A6 /* YoutubePlayerView.m in Sources */,
+				90D2ADC723167D67008602A6 /* XJMarkSlider.m in Sources */,
 				90D2AD732314EA63008602A6 /* CustomControlsView.m in Sources */,
-				9034D76423017449000D902C /* XJPlayerBundleResource.m in Sources */,
 				9033598F22F9A059007F20CF /* DramaHeader.m in Sources */,
-				903519FF22FF080A002C9615 /* XJSlider.m in Sources */,
-				90351A0222FF080A002C9615 /* AVPlayerView.m in Sources */,
-				90351A1122FF080A002C9615 /* XJPlayerModel.m in Sources */,
 				903F923B22F56AD00001B44F /* AlbumCell.m in Sources */,
+				90D2ADC823167D67008602A6 /* XJSliderTrackView.m in Sources */,
+				90D2ADD723167D67008602A6 /* AVPlayerView.m in Sources */,
 				9033598C22F9A059007F20CF /* DramasViewController.m in Sources */,
 				903F923622F56AD00001B44F /* AlbumsViewController.m in Sources */,
 				6003F59E195388D20070C39A /* XJAppDelegate.m in Sources */,
-				90351A0822FF080A002C9615 /* XJPlayerFullScreenViewController.m in Sources */,
-				90351A0F22FF080A002C9615 /* XJBufferingView.m in Sources */,
-				90351A0322FF080A002C9615 /* XJPlayerGesture.m in Sources */,
-				90351A0C22FF080A002C9615 /* UIView+XJBasePlayerView.m in Sources */,
-				90351A1322FF080A002C9615 /* XJPlayerAdapter.m in Sources */,
-				90351A0422FF080A002C9615 /* XJPlayerControlsView.m in Sources */,
-				90351A0722FF080A002C9615 /* XJPlayerTransitioningDelegate.m in Sources */,
-				9034D76923027BDF000D902C /* UIImageView+XJPlayerImageManager.m in Sources */,
-				90351A0B22FF080A002C9615 /* UIButton+CenterSpace.m in Sources */,
-				90351A1222FF080A002C9615 /* XJPlayerView.m in Sources */,
-				90351A0922FF080A002C9615 /* XJPlayerAnimatedTransitioning.m in Sources */,
-				90351A1022FF080A002C9615 /* XJPlayerUtils.m in Sources */,
-				90351A0A22FF080A002C9615 /* UIView+PlayerControlsView.m in Sources */,
-				90D2AD762315448E008602A6 /* XJPlayerAdManager.m in Sources */,
 				9033598D22F9A059007F20CF /* DramaModel.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				90D2ADCD23167D67008602A6 /* XJPlayerTransitioningDelegate.m in Sources */,
+				90D2ADD523167D67008602A6 /* XJPlayerAdapter.m in Sources */,
+				90D2ADC423167D67008602A6 /* XJPlayerUtils.m in Sources */,
+				90D2ADCE23167D67008602A6 /* XJPlayerFullScreenViewController.m in Sources */,
+				90D2ADC523167D67008602A6 /* XJPlayerModel.m in Sources */,
+				90D2ADCA23167D67008602A6 /* XJPlayerControlsView.m in Sources */,
+				90D2ADD323167D67008602A6 /* XJPlayerView.m in Sources */,
+				90D2ADD623167D67008602A6 /* XJPlayerManager.m in Sources */,
+				90D2ADC323167D67008602A6 /* UIView+XJBasePlayerView.m in Sources */,
 				903F923822F56AD00001B44F /* AlbumHeader.m in Sources */,
+				90D2ADC023167D67008602A6 /* UIView+PlayerControlsView.m in Sources */,
 				903F923722F56AD00001B44F /* AlbumModel.m in Sources */,
-				90351A0D22FF080A002C9615 /* YoutubePlayerView.m in Sources */,
-				90351A0122FF080A002C9615 /* XJSliderTrackView.m in Sources */,
+				90D2ADC223167D67008602A6 /* UIImageView+XJPlayerImageManager.m in Sources */,
+				90D2ADCB23167D67008602A6 /* PlayerErrorInfoView.m in Sources */,
+				90D2ADD023167D67008602A6 /* XJPlayerBundleResource.m in Sources */,
+				90D2ADC923167D67008602A6 /* XJPlayerGesture.m in Sources */,
+				90D2ADCF23167D67008602A6 /* XJPlayerAnimatedTransitioning.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
