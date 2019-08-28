@@ -54,11 +54,12 @@
 {
     [super viewDidAppear:animated];
 
+    /*
     if (self.indexPath) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.playerManager playInScrollView:self.collectionView indexPath:self.indexPath rootViewController:self];
         });
-    }
+    }*/
 }
 
 - (void)viewWillDisappear:(BOOL)animated

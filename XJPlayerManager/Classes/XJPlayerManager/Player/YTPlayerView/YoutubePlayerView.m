@@ -11,7 +11,10 @@
 #import <YoutubePlayer_in_WKWebView/WKYTPlayerView.h>
 #import <Masonry/Masonry.h>
 #import <XJUtil/XJNetworkStatusMonitor.h>
+#import <XJUtil/NSArray+XJEnumExtensions.h>
 #import "XJPlayerUtils.h"
+
+#define WKYTPlayerStates @[@"Unstared", @"Ended", @"Playing", @"Paused", @"Buffering", @"Queued", @"Unknown"]
 
 typedef void(^SeekCompletionHandler)(BOOL);
 
@@ -36,7 +39,6 @@ typedef void(^SeekCompletionHandler)(BOOL);
 @property (nonatomic, assign) WKYTPlayerState playerState;
 
 @property (nonatomic, assign, getter=isLive) BOOL live;
-
 
 @end
 
@@ -242,24 +244,32 @@ typedef void(^SeekCompletionHandler)(BOOL);
     }];
 }
 
-- (void)playerView:(WKYTPlayerView *)playerView didChangeToState:(WKYTPlayerState)state
+- (void)playerView:(WKYTPlayerView *)playerView
+  didChangeToState:(WKYTPlayerState)state
 {
-    //NSLog(@"WKYTPlayerState : %ld", (long)state);
+    //NSLog(@"WKYTPlayerState : %@ (%ld)", [WKYTPlayerStates stringFromEnum:state], state);
     switch (state)
     {
-        case kWKYTPlayerStateBuffering:
-            //[self playerViewChangedStatus:XJPlayerStatusBuffering];
-            break;
-        case kWKYTPlayerStatePlaying:
-            [self playerViewChangedStatus:XJPlayerStatusPlaying];
-            break;
-        case kWKYTPlayerStatePaused:
-            [self playerViewChangedStatus:XJPlayerStatusPause];
-            break;
         case kWKYTPlayerStateEnded:
+        {
             NSLog(@"kYTPlayerStateEnded -----");
             [self playerViewChangedStatus:XJPlayerStatusEnded];
             break;
+        }
+        case kWKYTPlayerStatePlaying:
+        {
+            [self playerViewChangedStatus:XJPlayerStatusPlaying];
+            break;
+        }
+        case kWKYTPlayerStatePaused:
+        {
+            [self playerViewChangedStatus:XJPlayerStatusPause];
+            break;
+        }
+        case kWKYTPlayerStateBuffering:
+            //[self playerViewChangedStatus:XJPlayerStatusBuffering];
+            break;
+
         case kWKYTPlayerStateUnknown:
             NSLog(@"kYTPlayerStateUnknown -----");
             [self playerViewChangedStatus:XJPlayerStatusFailed];

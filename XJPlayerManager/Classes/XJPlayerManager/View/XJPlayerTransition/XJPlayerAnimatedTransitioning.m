@@ -46,7 +46,6 @@
 
     [toView addSubview:self.playerView];
 
-
     CGAffineTransform transform = toView.transform;
     UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
     UIDeviceOrientation deviceOrientationLandscape = UIDeviceOrientationIsLandscape(deviceOrientation) ? deviceOrientation : UIDeviceOrientationLandscapeLeft;
@@ -60,6 +59,13 @@
             break;
         default:
             break;
+    }
+
+    BOOL isYoutuePlayer = NO;
+    if ([self.playerView.player isKindOfClass:[YoutubePlayerView class]])
+    {
+        isYoutuePlayer = YES;
+        self.playerView.player.alpha = 0.0f;
     }
 
     NSTimeInterval duration = [self transitionDuration:transitionContext];
@@ -77,7 +83,24 @@
 
     } completion:^(BOOL finished) {
 
-        [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+        if (isYoutuePlayer)
+        {
+            [UIView animateWithDuration:0.3f
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseInOut
+                             animations:^
+             {
+                 self.playerView.player.alpha = 1.0f;
+
+             } completion:^(BOOL finished) {
+
+                 [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+             }];
+        }
+        else
+        {
+            [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+        }
 
     }];
 }
@@ -102,14 +125,11 @@
     CGRect targetBounds = CGRectMake(0, 0, targetRect.size.width, targetRect.size.height);
 
     BOOL isYoutuePlayer = NO;
-    UIView *bgView = nil;
     if ([self.playerView.player isKindOfClass:[YoutubePlayerView class]])
     {
         isYoutuePlayer = YES;
-        bgView = [[UIView alloc] initWithFrame:self.playerView.bounds];
-        bgView.backgroundColor = [UIColor blackColor];
-        [self.playerView insertSubview:bgView atIndex:1];
-        bgView.alpha = 0.0f;
+        //改在 XJPlayerView dismissFullScreenWithCompletion 將 player.alpha = 0.0f;
+        //self.playerView.player.alpha = 0.0f;
     }
 
     NSTimeInterval duration = [self transitionDuration:transitionContext] - 0.3f;
@@ -118,15 +138,11 @@
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
+
          fromView.transform = CGAffineTransformIdentity;
          fromView.frame = targetRect;
          [fromView layoutIfNeeded];
-         bgView.alpha = 1.0f;
          [self.playerView refreshPlayerFrame:targetBounds];
-
-         if (!isYoutuePlayer) {
-         }
-
 
      } completion:^(BOOL finished) {
 
@@ -142,11 +158,10 @@
                                  options:UIViewAnimationOptionCurveEaseInOut
                               animations:^
               {
-                  bgView.alpha = 0.0f;
+                  self.playerView.player.alpha = 1.0f;
 
               } completion:^(BOOL finished) {
 
-                  [bgView removeFromSuperview];
                   [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
               }];
          }

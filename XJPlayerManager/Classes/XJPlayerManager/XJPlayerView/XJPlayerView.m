@@ -275,7 +275,9 @@
         return;
     }
 
-    if (self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan) {
+    if (self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan)
+    {
+        NSLog(@"== AVAudioSessionInterruptionTypeBegan ==");
         [self actionPlay:NO];
         return;
     }
@@ -463,6 +465,7 @@
 
     NSTimeInterval duration = [self.player xj_duration];
     NSLog(@" +++ Ready To Play +++ duration : %f", duration);
+
     if (!self.playerGesture)
     {
         [self addNotifications];
@@ -643,6 +646,10 @@
     [self endEditing:YES];
     [self.player xj_layoutPortrait];
     __weak typeof(self)weakSelf = self;
+    if ([self.player isKindOfClass:[YoutubePlayerView class]]) {
+        self.player.alpha = 0.0f;
+    }
+    
     [self.rootViewController dismissViewControllerAnimated:YES completion:^{
 
         [weakSelf.controlView xj_controlsLayoutPortrait];
@@ -650,7 +657,6 @@
                                                       animation:UIStatusBarAnimationFade
                                                      completion:^
         {
-
             weakSelf.fullScreenRotating = NO;
             weakSelf.fullScreen = NO;
             if (completion) completion();
@@ -735,7 +741,6 @@
 {
     self.muted = sender.selected;
     XJPlayerMANAGER.muted = self.muted;
-    NSLog(@"actionMute : %d", XJPlayerMANAGER.isMuted);
 }
 
 - (void)xj_controlsView:(UIView *)controlsView actionFullScreen:(UIButton *)sender
@@ -799,6 +804,7 @@
                                              selector:@selector(audioRouteChangeListenerCallback:) name:AVAudioSessionRouteChangeNotification
                                                object:nil];
     // voip 或電話來時 打斷通知
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(audioSessionInterruptionNotification:) name:AVAudioSessionInterruptionNotification
                                                object:nil];
@@ -868,6 +874,7 @@
 {
     NSDictionary *info = notification.userInfo;
     AVAudioSessionInterruptionType type = [info[AVAudioSessionInterruptionTypeKey] unsignedIntegerValue];
+
     self.audioSessionInterruptionType = type;
     if (type == AVAudioSessionInterruptionTypeBegan) {
         [self actionPlay:NO];
