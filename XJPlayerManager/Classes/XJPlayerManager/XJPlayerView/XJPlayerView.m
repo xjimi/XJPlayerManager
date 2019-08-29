@@ -605,10 +605,10 @@
 - (void)presentFullScreen
 {
     if (self.isPauseBySystem ||
-        [UIWindow xj_rootViewController].presentedViewController ||
         self.isFullScreening ||
         !self.isFullScreenEnabled ||
-        self.isAdPlaying) return;
+        self.isAdPlaying ||
+        [UIWindow xj_rootViewController].presentedViewController) return;
     
     self.fullScreenRotating = YES;
 
@@ -840,9 +840,7 @@
 - (void)applicationDidBecomeActive:(NSNotification*)notification
 {
     self.didEnterBackground = NO;
-    if (!self.isPauseBySystem) {
-        [self safePlay];
-    }
+    [self safePlay];
 }
 
 - (void)audioRouteChangeListenerCallback:(NSNotification *)notification

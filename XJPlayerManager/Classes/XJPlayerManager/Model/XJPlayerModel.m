@@ -32,4 +32,13 @@
     _videoUrl = extractUrl;
 }
 
+- (NSString *)preRollAdUrl
+{
+    if (self.playerType == XJPlayerTypeYoutube) {
+        return nil;
+    }
+
+    return _preRollAdUrl;
+}
+
 @end
