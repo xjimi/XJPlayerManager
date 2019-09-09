@@ -30,6 +30,8 @@ typedef void(^PlayerReadyBlock)(void);
 
 - (void)xj_resetPlayer;
 
+- (void)xj_loadVideo;
+
 - (void)xj_seekToTime:(NSTimeInterval)time
     completionHandler:(void (^)(BOOL finished))completionHandler;
 

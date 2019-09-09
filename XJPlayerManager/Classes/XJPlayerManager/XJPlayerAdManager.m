@@ -54,6 +54,8 @@ typedef NS_ENUM(NSUInteger, XJPlayerAdSource) {
 
 - (void)dealloc
 {
+    self.adContainer = nil;
+    self.adViewController = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"%s", __func__);
 }

@@ -72,7 +72,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.playerManager remove];
+    //[self.playerManager remove];
 }
 
 - (void)xj_collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -145,12 +145,15 @@
         
         NSString *url = @"https://www.youtube.com/watch?v=4ZVUmEUFwaY";
         //url = @"4ZVUmEUFwaY";
+        //https://dlhdl-cdn.zhanqi.tv/zqlive/7032_0s2qn.m3u8
+
+    //https://webapi.setn.com/api/Event/GetVideoUrl?domain=video.setn.com&url=dest/2019/06/05/121332_1631/master.m3u8&DeviceType=0&videoId=121332
         url = (i%2) ? @"https://dlhdl-cdn.zhanqi.tv/zqlive/7032_0s2qn.m3u8" : @"http://www.youtube.com/embed/4ZVUmEUFwaY";
         //url = @"ulKrn-3GraI";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
                                          coverImageUrl:imageUrl];
-        //model.playerModel.preRollAdUrl = @"https://pubads.g.doubleclick.net/gampad/ads?sz=1024x768&iu=/123939770/Vidol-test20180420&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]";
+        model.playerModel.preRollAdUrl = @"https://pubads.g.doubleclick.net/gampad/ads?sz=1024x768&iu=/123939770/Vidol-test20180420&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=[referrer_url]&description_url=[description_url]&correlator=[timestamp]";
         
         CGFloat vw = CGRectGetWidth(self.view.frame) - 40.0f;
         CGFloat cellh = roundf(vw * (9.0 / 16.0)) + 70.0f;

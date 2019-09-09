@@ -38,17 +38,22 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-typedef NS_ENUM(NSInteger, XJPlayerStatus) {
-    XJPlayerStatusNone,
-    XJPlayerStatusReadyToPlay,
-    XJPlayerStatusBuffering,
-    XJPlayerStatusPlaying,
-    XJPlayerStatusPause,
-    XJPlayerStatusEnded,
-    XJPlayerStatusFailed,
-    XJPlayerStatusFailedToPlayToEndTime
+typedef NS_ENUM(NSInteger, XJPlayerPlayStatus) {
+    XJPlayerPlayStatusUnknown,
+    XJPlayerPlayStatusPlaying,
+    XJPlayerPlayStatusPaused,
+    XJPlayerPlayStatusFailed,
+    XJPlayerPlayStatusEnded,
+    XJPlayerPlayStatusFailedToPlayToEndTime
 };
 
+typedef NS_OPTIONS(NSUInteger, XJPlayerLoadStatus) {
+    XJPlayerLoadStatusUnknown        = 0,
+    XJPlayerLoadStatusPrepare        = 1 << 0,
+    XJPlayerLoadStatusPlayable       = 1 << 1,
+    XJPlayerLoadStatusReadyToPlay    = 1 << 2,
+    XJPlayerLoadStatusStalled        = 1 << 3,
+};
 
 @interface XJPlayerView : UIView
 

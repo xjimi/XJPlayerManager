@@ -12,7 +12,11 @@
 @optional
 
 - (void)xj_playerView:(UIView *)playerView
-               status:(XJPlayerStatus)status;
+           loadStatus:(XJPlayerLoadStatus)loadStatus;
+
+- (void)xj_playerView:(UIView *)playerView
+           playStatus:(XJPlayerPlayStatus)playStatus;
+
 
 - (void)xj_playerView:(UIView *)playerView
           currentTime:(NSTimeInterval)currentTime

@@ -38,6 +38,11 @@ typedef void(^SeekCompletionHandler)(BOOL);
 
 @property (nonatomic, assign) WKYTPlayerState playerState;
 
+@property (nonatomic, assign) XJPlayerLoadStatus loadStatus;
+
+@property (nonatomic, assign) XJPlayerPlayStatus playStatus;
+
+
 @property (nonatomic, assign, getter=isLive) BOOL live;
 
 @end
@@ -212,13 +217,6 @@ typedef void(^SeekCompletionHandler)(BOOL);
     }
 }
 
-- (void)playerViewChangedStatus:(XJPlayerStatus)status
-{
-    if ([self.delegate respondsToSelector:@selector(xj_playerView:status:)]) {
-        [self.delegate xj_playerView:self status:status];
-    }
-}
-
 #pragma mark YTPlayerView delegate
 
 - (void)playerViewDidBecomeReady:(WKYTPlayerView *)playerView
@@ -235,7 +233,7 @@ typedef void(^SeekCompletionHandler)(BOOL);
         weakSelf.live = !duration;
         weakSelf.readyToPlay = YES;
         weakSelf.duration = duration;
-        [weakSelf playerViewChangedStatus:XJPlayerStatusReadyToPlay];
+        weakSelf.loadStatus = XJPlayerLoadStatusReadyToPlay;
 
         if (weakSelf.timeLastPlayed) {
             [weakSelf xj_seekToTime:weakSelf.timeLastPlayed completionHandler:nil];
@@ -252,32 +250,51 @@ typedef void(^SeekCompletionHandler)(BOOL);
     {
         case kWKYTPlayerStateEnded:
         {
-            NSLog(@"kYTPlayerStateEnded -----");
-            [self playerViewChangedStatus:XJPlayerStatusEnded];
+            self.playStatus = XJPlayerPlayStatusEnded;
             break;
         }
         case kWKYTPlayerStatePlaying:
         {
-            [self playerViewChangedStatus:XJPlayerStatusPlaying];
+            self.playStatus = XJPlayerPlayStatusPlaying;
             break;
         }
         case kWKYTPlayerStatePaused:
         {
-            [self playerViewChangedStatus:XJPlayerStatusPause];
+            self.playStatus = XJPlayerPlayStatusPaused;
             break;
         }
-        case kWKYTPlayerStateBuffering:
-            //[self playerViewChangedStatus:XJPlayerStatusBuffering];
-            break;
-
         case kWKYTPlayerStateUnknown:
-            NSLog(@"kYTPlayerStateUnknown -----");
-            [self playerViewChangedStatus:XJPlayerStatusFailed];
+            self.playStatus = XJPlayerPlayStatusFailed;
             break;
         default:
             break;
     }
 }
+
+- (void)setLoadStatus:(XJPlayerLoadStatus)loadStatus
+{
+    if ([self.delegate respondsToSelector:@selector(xj_playerView:loadStatus:)]) {
+        [self.delegate xj_playerView:self loadStatus:loadStatus];
+    }
+}
+
+- (void)setPlayStatus:(XJPlayerPlayStatus)playStatus
+{
+    if ([self.delegate respondsToSelector:@selector(xj_playerView:playStatus:)]) {
+        [self.delegate xj_playerView:self playStatus:playStatus];
+    }
+}
+
+- (void)playerView:(WKYTPlayerView *)playerView didPlayTime:(float)playTime
+{
+    self.currentTime = playTime;
+    self.timeLastPlayed = playTime;
+    if ([self.delegate respondsToSelector:@selector(xj_playerView:currentTime:totalTime:)]) {
+        [self.delegate xj_playerView:self currentTime:playTime totalTime:self.duration];
+    }
+}
+
+#pragma mark - YTPlayer view setting
 
 - (UIColor *)playerViewPreferredWebViewBackgroundColor:(WKYTPlayerView *)playerView {
     return [UIColor blackColor];
@@ -288,15 +305,6 @@ typedef void(^SeekCompletionHandler)(BOOL);
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor blackColor];
     return view;
-}
-
-- (void)playerView:(WKYTPlayerView *)playerView didPlayTime:(float)playTime
-{
-    self.currentTime = playTime;
-    self.timeLastPlayed = playTime;
-    if ([self.delegate respondsToSelector:@selector(xj_playerView:currentTime:totalTime:)]) {
-        [self.delegate xj_playerView:self currentTime:playTime totalTime:self.duration];
-    }
 }
 
 @end

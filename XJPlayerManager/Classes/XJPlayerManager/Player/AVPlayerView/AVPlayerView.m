@@ -10,12 +10,21 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "UIView+XJBasePlayerView.h"
 
+static NSString *const kStatus                   = @"status";
+static NSString *const kLoadedTimeRanges         = @"loadedTimeRanges";
+static NSString *const kPlaybackBufferEmpty      = @"playbackBufferEmpty";
+static NSString *const kPlaybackLikelyToKeepUp   = @"playbackLikelyToKeepUp";
+static NSString *const kPresentationSize         = @"presentationSize";
+
 @interface AVPlayerLayerView : UIView
 
 @property (nonatomic, strong) AVPlayer *player;
 
 @property (nonatomic, strong) AVLayerVideoGravity videoGravity;
 
+@property (nonatomic, assign) NSTimeInterval currentTime;
+
+@property (nonatomic, assign) NSTimeInterval totalTime;
 
 @end
 
@@ -66,6 +75,9 @@
 @property (nonatomic, copy)   NSString               *videoGravity;
 @property (nonatomic, strong) NSURL                  *videoURL;
 @property (nonatomic, strong) id                     timeObserver;
+@property (nonatomic, assign, getter=isReadyToPlay)  BOOL readyToPlay;
+@property (nonatomic, assign) XJPlayerLoadStatus     loadStatus;
+@property (nonatomic, assign) XJPlayerPlayStatus     playStatus;
 
 @end
 
@@ -103,6 +115,190 @@
     self.playerLayerView.frame = self.frame;
 }
 
+- (void)resetPlayer
+{
+    if (self.timeObserver)
+    {
+        [self.player removeTimeObserver:self.timeObserver];
+        self.timeObserver = nil;
+    }
+
+    [self.player pause];
+    self.urlAsset = nil;
+    self.playerItem = nil;
+    [self.player replaceCurrentItemWithPlayerItem:nil];
+    self.player = nil;
+    [self.playerLayerView removeFromSuperview];
+    self.playerLayerView = nil;
+}
+
+- (void)initPlayer
+{
+    self.readyToPlay = NO;
+    self.loadStatus = XJPlayerLoadStatusPrepare;
+
+    self.urlAsset = [AVURLAsset URLAssetWithURL:self.videoURL options:self.requestHeader];
+    self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
+    self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
+    //[self enableAudioTracks:YES inPlayerItem:_playerItem];
+    [self addPeriodicTimeObserver];
+
+    self.playerLayerView = [[AVPlayerLayerView alloc] init];
+    self.playerLayerView.frame = self.bounds;
+    self.playerLayerView.player = self.player;
+    self.playerLayerGravity = self.videoGravity;
+}
+
+- (void)setPlayerItem:(AVPlayerItem *)playerItem
+{
+    if (_playerItem == playerItem) return;
+
+    if (_playerItem) [self removeObservers];
+    _playerItem = playerItem;
+    if (@available(iOS 10.0, *)) {
+        _playerItem.preferredForwardBufferDuration = 5;
+        _player.automaticallyWaitsToMinimizeStalling = NO;
+    }
+
+    if (playerItem) [self addObservers];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if ([keyPath isEqualToString:kStatus])
+    {
+        if (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay)
+        {
+            if (self.loadStatus == XJPlayerLoadStatusPrepare)
+            {
+                NSLog(@"player.currentItem.status ======== XJPlayerStatusReadyToPlay");
+                //self.loadStatus = XJPlayerLoadStatusReadyToPlay;
+                if (![self.playerLayerView isDescendantOfView:self]) {
+                    [self addSubview:self.playerLayerView];
+                }
+            }
+        }
+        else if (self.player.currentItem.status == AVPlayerItemStatusFailed)
+        {
+            NSError *error = self.player.currentItem.error;
+            NSLog(@"player.currentItem.status ======== AVPlayerItemStatusFailed : %@", error);
+            NSLog(@"%@", self.videoURL.absoluteString);
+            self.playStatus = XJPlayerPlayStatusFailed;
+        }
+        else if (self.player.currentItem.status == AVPlayerItemStatusUnknown)
+        {
+
+            NSLog(@"player.currentItem.status ======== AVPlayerItemStatusUnknown");
+            self.playStatus = XJPlayerPlayStatusFailed;
+        }
+
+    }
+    else if ([keyPath isEqualToString:kLoadedTimeRanges])
+    {
+        if ([self.delegate respondsToSelector:@selector(xj_playerView:loadedTimeRangesWithProgress:)])
+        {
+            NSTimeInterval timeInterval = [self availableDuration];
+            CGFloat progress = timeInterval / self.xj_duration;
+            [self.delegate xj_playerView:self loadedTimeRangesWithProgress:progress];
+        }
+
+    }
+    else if ([keyPath isEqualToString:kPlaybackBufferEmpty])
+    {
+        if (self.playerItem.playbackBufferEmpty)
+        {
+            self.loadStatus = XJPlayerLoadStatusStalled;
+            if ([self.delegate respondsToSelector:@selector(xj_playerViewBufferingSomeSecond)]) {
+                [self.delegate xj_playerViewBufferingSomeSecond];
+            }
+        }
+    }
+    else if ([keyPath isEqualToString:kPlaybackLikelyToKeepUp])
+    {
+        if (self.playerItem.playbackLikelyToKeepUp) {
+            self.loadStatus = XJPlayerLoadStatusPlayable;
+        }
+    }
+}
+
+- (void)addPeriodicTimeObserver
+{
+    __weak typeof(self)weakSelf = self;
+    CMTime interval = CMTimeMakeWithSeconds(self.timeRefreshInterval > 0 ? self.timeRefreshInterval : 0.1, NSEC_PER_SEC);
+    self.timeObserver = [self.player addPeriodicTimeObserverForInterval:interval
+                                     queue:nil usingBlock:^(CMTime time)
+                         {
+
+                             NSArray *loadedRanges = weakSelf.playerItem.seekableTimeRanges;
+                             if (CMTimeGetSeconds(time) > 0 && !weakSelf.isReadyToPlay)
+                             {
+                                 // 大於0才把狀態改為可以播放，解決黑屏問題
+                                 weakSelf.readyToPlay = YES;
+                                 weakSelf.loadStatus = XJPlayerLoadStatusReadyToPlay;
+                             }
+
+                             if (loadedRanges.count > 0)
+                             {
+                                 if ([weakSelf.delegate respondsToSelector:@selector(xj_playerView:currentTime:totalTime:)])
+                                 {
+                                     [weakSelf.delegate xj_playerView:weakSelf
+                                                          currentTime:weakSelf.xj_currentTime
+                                                            totalTime:weakSelf.xj_duration];
+                                 }
+                             }
+                         }];
+}
+
+- (void)setLoadStatus:(XJPlayerLoadStatus)loadStatus
+{
+    _loadStatus = loadStatus;
+    if ([self.delegate respondsToSelector:@selector(xj_playerView:loadStatus:)]) {
+        [self.delegate xj_playerView:self loadStatus:loadStatus];
+    }
+}
+
+- (void)setPlayStatus:(XJPlayerPlayStatus)playStatus
+{
+    _playStatus = playStatus;
+    if ([self.delegate respondsToSelector:@selector(xj_playerView:playStatus:)]) {
+        [self.delegate xj_playerView:self playStatus:playStatus];
+    }
+}
+
+- (void)setPlayerLayerGravity:(AVLayerVideoGravity)playerLayerGravity
+{
+    _playerLayerGravity = playerLayerGravity;
+    self.playerLayerView.videoGravity = playerLayerGravity;
+    self.videoGravity = playerLayerGravity;
+}
+
+- (void)videoPlayDidEnd:(NSNotification *)notification {
+    self.playStatus = XJPlayerPlayStatusEnded;
+}
+
+- (void)removeObservers
+{
+    [_playerItem removeObserver:self forKeyPath:kStatus];
+    [_playerItem removeObserver:self forKeyPath:kLoadedTimeRanges];
+    [_playerItem removeObserver:self forKeyPath:kPlaybackBufferEmpty];
+    [_playerItem removeObserver:self forKeyPath:kPlaybackLikelyToKeepUp];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
+}
+
+- (void)addObservers
+{
+    [_playerItem addObserver:self forKeyPath:kStatus options:NSKeyValueObservingOptionNew context:nil];
+    [_playerItem addObserver:self forKeyPath:kLoadedTimeRanges options:NSKeyValueObservingOptionNew context:nil];
+    [_playerItem addObserver:self forKeyPath:kPlaybackBufferEmpty options:NSKeyValueObservingOptionNew context:nil];
+    [_playerItem addObserver:self forKeyPath:kPlaybackLikelyToKeepUp options:NSKeyValueObservingOptionNew context:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayDidEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
+}
+
+#pragma mark - setter
+
 - (void)xj_setVideoObject:(id)videoObject
 {
     if ([videoObject isKindOfClass:[NSURL class]]) {
@@ -116,33 +312,25 @@
     [self initPlayer];
 }
 
-- (void)resetPlayer
+- (void)xj_seekToTime:(NSTimeInterval)time
+    completionHandler:(void (^)(BOOL finished))completionHandler
 {
-    if (self.timeObserver) {
-        [self.player removeTimeObserver:self.timeObserver];
-        self.timeObserver = nil;
+    if ([self xj_isReadyToPlay])
+    {
+        CMTime seekTime = CMTimeMake(time, 1);
+        if (![self xj_isValidDuration])
+        {
+            NSLog(@"kCMTimePositiveInfinity %f", time);
+            seekTime = kCMTimePositiveInfinity;
+        }
+
+        [self.player seekToTime:seekTime
+                toleranceBefore:kCMTimeZero
+                 toleranceAfter:kCMTimeZero
+              completionHandler:^(BOOL finished) {
+                  if (completionHandler) completionHandler(finished);
+              }];
     }
-
-    [self.player pause];
-    self.urlAsset = nil;
-    self.playerItem = nil;
-    self.player = nil;
-    [self.playerLayerView removeFromSuperview];
-    self.playerLayerView = nil;
-}
-
-- (void)initPlayer
-{
-    self.urlAsset = [AVURLAsset assetWithURL:self.videoURL];
-    self.playerItem = [AVPlayerItem playerItemWithAsset:self.urlAsset];
-    // 每次都重新创建Player，替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程
-    self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
-    // 初始化playerLayer
-    self.playerLayerView = [[AVPlayerLayerView alloc] init];
-    self.playerLayerView.frame = self.bounds;
-    self.playerLayerView.player = self.player;
-    self.playerLayerGravity = self.videoGravity;
-    [self addPeriodicTimeObserver];
 }
 
 - (void)xj_play {
@@ -161,142 +349,46 @@
     self.player.muted = NO;
 }
 
-- (void)xj_seekToTime:(NSTimeInterval)time completionHandler:(void (^)(BOOL finished))completionHandler
-{
-    if (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay)
-    {
-        // seekTime:completionHandler:不能精确定位
-        // 如果需要精确定位，可以使用seekToTime:toleranceBefore:toleranceAfter:completionHandler:
-        // 转换成CMTime才能给player来控制播放进度
-
-        CMTime seekTime = CMTimeMake(time, 1); //kCMTimeZero
-        if (![self xj_isValidDuration])
-        {
-            NSLog(@"kCMTimePositiveInfinity %f", time);
-            seekTime = kCMTimePositiveInfinity;
-        }
-
-        [self.player seekToTime:seekTime
-                toleranceBefore:CMTimeMake(1,1)
-                 toleranceAfter:CMTimeMake(1,1)
-              completionHandler:^(BOOL finished)
-         {
-
-             if (completionHandler) completionHandler(finished);
-
-         }];
-    }
-}
-
 - (void)xj_resetPlayer {
     [self resetPlayer];
 }
 
-- (void)removeObservers
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
-    [_playerItem removeObserver:self forKeyPath:@"status"];
-    [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
-    [_playerItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
-    [_playerItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+#pragma mark - getter
+
+- (BOOL)xj_isReadyToPlay {
+    return (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay);
 }
 
-- (void)addObservers
-{
-    [_playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-    [_playerItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
-    // 缓冲区空了，需要等待数据
-    [_playerItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
-    // 缓冲区有足够数据可以播放了
-    [_playerItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayDidEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:_playerItem];
+- (BOOL)xj_isLikelyToKeepUp {
+    return self.player.currentItem.isPlaybackLikelyToKeepUp;
 }
 
-/**
- *  根据playerItem，来添加移除观察者
- *
- *  @param playerItem playerItem
- */
-- (void)setPlayerItem:(AVPlayerItem *)playerItem
+- (BOOL)xj_isValidDuration
 {
-    if (_playerItem == playerItem) return;
-
-    if (_playerItem) {
-        [self removeObservers];
-    }
-
-    _playerItem = playerItem;
-
-    if (playerItem) {
-        [self addObservers];
-    }
+    NSTimeInterval duration = [self xj_duration];
+    return !(isnan(duration) || !isfinite(duration) || !duration);
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (object == self.player.currentItem)
-    {
-        if ([keyPath isEqualToString:@"status"])
-        {
-            if (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay)
-            {
-                NSLog(@"player.currentItem.status ======== XJPlayerStatusReadyToPlay");
-                // 添加playerLayer到self.layer
-                if (![self.playerLayerView isDescendantOfView:self]) {
-                    [self addSubview:self.playerLayerView];
-                }
-                [self xj_pause];
-                [self playerViewChangedStatus:XJPlayerStatusReadyToPlay];
-            }
-            else if (self.player.currentItem.status == AVPlayerItemStatusFailed)
-            {
-                NSLog(@"player.currentItem.status ======== AVPlayerItemStatusFailed");
-                NSLog(@"%@", self.videoURL.absoluteString);
-                [self playerViewChangedStatus:XJPlayerStatusFailed];
-            }
-            else if (self.player.currentItem.status == AVPlayerItemStatusUnknown)
-            {
-
-                NSLog(@"player.currentItem.status ======== AVPlayerItemStatusUnknown");
-                [self playerViewChangedStatus:XJPlayerStatusFailed];
-
-            }
-
-        } else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
-
-            // 计算缓冲进度
-            NSTimeInterval timeInterval = [self availableDuration];
-            CMTime duration             = self.playerItem.duration;
-            CGFloat totalDuration       = CMTimeGetSeconds(duration);
-            CGFloat progress            = timeInterval / totalDuration;
-
-            if ([self.delegate respondsToSelector:@selector(xj_playerView:loadedTimeRangesWithProgress:)]) {
-                [self.delegate xj_playerView:self loadedTimeRangesWithProgress:progress];
-            }
-
-        } else if ([keyPath isEqualToString:@"playbackBufferEmpty"] ||
-                   [keyPath isEqualToString:@"playbackLikelyToKeepUp"])
-        {
-            // 当缓冲是空的时候
-            if (self.playerItem.playbackBufferEmpty)
-            {
-                [self playerViewChangedStatus:XJPlayerStatusBuffering];
-                if ([self.delegate respondsToSelector:@selector(xj_playerViewBufferingSomeSecond)]) {
-                    [self.delegate xj_playerViewBufferingSomeSecond];
-                }
-            }
-        }
-    }
+- (float)rate {
+    return _rate == 0 ?1:_rate;
 }
 
-- (void)playerViewChangedStatus:(XJPlayerStatus)status
+- (NSTimeInterval)xj_duration
 {
-    if ([self.delegate respondsToSelector:@selector(xj_playerView:status:)]) {
-        [self.delegate xj_playerView:self status:status];
+    NSTimeInterval sec = CMTimeGetSeconds(self.player.currentItem.duration);
+    if (isnan(sec)) {
+        return 0;
     }
+    return sec;
+}
+
+- (NSTimeInterval)xj_currentTime
+{
+    NSTimeInterval sec = CMTimeGetSeconds(self.playerItem.currentTime);
+    if (isnan(sec) || sec < 0) {
+        return 0;
+    }
+    return sec;
 }
 
 - (BOOL)xj_isPlaybackLikelyToKeepUp {
@@ -307,80 +399,43 @@
     return self.player.currentItem;
 }
 
-- (void)addPeriodicTimeObserver
+#pragma mark - private method
+
+/// Calculate buffer progress
+- (NSTimeInterval)availableDuration
 {
-    __weak typeof(self) weakSelf = self;
-    self.timeObserver = [self.player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 1)
-                                                                  queue:nil usingBlock:^(CMTime time)
-                         {
-                             AVPlayerItem *currentItem = weakSelf.playerItem;
-                             NSArray *loadedRanges = currentItem.seekableTimeRanges;
-                             if (loadedRanges.count > 0 && currentItem.duration.timescale != 0)
-                             {
-                                 NSTimeInterval currentTime = (NSTimeInterval)CMTimeGetSeconds([currentItem currentTime]);
-                                 CGFloat totalTime     = (CGFloat)currentItem.duration.value / currentItem.duration.timescale;
-                                 if ([weakSelf.delegate respondsToSelector:@selector(xj_playerView:currentTime:totalTime:)]) {
-                                     [weakSelf.delegate xj_playerView:weakSelf currentTime:currentTime totalTime:totalTime];
-                                 }
-                             }
-                         }];
+    NSArray *timeRangeArray = _playerItem.loadedTimeRanges;
+    CMTime currentTime = [_player currentTime];
+    BOOL foundRange = NO;
+    CMTimeRange aTimeRange = {0};
+    if (timeRangeArray.count) {
+        aTimeRange = [[timeRangeArray objectAtIndex:0] CMTimeRangeValue];
+        if (CMTimeRangeContainsTime(aTimeRange, currentTime)) {
+            foundRange = YES;
+        }
+    }
+
+    if (foundRange) {
+        CMTime maxTime = CMTimeRangeGetEnd(aTimeRange);
+        NSTimeInterval playableDuration = CMTimeGetSeconds(maxTime);
+        if (playableDuration > 0) {
+            return playableDuration;
+        }
+    }
+    return 0;
 }
 
-- (void)setPlayerLayerGravity:(AVLayerVideoGravity)playerLayerGravity
+/// Playback speed switching method
+- (void)enableAudioTracks:(BOOL)enable inPlayerItem:(AVPlayerItem*)playerItem
 {
-    _playerLayerGravity = playerLayerGravity;
-    self.playerLayerView.videoGravity = playerLayerGravity;
-    self.videoGravity = playerLayerGravity;
-}
-
-- (void)videoPlayDidEnd:(NSNotification *)notification
-{
-    if ([self.delegate respondsToSelector:@selector(xj_playerView:status:)]) {
-        [self.delegate xj_playerView:self status:XJPlayerStatusEnded];
+    for (AVPlayerItemTrack *track in playerItem.tracks){
+        if ([track.assetTrack.mediaType isEqual:AVMediaTypeVideo]) {
+            track.enabled = enable;
+        }
     }
 }
 
-- (NSTimeInterval)xj_currentTime {
-    return CMTimeGetSeconds(self.player.currentItem.currentTime);
-}
-
-- (NSTimeInterval)xj_duration {
-    return CMTimeGetSeconds(self.player.currentItem.duration);
-}
-
-- (BOOL)xj_isReadyToPlay {
-    return (self.player.currentItem.status == AVPlayerItemStatusReadyToPlay);
-}
-
-- (BOOL)xj_isLikelyToKeepUp {
-    NSLog(@"--- check is likely to keep up %d", self.player.currentItem.isPlaybackLikelyToKeepUp);
-    return self.player.currentItem.isPlaybackLikelyToKeepUp;
-}
-
-- (BOOL)xj_isValidDuration
-{
-    NSTimeInterval duration = [self xj_duration];
-    return !(isnan(duration) || !isfinite(duration) || !duration);
-}
-
-#pragma mark - 计算缓冲进度
-
-/**
- *  计算缓冲进度
- *
- *  @return 缓冲进度
- */
-- (NSTimeInterval)availableDuration
-{
-    NSArray *loadedTimeRanges = [[_player currentItem] loadedTimeRanges];
-    CMTimeRange timeRange     = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域
-    float startSeconds        = CMTimeGetSeconds(timeRange.start);
-    float durationSeconds     = CMTimeGetSeconds(timeRange.duration);
-    NSTimeInterval result     = startSeconds + durationSeconds;// 计算缓冲总进度
-    return result;
-}
-
-- (void)xj_removePlayerOnPlayerLaye {
+- (void)xj_removePlayerOnPlayerLayer {
     self.playerLayerView.player = nil;
 }
 

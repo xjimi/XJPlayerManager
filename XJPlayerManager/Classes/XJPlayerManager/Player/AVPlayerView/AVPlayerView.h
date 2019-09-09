@@ -13,4 +13,10 @@
 
 @property (nonatomic, assign) AVLayerVideoGravity playerLayerGravity;
 
+@property (nonatomic, assign) NSTimeInterval timeRefreshInterval;
+
+@property (nonatomic, strong) NSDictionary *requestHeader;
+
+@property (nonatomic, assign) float rate;
+
 @end

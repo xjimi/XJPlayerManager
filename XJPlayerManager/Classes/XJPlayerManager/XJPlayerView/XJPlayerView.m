@@ -31,7 +31,9 @@
 
 @property (nonatomic, strong) XJPlayerModel          *playerModel;
 
-@property (nonatomic, assign) XJPlayerStatus         status;
+@property (nonatomic, assign) XJPlayerLoadStatus     loadStatus;
+
+@property (nonatomic, assign) XJPlayerPlayStatus     playStatus;
 
 @property (nonatomic, assign) BOOL                   isStatusFailed;
 
@@ -55,7 +57,6 @@
 
 @property (nonatomic, assign, getter=isBuffering) BOOL buffering;
 
-
 @property (nonatomic, strong) UIView *adContainer;
 
 @property (nonatomic, strong) XJNetworkStatusMonitor *networkStatusMonitor;
@@ -67,11 +68,12 @@
  */
 @property (nonatomic, assign, getter=isPauseByUser) BOOL pauseByUser;
 
-
 /**
  系統暫停為最高操作權限，但不干擾使用者pauseByUser行為
  */
 @property (nonatomic, assign, getter=isPauseBySystem) BOOL pauseBySystem;
+
+@property (nonatomic, assign, getter=isPauseInBackground) BOOL pauseInBackground;
 
 @property (nonatomic, assign) AVAudioSessionInterruptionType audioSessionInterruptionType;
 
@@ -218,14 +220,16 @@
 
 - (void)configurePlayer
 {
-    if ((self.player && !self.playerModel.videoUrl) ||
+    if (self.isReadyToPlay ||
+        (self.player && !self.playerModel.videoUrl) ||
         self.networkStatusMonitor.netStatus == NotReachable) {
-        self.status = XJPlayerStatusFailed;
+        self.playStatus = XJPlayerPlayStatusFailed;
         return;
     }
 
     [self.controlView xj_controlsReset];
-    self.status = XJPlayerStatusBuffering;
+    [self.controlView xj_controlsBuffering:YES];
+
     id videoObj = self.playerModel.videoUrl ? : self.playerModel.videoObject;
     [self.player xj_setVideoObject:videoObj];
     //self.seekTime = self.seekTime ? : [self.player xj_currentTime];
@@ -258,26 +262,20 @@
 
 - (void)safePlay
 {
-    if (self.isAdPlaying)
-    {
-        [self xj_pause];
-        return;
-    }
-
     if (self.isPauseBySystem)
     {
         [self systemPause];
         return;
     }
-
-    if (self.isPauseByUser) {
+    else if (self.isPauseByUser)
+    {
         [self pause];
         return;
     }
-
-    if (self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan)
+    else if (self.isAdPlaying ||
+             self.isPauseInBackground ||
+             self.audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan)
     {
-        NSLog(@"== AVAudioSessionInterruptionTypeBegan ==");
         [self actionPlay:NO];
         return;
     }
@@ -293,20 +291,14 @@
 
 - (void)play
 {
-    if (self.status == XJPlayerStatusPause) {
-        self.status = XJPlayerStatusPlaying;
-    }
-
+    self.playStatus = XJPlayerPlayStatusPlaying;
     [self disablePauseByProperty];
     [self actionPlay:YES];
 }
 
 - (void)pause
 {
-    if (self.status == XJPlayerStatusPlaying) {
-        self.status = XJPlayerStatusPause;
-    }
-
+    self.playStatus = XJPlayerPlayStatusPaused;
     self.pauseByUser = YES;
     [self actionPlay:NO];
 }
@@ -348,7 +340,8 @@
 - (void)audioSessionCategoryPlaybackEnabled:(BOOL)enabled
 {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [audioSession setCategory:AVAudioSessionCategoryPlayback
+                  withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
     [audioSession setActive:enabled error:nil];
 }
 
@@ -356,6 +349,7 @@
 {
     self.pauseByUser = NO;
     self.pauseBySystem = NO;
+    self.pauseInBackground = NO;
 }
 
 - (void)addNetworkStatusMonitor
@@ -366,7 +360,7 @@
     [XJNetworkStatusMonitor
      monitorWithNetworkStatusChange:^(NetworkStatus netStatus)
      {
-         NSLog(@"monitorWithNetworkStatusChange %ld", (long)weakSelf.status);
+         NSLog(@"monitorWithNetworkStatusChange");
          if (netStatus != NotReachable)
          {
              if (weakSelf.isStatusFailed) {
@@ -379,8 +373,12 @@
 
 #pragma mark - BasePlayerViewDelegate
 
-- (void)xj_playerView:(UIView *)playerView status:(XJPlayerStatus)status {
-    self.status = status;
+- (void)xj_playerView:(UIView *)playerView loadStatus:(XJPlayerLoadStatus)loadStatus {
+    self.loadStatus = loadStatus;
+}
+
+- (void)xj_playerView:(UIView *)playerView playStatus:(XJPlayerPlayStatus)playStatus {
+    self.playStatus = playStatus;
 }
 
 - (void)xj_playerViewBufferingSomeSecond {
@@ -404,25 +402,34 @@
     }
 }
 
-- (void)setStatus:(XJPlayerStatus)status
+- (void)setLoadStatus:(XJPlayerLoadStatus)loadStatus
 {
-    _status = status;
-    [self.controlView xj_controlsBuffering:status == XJPlayerStatusBuffering];
+    _loadStatus = loadStatus;
+    BOOL isBuffering = (loadStatus == XJPlayerLoadStatusStalled || loadStatus == XJPlayerLoadStatusPrepare);
+    [self.controlView xj_controlsBuffering:isBuffering];
 
-    switch (_status)
+    switch (_loadStatus)
     {
-        case XJPlayerStatusReadyToPlay:
+        case XJPlayerLoadStatusReadyToPlay:
         {
-            [self setNeedsLayout];
-            [self layoutIfNeeded];
             [self processReadyToPlay];
             break;
         }
-        case XJPlayerStatusPlaying:
+        case XJPlayerLoadStatusPlayable:
         {
-            break;
+            [self safePlay];
         }
-        case XJPlayerStatusEnded:
+        default:
+            break;
+    }
+}
+
+- (void)setPlayStatus:(XJPlayerPlayStatus)playStatus
+{
+    _playStatus = playStatus;
+    switch (_playStatus)
+    {
+        case XJPlayerPlayStatusEnded:
         {
             if (!self.isDragged)
             {
@@ -434,44 +441,42 @@
             }
             break;
         }
-        case XJPlayerStatusFailed:
+        case XJPlayerPlayStatusFailed:
+        {
             if ([self.delegate respondsToSelector:@selector(xj_playerViewDidFailed:)]) {
                 [self.delegate xj_playerViewDidFailed:self];
             }
             break;
-        case XJPlayerStatusFailedToPlayToEndTime:
+        }
+        case XJPlayerPlayStatusFailedToPlayToEndTime:
         {
             [self.controlView xj_controlsPlayFailed];
             break;
         }
-        case XJPlayerStatusNone:
-        case XJPlayerStatusBuffering:
-        case XJPlayerStatusPause:
+        default:
             break;
     }
 }
 
 - (BOOL)isStatusFailed
 {
-    return (self.status == XJPlayerStatusFailed ||
-            self.status == XJPlayerStatusFailedToPlayToEndTime);
+    return (self.playStatus == XJPlayerPlayStatusFailed ||
+            self.playStatus == XJPlayerPlayStatusFailedToPlayToEndTime);
 }
 
 - (void)processReadyToPlay
 {
-    if (self.playerModel.preRollAdUrl.length) {
-        [self xj_playerView:self.player didPassCuePointTime:0 adUrl:self.playerModel.preRollAdUrl];
-    }
-
     NSTimeInterval duration = [self.player xj_duration];
     NSLog(@" +++ Ready To Play +++ duration : %f", duration);
+    if (self.playerGesture) return;
 
-    if (!self.playerGesture)
-    {
-        [self addNotifications];
-        self.playerGesture = [XJPlayerGesture initWithView:self];
-        self.playerGesture.delegate = self;
-        [self.playerGesture addTapGesture];
+    [self addNotifications];
+    self.playerGesture = [XJPlayerGesture initWithView:self];
+    self.playerGesture.delegate = self;
+    [self.playerGesture addTapGesture];
+
+    if (self.playerModel.preRollAdUrl.length) {
+        [self xj_playerView:self.player didPassCuePointTime:0 adUrl:self.playerModel.preRollAdUrl];
     }
 
     [self.controlView xj_controlsReadyToPlay];
@@ -495,6 +500,8 @@
     [self.controlView xj_controlsHideCoverImageWithCompletion:^{
         [weakSelf.controlView xj_controlsShowControlsView];
         [UIView animateWithDuration:.3 animations:^{
+            [weakSelf setNeedsLayout];
+            [weakSelf layoutIfNeeded];
             weakSelf.player.alpha = 1.0f;
         }];
     }];
@@ -516,17 +523,16 @@
             [self.delegate xj_playerView:self seekToProgress:progress];
         }
     }
+
     __weak typeof(self)weakSelf = self;
     [self.player xj_seekToTime:time
              completionHandler:^(BOOL finished)
      {
-         [weakSelf.controlView xj_controlsBuffering:NO];
+
          weakSelf.seekTime = 0;
          weakSelf.dragged = NO;
-
-         if (![weakSelf.player xj_isLikelyToKeepUp]) {
-             weakSelf.status = XJPlayerStatusBuffering;
-         }
+         BOOL isLikelyToKeepUp = [weakSelf.player xj_isLikelyToKeepUp];
+         [weakSelf.controlView xj_controlsBuffering:!isLikelyToKeepUp];
 
          [weakSelf safePlay];
 
@@ -551,9 +557,6 @@
 - (void)bufferingSomeSecond
 {
     if (self.isStatusFailed) return;
-    self.status = XJPlayerStatusBuffering;
-    // playbackBufferEmpty会反复进入，因此在bufferingOneSecond延时播放执行完之前再调用bufferingSomeSecond都忽略
-
     if (![self.player xj_isLikelyToKeepUp])
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(bufferingSomeSecond) object:nil];
@@ -561,7 +564,6 @@
     }
     else
     {
-        self.status = XJPlayerStatusPlaying;
         [self safePlay];
     }
 }
@@ -581,7 +583,7 @@
 - (void)xj_playerGestureDoubleTap:(UIGestureRecognizer *)gesture
 {
     if (self.isStatusFailed ||
-        self.status == XJPlayerStatusEnded ||
+        self.playStatus == XJPlayerPlayStatusEnded ||
         self.hiddenControlsView ||
         self.isAdPlaying) return;
 
@@ -758,10 +760,8 @@
     }
 }
 
-- (void)xj_controlsView:(UIView *)controlsView actionReplay:(UIButton *)sender
-{
+- (void)xj_controlsView:(UIView *)controlsView actionReplay:(UIButton *)sender {
     [self seekToTime:0];
-    self.status = XJPlayerStatusBuffering;
 }
 
 - (void)xj_controlsView:(UIView *)controlsView actionNext:(UIButton *)sender
@@ -787,7 +787,7 @@
 - (void)addNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+                                             selector:@selector(applicationWillEnterBackground:) name:UIApplicationWillResignActiveNotification object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidBecomeActive:)
@@ -804,7 +804,6 @@
                                              selector:@selector(audioRouteChangeListenerCallback:) name:AVAudioSessionRouteChangeNotification
                                                object:nil];
     // voip 或電話來時 打斷通知
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(audioSessionInterruptionNotification:) name:AVAudioSessionInterruptionNotification
                                                object:nil];
@@ -833,13 +832,17 @@
     }
 }
 
-- (void)applicationDidEnterBackground:(NSNotification*)notification {
+- (void)applicationWillEnterBackground:(NSNotification*)notification
+{
     self.didEnterBackground = YES;
+    self.pauseInBackground = YES;
+    [self actionPlay:NO];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification*)notification
 {
     self.didEnterBackground = NO;
+    self.pauseInBackground = NO;
     [self safePlay];
 }
 
@@ -960,10 +963,13 @@
 {
     [UIView animateWithDuration:.3 animations:^{
         self.adContainer.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+
+        [self.controlView xj_controlsHidden:NO];
+        [self.controlView xj_controlsEnabled:YES];
+        [self safePlay];
+
     }];
-    [self.controlView xj_controlsHidden:NO];
-    [self.controlView xj_controlsEnabled:YES];
-    [self safePlay];
     /*if ([self.delegate respondsToSelector:@selector(xj_playerViewAdDidEnd:)]) {
         [self.delegate xj_playerViewAdDidEnd:self];
     }*/

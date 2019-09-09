@@ -33,6 +33,8 @@
 
 - (void)xj_resetPlayer {}
 
+- (void)xj_loadVideo {}
+
 - (void)xj_bufferingSomeSecond {}
 
 - (void)xj_seekToTime:(NSTimeInterval)time
