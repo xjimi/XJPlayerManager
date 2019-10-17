@@ -34,9 +34,7 @@
 - (void)dealloc
 {
     NSLog(@"%s", __func__);
-    if (self.isObserver) {
-        [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:nil];
-    }
+    [self removeObserver];
 }
 
 + (instancetype)initWithRootViewController:(UIViewController *)rootViewController
@@ -301,11 +299,7 @@
         return;
     }
 
-    if (self.isObserver)
-    {
-        [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:nil];
-        self.observer = NO;
-    }
+    [self removeObserver];
 
     for (NSString *key in self.players.allKeys)
     {
@@ -315,6 +309,18 @@
     }
     [self.players removeAllObjects];
     self.scrollView = nil;
+}
+
+- (void)removeObserver
+{
+    if (self.isObserver)
+    {
+        @try {
+            [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:nil];
+        } @catch (NSException *exception) {}
+
+        self.observer = NO;
+    }
 }
 
 - (void)playAtIndexPath:(NSIndexPath *)indexPath
