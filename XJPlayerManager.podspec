@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'XJPlayerManager'
-  s.version          = '0.0.58'
+  s.version          = '0.0.59'
   s.summary          = 'A short description of XJPlayerManager.'
   s.homepage         = 'https://github.com/xjimi/XJPlayerManager'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -23,6 +23,8 @@ Pod::Spec.new do |s|
   s.dependency 'YoutubePlayer-in-WKWebView'
   s.dependency 'PINRemoteImage', '<= 3.0.0-beta.13'
   s.dependency 'GoogleAds-IMA-iOS-SDK', '<=3.9.0'
+  s.dependency 'KVOController'
+  
   s.xcconfig = {
       'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES',
       'OTHER_LDFLAGS' => '$(inherited) -framework "GoogleInteractiveMediaAds"',

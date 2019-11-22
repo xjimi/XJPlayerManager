@@ -10,6 +10,7 @@
 #import "YoutubePlayerView.h"
 #import "AVPlayerView.h"
 #import "XJPlayerManager.h"
+#import <KVOController/NSObject+FBKVOController.h>
 
 @interface XJPlayerAdapter ()
 
@@ -27,6 +28,8 @@
 
 @property (nonatomic, assign) NSUInteger maxCachePlayerNum;
 
+@property (nonatomic, strong) FBKVOController *KVOController;
+
 @end
 
 @implementation XJPlayerAdapter
@@ -34,7 +37,6 @@
 - (void)dealloc
 {
     NSLog(@"%s", __func__);
-    [self removeObserver];
 }
 
 + (instancetype)initWithRootViewController:(UIViewController *)rootViewController
@@ -48,24 +50,18 @@
     playerAdapter.rootViewController = rootViewController;
     playerAdapter.players = [NSMutableDictionary dictionary];
     playerAdapter.playerKeys = [NSMutableArray array];
-
-    NSKeyValueObservingOptions options = NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew;
-    [playerAdapter.scrollView addObserver:playerAdapter forKeyPath:NSStringFromSelector(@selector(contentOffset)) options:options context:nil];
-    playerAdapter.observer = YES;
-
+    [playerAdapter addObserve];
     return playerAdapter;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+- (void)addObserve
 {
-    if ([keyPath isEqualToString:@"contentOffset"])
-    {
-        if (!self.isSystemPause) [self scrollViewDidScroll];
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+    NSKeyValueObservingOptions options = NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew;
+    self.KVOController = [FBKVOController controllerWithObserver:self];
+    __weak typeof(self)weakSelf = self;
+    [self.KVOController observe:self.scrollView keyPath:NSStringFromSelector(@selector(contentOffset)) options:options block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSString *,id> * _Nonnull change) {
+        if (!weakSelf.isSystemPause) [weakSelf scrollViewDidScroll];
+    }];
 }
 
 - (void)scrollViewDidScroll
@@ -299,8 +295,6 @@
         return;
     }
 
-    [self removeObserver];
-
     for (NSString *key in self.players.allKeys)
     {
         XJPlayerView *player = [self.players objectForKey:key];
@@ -309,18 +303,6 @@
     }
     [self.players removeAllObjects];
     self.scrollView = nil;
-}
-
-- (void)removeObserver
-{
-    if (self.isObserver)
-    {
-        @try {
-            [self.scrollView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentOffset)) context:nil];
-        } @catch (NSException *exception) {}
-
-        self.observer = NO;
-    }
 }
 
 - (void)playAtIndexPath:(NSIndexPath *)indexPath
