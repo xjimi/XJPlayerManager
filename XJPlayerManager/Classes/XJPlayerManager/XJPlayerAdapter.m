@@ -12,7 +12,7 @@
 #import "XJPlayerManager.h"
 #import <KVOController/NSObject+FBKVOController.h>
 
-@interface XJPlayerAdapter ()
+@interface XJPlayerAdapter () < XJPlayerViewDelegate >
 
 @property (nonatomic, assign) UIScrollView *scrollView;
 
@@ -95,7 +95,17 @@
                 {
                     if (indexPath.section == section && indexPath.row == row)
                     {
-                        pv.alpha = 1.0f;
+                        if ([pv.player isMemberOfClass:[YoutubePlayerView class]])
+                        {
+                            if (pv.isStartToPlay) {
+                                pv.alpha = 1.0f;
+                            }
+                        }
+                        else
+                        {
+                            pv.alpha = 1.0f;
+                        }
+
                         UIView *playerContainer = [self playerContainerAtIndexPath:indexPath];
                         if (!playerContainer) break;
 
@@ -197,9 +207,9 @@
         {
             NSLog(@"create playerView:: +");
             UIView *playerContainer = [self playerContainerAtIndexPath:playableIndexPath];
-            playerView = [XJPlayerAdapter playerViewWithPlayerModel:playerData
-                                                    playerContainer:playerContainer
-                                                 rootViewController:self.rootViewController];
+            playerView = [self playerViewWithPlayerModel:playerData
+                                         playerContainer:playerContainer
+                                      rootViewController:self.rootViewController];
 
             [self.players setObject:playerView forKey:identifier];
         }
@@ -232,7 +242,7 @@
         NSLog(@"add playerView:: ++ ");
         [playerContainer addSubview:playerView];
     }
-    
+
     if (!playerView.alpha)
     {
         [UIView animateWithDuration:.15 animations:^{
@@ -352,14 +362,14 @@
             pv = nil;
         }
 
-        playerView = [XJPlayerAdapter playerViewWithPlayerModel:playerData
-                                                playerContainer:playerContainer
-                                             rootViewController:self.rootViewController];
+        playerView = [self playerViewWithPlayerModel:playerData
+                                     playerContainer:playerContainer
+                                  rootViewController:self.rootViewController];
         [self.players setObject:playerView forKey:identifier];
     }
 
     [self.playerKeys insertObject:identifier atIndex:0];
-
+    
     playerView.playerContainer = playerContainer;
     if (![playerContainer.subviews containsObject:playerView])
     {
@@ -367,11 +377,24 @@
         [playerContainer addSubview:playerView];
     }
 
-    if (!playerView.alpha)
+    if ([playerView.player isMemberOfClass:[YoutubePlayerView class]])
     {
-        [UIView animateWithDuration:.15 animations:^{
-            playerView.alpha = 1.0f;
-        }];
+        playerView.alpha = 0.0f;
+        if (playerView.isStartToPlay)
+        {
+            [UIView animateWithDuration:.15 animations:^{
+                playerView.alpha = 1.0f;
+            }];
+        }
+    }
+    else
+    {
+        if (!playerView.alpha)
+        {
+            [UIView animateWithDuration:.15 animations:^{
+                playerView.alpha = 1.0f;
+            }];
+        }
     }
 
     playerView.playable = YES;
@@ -382,17 +405,17 @@
     }
 }
 
-+ (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
+- (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
                             playerContainer:(UIView *)playerContainer
                          rootViewController:(UIViewController *)rootViewController
 {
-    return [XJPlayerAdapter playerViewWithPlayerModel:playerModel
-                                          controlView:[[XJPlayerMANAGER.defaultControlsView alloc] init]
-                                      playerContainer:playerContainer
-                                   rootViewController:rootViewController];
+    return [self playerViewWithPlayerModel:playerModel
+                               controlView:[[XJPlayerMANAGER.defaultControlsView alloc] init]
+                           playerContainer:playerContainer
+                        rootViewController:rootViewController];
 }
 
-+ (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
+- (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
                                 controlView:(UIView *)controlView
                             playerContainer:(UIView *)playerContainer
                          rootViewController:(UIViewController *)rootViewController
@@ -411,10 +434,21 @@
     }
 
     XJPlayerView *playerView = [[XJPlayerView alloc] init];
+    playerView.delegate = self;
     [playerView setPlayerView:player controlView:controlView playerModel:playerModel];
     playerView.playerContainer = playerContainer;
     playerView.rootViewController = rootViewController;
     return playerView;
+}
+
+- (void)xj_playerViewStartToPlay:(XJPlayerView *)playerView
+{
+    if ([playerView.player isMemberOfClass:[YoutubePlayerView class]])
+    {
+        [UIView animateWithDuration:.15 animations:^{
+            playerView.alpha = 1.0f;
+        }];
+    }
 }
 
 #pragma mark XJPlayerManagerProtocol

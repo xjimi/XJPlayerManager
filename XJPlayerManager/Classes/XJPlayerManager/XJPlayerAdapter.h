@@ -32,15 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)mute:(BOOL)mute;
 
-+ (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
-                            playerContainer:(UIView *)playerContainer
-                         rootViewController:(UIViewController *)rootViewController;
-
-+ (XJPlayerView *)playerViewWithPlayerModel:(XJPlayerModel *)playerModel
-                                controlView:(nullable UIView *)controlView
-                            playerContainer:(UIView *)playerContainer
-                         rootViewController:(UIViewController *)rootViewController;
-
 @end
 
 NS_ASSUME_NONNULL_END

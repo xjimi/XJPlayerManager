@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)xj_playerViewReadyToPlay:(UIView *)playerView duration:(NSTimeInterval)duration;
 
+- (void)xj_playerViewStartToPlay:(UIView *)playerView;
+
 - (void)xj_playerView:(UIView *)playerView seekToProgress:(CGFloat)progress;
 
 - (void)xj_playerViewDidSelectNextEpisode:(UIView *)playerView;
@@ -92,6 +94,9 @@ typedef NS_OPTIONS(NSUInteger, XJPlayerLoadStatus) {
 @property (nonatomic, weak) UIViewController *rootViewController;
 
 @property (nonatomic, assign, getter=isMuted) BOOL muted;
+
+@property (nonatomic, assign, readonly, getter=isStartToPlay) BOOL startToPlay;
+
 
 - (void)setPlayerView:(UIView *)playerView
           controlView:(nullable UIView *)controlView

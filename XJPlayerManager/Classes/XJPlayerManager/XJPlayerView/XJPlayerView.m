@@ -79,6 +79,9 @@
 
 @property (nonatomic, strong) XJPlayerAdManager *adManager;
 
+@property (nonatomic, assign, getter=isStartToPlay) BOOL startToPlay;
+
+
 @end
 
 @implementation XJPlayerView
@@ -399,6 +402,14 @@
     [self.controlView xj_controlsCurrentTime:currentTime totalTime:totalTime sliderValue:value];
     if ([self.delegate respondsToSelector:@selector(xj_playerView:didPlayTime:)]) {
         [self.delegate xj_playerView:self didPlayTime:currentTime];
+    }
+
+    if (!self.isStartToPlay)
+    {
+        self.startToPlay = YES;
+        if ([self.delegate respondsToSelector:@selector(xj_playerViewStartToPlay:)]) {
+            [self.delegate xj_playerViewStartToPlay:self];
+        }
     }
 }
 

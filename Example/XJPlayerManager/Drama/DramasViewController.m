@@ -148,7 +148,7 @@
         //https://dlhdl-cdn.zhanqi.tv/zqlive/7032_0s2qn.m3u8
 
     //https://webapi.setn.com/api/Event/GetVideoUrl?domain=video.setn.com&url=dest/2019/06/05/121332_1631/master.m3u8&DeviceType=0&videoId=121332
-        url = (i%2) ? @"https://dlhdl-cdn.zhanqi.tv/zqlive/7032_0s2qn.m3u8" : @"http://www.youtube.com/embed/4ZVUmEUFwaY";
+        url = (i%2) ? @"http://live.chosun.gscdn.com/live/_definst_/tvchosun1.stream/playlist.m3u8" : @"http://www.youtube.com/embed/4ZVUmEUFwaY";
         //url = @"ulKrn-3GraI";
         NSString *imageUrl = [NSString stringWithFormat:@"https://img.youtube.com/vi/%@/default.jpg", @"4ZVUmEUFwaY"];
         model.playerModel = [XJPlayerModel initWithUrl:url
